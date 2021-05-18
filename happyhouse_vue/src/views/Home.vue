@@ -144,8 +144,7 @@
         <!-- filters end -->
       </div>
     </div>
-    <div class="text-center mb-3"></div>
-    <div id="map" style="width: 100%; height: 300px; margin: auto"></div>
+    <GmapMap ref="mapRef" :center="center" :zoom="16" style="width: 100%; height: 300px"></GmapMap>
     <div class="row mt-3">
       <!-- 내집마련 Article Start  -->
       <div class="col-md-4">
@@ -277,97 +276,15 @@
 </template>
 
 <script>
-// defer
-// src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCGl1i-Ux9jScPt5LxRSkDtkEN0legZ67E&callback=initMap"
-
 export default {
-  name: "Home",
-  components: {
-    // HelloWorld,
+  name: "search",
+  data() {
+    return {
+      center: {
+        lat: 37.5,
+        lng: 127.0324,
+      },
+    };
   },
 };
-
-// var map = null;
-// var latitude;
-// var longitude;
-// var lat = 37.606991;
-// var lng = 127.0232185;
-// var zoom = 11;
-
-///////////////////////////////////////////////////맵 설정
-// function initMap() {
-//   //getLocation();
-//   var opt = {
-//     // google map에 중앙으로 표시할 좌표 설정
-//     center: {
-//       lat: lat,
-//       lng: lng,
-//     },
-//     zoom: zoom, //0~ 21  큰 값일 수록  zooming
-//   };
-//   //google.maps.Map(map을 그릴 영역, 옵션정보 );
-//   map = new google.maps.Map(document.getElementById("map"), opt);
-
-//   var infowindow = new google.maps.InfoWindow();
-
-//   var marker, i;
-//   for (i = 0; i < locations.length; i++) {
-//     marker = new google.maps.Marker({
-//       id: i,
-//       title: locations[i][0],
-//       label: locations[i][0],
-//       position: new google.maps.LatLng(locations[i][1], locations[i][2]),
-//       map: map,
-//     });
-
-//     google.maps.event.addListener(
-//       marker,
-//       "click",
-//       (function (marker, i) {
-//         return function () {
-//           infowindow.setContent(locations[i][0]);
-//           infowindow.open(map, marker);
-//         };
-//       })(marker, i)
-//     );
-//     if (marker) {
-//       marker.addListener("click", function () {
-//         console.log(this.title);
-//         map.setZoom(15);
-//         map.panTo(this.getPosition());
-//       });
-//     }
-//   }
-// }
-
-// /// 현재 위치를 최초위치로.
-// function showLocation(position) {
-//   latitude = position.coords.latitude;
-//   longitude = position.coords.longitude;
-//   //alert("Latitude : " + latitude + " Longitude: " + longitude);
-//   //현재 위치 정보를 center로 지정하기 위해 객체 생성
-//   var hear = new google.maps.LatLng(latitude, longitude);
-//   map.panTo(hear); //위치 정보를 통해 맵에 표시
-// }
-
-// function errorHandler(err) {
-//   if (err.code == 1) {
-//     alert("Error: Access is denied!");
-//   } else if (err.code == 2) {
-//     alert("Error: Position is unavailable!");
-//   } else if (err.code == 3) {
-//     alert("Erro : Time out");
-//   }
-// }
-// function getLocation() {
-//   if (navigator.geolocation) {
-//     var options = {
-//       timeout: 60000,
-//       enabledHighAccuracy: true,
-//     };
-//     navigator.geolocation.getCurrentPosition(showLocation, errorHandler, options);
-//   } else {
-//     alert("Sorry, browser does not support geolocation!");
-//   }
-// }
 </script>
