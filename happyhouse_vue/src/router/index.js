@@ -7,6 +7,8 @@ import Read from "../views/read.vue";
 import Update from "../views/update.vue";
 import Delete from "../views/delete.vue";
 import Housesearch from "../views/housesearch.vue";
+import Login from "../views/Login.vue";
+import Regist from "../views/Regist.vue";
 
 Vue.use(VueRouter);
 
@@ -46,6 +48,16 @@ const routes = [
     name: "housesearch",
     component: Housesearch,
   },
+  {
+    path: "/login",
+    name: "login",
+    component:Login,
+  },
+  {
+    path: "/regist",
+    name: "regist",
+    component:Regist,
+  }
 ];
 
 const router = new VueRouter({

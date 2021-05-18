@@ -43,17 +43,10 @@
           <!-- 로그인 전 -->
           <ul id="header_nav_confirm_off" class="navbar-nav justify-content-end">
             <li class="nav-item">
-              <a
-                class="nav-link text-secondary"
-                href="#"
-                id="login"
-                data-toggle="modal"
-                data-target="#loginModal"
-                >로그인</a
-              >
+              <router-link class="nav-link text-secondary" to="/login">로그인</router-link>
             </li>
             <li class="nav-item">
-              <a class="nav-link text-secondary" href="#voteModal" data-toggle="modal">회원가입</a>
+              <router-link class="nav-link text-secondary" to="/regist">회원가입</router-link>
             </li>
           </ul>
 
