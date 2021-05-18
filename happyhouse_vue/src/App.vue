@@ -1,7 +1,7 @@
 <template>
   <div id="app" class="container">
     <nav-header></nav-header>
-    <h2 class="text-center">Vue를 이용한 게시판</h2>
+    <div style="height: 80px"></div>
     <router-view />
   </div>
 </template>

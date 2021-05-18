@@ -1,7 +1,6 @@
 <template>
   <div class="container">
     <!-- 중앙 left contents start -->
-    <div style="height: 80px"></div>
     <div id="demo" class="container carousel slide mb-3" style="height: 400px" data-ride="carousel">
       <!-- Indicators -->
       <ul class="carousel-indicators">
