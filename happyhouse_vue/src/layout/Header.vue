@@ -1,10 +1,6 @@
 <template>
   <header>
     <nav class="navbar navbar-expand-sm bg-light fixed-top shadow">
-      <div id="nav">
-        <router-link to="/">Home</router-link> |
-        <router-link to="/list">게시판</router-link>
-      </div>
       <div class="container">
         <a class="navbar-brand" href="/">
           <img src="../img/logo.jpg" alt="Logo" style="width: 100px" />
@@ -35,6 +31,12 @@
                 id="interest"
                 >관심 지역 추가</a
               >
+            </li>
+            <li class="nav-item menu_confirm_on">
+              <router-link class="nav-link text-secondary" to="/list">Q&A 게시판</router-link>
+            </li>
+            <li class="nav-item menu_confirm_on">
+              <router-link class="nav-link text-secondary" to="/housesearch">검색</router-link>
             </li>
           </ul>
 
@@ -74,6 +76,7 @@
         </div>
       </div>
     </nav>
+    <div style="height: 100px"></div>
   </header>
 </template>
 
