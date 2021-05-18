@@ -3,15 +3,18 @@
     <nav-header></nav-header>
     <h2 class="text-center">Vue를 이용한 게시판</h2>
     <router-view />
+    <my-footer></my-footer>
   </div>
 </template>
 <script>
 import NavHeader from "./layout/Header.vue";
+import MyFooter from "./layout/Footer.vue";
 
 export default {
   name: "App",
   components: {
     NavHeader,
+    MyFooter,
   },
 };
 </script>
