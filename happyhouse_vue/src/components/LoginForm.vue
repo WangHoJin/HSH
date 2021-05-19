@@ -37,6 +37,7 @@
 
 <script>
 import http from "@/util/http-common";
+import { mapMutations, mapActions } from "vuex";
 export default {
   name: "login",
   props: {
@@ -49,6 +50,10 @@ export default {
     };
   },
   methods: {
+    ...mapMutations({
+      Mlogin: "M_LOGIN",
+    }),
+    ...mapActions(["asyncLogin"]),
     login() {
       if (this.userid == "") {
         alert("아이디를 입력해주세요");
@@ -69,6 +74,11 @@ export default {
             // this.$store.commit("userid")
             sessionStorage.setItem("ID", this.userid);
             msg = "로그인 성공";
+            alert(msg);
+            // this.$store.dispatch();
+            // this.Mlogin(this.userid);
+            // this.$store.commit("LOGIN", this.userid);
+            this.asyncLogin(this.userid);
           } else {
             alert(msg);
           }
