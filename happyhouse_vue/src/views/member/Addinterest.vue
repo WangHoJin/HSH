@@ -5,7 +5,7 @@
 </template>
 
 <script>
-import AddInterest from "@/components/AddInterestForm.vue";
+import AddInterest from "@/components/member/AddInterestForm.vue";
 
 export default {
   name: "addinterest",

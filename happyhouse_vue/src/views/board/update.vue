@@ -5,9 +5,9 @@
 </template>
 
 <script>
-import UpdateForm from '@/components/Form.vue';
+import UpdateForm from "@/components/board/Form.vue";
 export default {
-  name: 'update',
+  name: "update",
   components: {
     UpdateForm,
   },

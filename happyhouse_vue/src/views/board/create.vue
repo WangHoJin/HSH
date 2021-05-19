@@ -5,9 +5,9 @@
 </template>
 
 <script>
-import CreateForm from '@/components/Form.vue';
+import CreateForm from "@/components/board/Form.vue";
 export default {
-  name: 'create',
+  name: "create",
   components: {
     CreateForm,
   },

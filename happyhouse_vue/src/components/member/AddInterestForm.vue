@@ -33,7 +33,7 @@
 
 <script>
 import http from "@/util/http-common";
-
+import { mapGetters } from "vuex";
 export default {
   name: "addinterest",
   props: {
@@ -50,6 +50,9 @@ export default {
       guguncode: 0,
       dongcode: 0,
     };
+  },
+  computed: {
+    ...mapGetters(["getUserId", "getUserName"]),
   },
   created() {
     http
@@ -87,7 +90,7 @@ export default {
     addInterest() {
       http
         .post("/member/addinterest", {
-          userid: sessionStorage.getItem("ID"),
+          userid: this.$store.state.userid,
           dong: this.dong,
         })
         .then(({ data }) => {

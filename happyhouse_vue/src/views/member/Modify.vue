@@ -5,7 +5,7 @@
 </template>
 
 <script>
-import ModifyForm from "@/components/ModifyForm.vue";
+import ModifyForm from "@/components/member/ModifyForm.vue";
 
 export default {
   name: "modify",

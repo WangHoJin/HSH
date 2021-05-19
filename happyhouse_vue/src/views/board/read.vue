@@ -11,14 +11,14 @@
 </template>
 
 <script>
-import http from '@/util/http-common';
-import Detail from '@/components/Detail.vue';
+import http from "@/util/http-common";
+import Detail from "@/components/board/Detail.vue";
 export default {
-  name: 'read',
+  name: "read",
   components: {
     Detail,
   },
-  data: function() {
+  data: function () {
     return {
       item: {},
     };

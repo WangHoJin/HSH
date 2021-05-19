@@ -2,9 +2,9 @@
   <header>
     <nav class="navbar navbar-expand-sm bg-light fixed-top shadow">
       <div class="container">
-        <a class="navbar-brand" href="/">
+        <router-link class="navbar-brand" to="/">
           <img src="../img/logo.jpg" alt="Logo" style="width: 100px" />
-        </a>
+        </router-link>
         <button
           class="navbar-toggler navbar-toggler-right bg-secondary text-white"
           type="button"

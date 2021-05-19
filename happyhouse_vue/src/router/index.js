@@ -1,23 +1,26 @@
 import Vue from "vue";
 import VueRouter from "vue-router";
-import Home from "../views/Home.vue";
-import List from "../views/list.vue";
-import Create from "../views/create.vue";
-import Read from "../views/read.vue";
-import Update from "../views/update.vue";
-import Delete from "../views/delete.vue";
-import Housesearch from "../views/housesearch.vue";
-import Login from "../views/Login.vue";
-import Regist from "../views/Regist.vue";
-import Addinterest from "../views/Addinterest.vue";
-import Modify from "../views/Modify.vue";
+import Index from "../views/index.vue";
+
+import List from "../views/board/list.vue";
+import Create from "../views/board/create.vue";
+import Read from "../views/board/read.vue";
+import Update from "../views/board/update.vue";
+import Delete from "../views/board/delete.vue";
+
+import Login from "../views/member/Login.vue";
+import Regist from "../views/member/Regist.vue";
+import Modify from "../views/member/Modify.vue";
+import Addinterest from "../views/member/Addinterest.vue";
+
+import Housesearch from "../views/apt/housesearch.vue";
 Vue.use(VueRouter);
 
 const routes = [
   {
     path: "/",
-    name: "Home",
-    component: Home,
+    name: "Index",
+    component: Index,
   },
   {
     path: "/list",
@@ -52,12 +55,12 @@ const routes = [
   {
     path: "/login",
     name: "login",
-    component:Login,
+    component: Login,
   },
   {
     path: "/regist",
     name: "regist",
-    component:Regist,
+    component: Regist,
   },
   {
     path: "/addinterest",
@@ -68,8 +71,7 @@ const routes = [
     path: "/modify",
     name: "modify",
     component: Modify,
-  }
-  
+  },
 ];
 
 const router = new VueRouter({

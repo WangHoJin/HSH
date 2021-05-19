@@ -34,7 +34,7 @@
 
 <script>
 import http from "@/util/http-common";
-import ListRow from "@/components/Row.vue";
+import ListRow from "@/components/board/Row.vue";
 export default {
   name: "list",
   components: {

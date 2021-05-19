@@ -15,6 +15,10 @@ values('ssafy', 'Vue Axios 연동', 'Vue를 이용한 HTTP 통신'),
       ('ssafy', 'Vue를 배워봅시다', 'Vue와 Spring을 연동하자~'),
       ('ssafy', '프론트엔드 프레임워크', 'Vue는 프론트엔드의 인기있는 프레임워크 입니다.');
 
+alter table qnaboard drop foreign key qnaboard_to_member_fk;
+
+alter table happyhouse.qnaboard add constraint foreign key (writer) references happyhouse.member (userid) on delete cascade;
+
 commit;
 
 select * from qnaboard;

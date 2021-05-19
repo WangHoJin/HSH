@@ -65,6 +65,7 @@
 </template>
 
 <script>
+import { mapMutations, mapActions } from "vuex";
 import http from "@/util/http-common";
 export default {
   name: "modify",
@@ -90,6 +91,8 @@ export default {
     });
   },
   methods: {
+    ...mapMutations(["mLogout"]),
+    ...mapActions(["aLogout"]),
     modifyHandler() {
       http
         .put("/member/modify", {
@@ -115,6 +118,7 @@ export default {
           msg = "탈퇴가 완료되었습니다.";
         }
         alert(msg);
+        this.aLogout();
         this.$router.push("/");
       });
     },

@@ -1,0 +1,9 @@
+npm i vue
+npm i vue-router
+npm i axios
+npm i bootstrap
+npm i bootstrap-vue
+npm i moment
+npm i core-js
+npm i vue2-google-maps
+npm i vuex

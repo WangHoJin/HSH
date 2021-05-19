@@ -68,7 +68,12 @@
               </div>
             </form>
 
-            <button type="button" class="form-inline ml-3 btn btn-warning" id="searchinterest">
+            <button
+              type="button"
+              class="form-inline ml-3 btn btn-warning"
+              id="searchinterest"
+              @click="searchInterest"
+            >
               관심지역
             </button>
           </div>
@@ -152,8 +157,8 @@
 
 <script>
 import http from "@/util/http-common";
-import AptListRow from "@/components/AptListRow.vue";
-import AptDetailListRow from "@/components/AptDetailListRow.vue";
+import AptListRow from "@/components/apt/AptListRow.vue";
+import AptDetailListRow from "@/components/apt/AptDetailListRow.vue";
 export default {
   name: "search",
   components: {
@@ -258,6 +263,24 @@ export default {
         });
       http
         .get("/housesearch/dealofaptname/" + this.aptname)
+        .then(({ data }) => {
+          this.aptdetail = data;
+        })
+        .catch(() => {
+          alert("에러가 발생했습니다.");
+        });
+    },
+    searchInterest() {
+      http
+        .get("/housesearch2/interest/" + this.$store.state.userid)
+        .then(({ data }) => {
+          this.apts = data;
+        })
+        .catch(() => {
+          alert("에러가 발생했습니다.");
+        });
+      http
+        .get("/housesearch2/dealinterest/" + this.$store.state.userid)
         .then(({ data }) => {
           this.aptdetail = data;
         })
