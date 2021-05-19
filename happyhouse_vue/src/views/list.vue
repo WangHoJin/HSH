@@ -1,5 +1,6 @@
 <template>
   <div>
+    <h2 class="text-center">Q&A 게시판</h2>
     <div v-if="items.length">
       <table class="table table-bordered table-condensed">
         <colgroup>

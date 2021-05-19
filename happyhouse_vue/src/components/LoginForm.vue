@@ -66,10 +66,13 @@ export default {
         .then(({ data }) => {
           let msg = "로그인 실패";
           if (data === "success") {
+            // this.$store.commit("userid")
+            sessionStorage.setItem("ID", this.userid);
             msg = "로그인 성공";
           } else {
             alert(msg);
           }
+          console.log(sessionStorage.getItem("ID"));
           this.$router.push("/");
         });
     },

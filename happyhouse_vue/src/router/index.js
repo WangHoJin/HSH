@@ -9,6 +9,7 @@ import Delete from "../views/delete.vue";
 import Housesearch from "../views/housesearch.vue";
 import Login from "../views/Login.vue";
 import Regist from "../views/Regist.vue";
+import Addinterest from "../views/Addinterest.vue";
 
 Vue.use(VueRouter);
 
@@ -57,7 +58,13 @@ const routes = [
     path: "/regist",
     name: "regist",
     component:Regist,
+  },
+  {
+    path: "/addinterest",
+    name: "addinterest",
+    component: Addinterest,
   }
+  
 ];
 
 const router = new VueRouter({
