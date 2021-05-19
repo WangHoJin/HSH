@@ -91,9 +91,6 @@ export default {
           dong: this.dong,
         })
         .then(({ data }) => {
-          // console.log(this.dongs);
-
-          console.log(this.dong);
           let msg = "등록 처리시 문제가 발생했습니다.";
           if (data === "success") {
             msg = "관심 지역 추가가 완료되었습니다.";
