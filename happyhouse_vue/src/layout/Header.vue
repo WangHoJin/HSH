@@ -15,22 +15,19 @@
         </button>
         <div id="navb" class="collapse navbar-collapse">
           <ul class="navbar-nav mr-auto">
-            <li class="nav-item">
-              <a class="nav-link text-secondary" href="#">공지사항</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link text-secondary" href="#">오늘의 뉴스</a>
-            </li>
-
             <!-- 로그인 후 -->
-            <li v-if="getUserId != null" class="nav-item menu_confirm_on">
-              <a
+            <li v-if="getUserId != null" class="nav-item menu_confirm_on"></li>
+            <li class="nav-item menu_confirm_on">
+              <router-link class="nav-link text-secondary" to="/addinterest"
+                >관심 지역 추가</router-link
+              >
+              <!-- <a
                 class="nav-link text-secondary"
                 href="#InterestArea"
                 data-toggle="modal"
                 id="interest"
-                >관심 지역 추가</a
-              >
+                >관심 지역 추가</
+              > -->
             </li>
             <li class="nav-item menu_confirm_on">
               <router-link class="nav-link text-secondary" to="/list">Q&A 게시판</router-link>
