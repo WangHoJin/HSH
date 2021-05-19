@@ -23,7 +23,7 @@
             </li>
 
             <!-- 로그인 후 -->
-            <li class="nav-item menu_confirm_on">
+            <li v-if="getUserId != null" class="nav-item menu_confirm_on">
               <a
                 class="nav-link text-secondary"
                 href="#InterestArea"
@@ -41,31 +41,32 @@
           </ul>
 
           <!-- 로그인 전 -->
-          <ul id="header_nav_confirm_off" class="navbar-nav justify-content-end">
-            <li class="nav-item">
-              <router-link class="nav-link text-secondary" to="/login">로그인</router-link>
-            </li>
-            <li class="nav-item">
-              <router-link class="nav-link text-secondary" to="/regist">회원가입</router-link>
-            </li>
-          </ul>
-
+          <div v-if="getUserId == null">
+            <ul id="header_nav_confirm_off" class="navbar-nav justify-content-end">
+              <li class="nav-item">
+                <router-link class="nav-link text-secondary" to="/login">로그인</router-link>
+              </li>
+              <li class="nav-item">
+                <router-link class="nav-link text-secondary" to="/regist">회원가입</router-link>
+              </li>
+            </ul>
+          </div>
           <!-- 로그인 후 -->
-          <ul id="header_nav_confirm_on" class="navbar-nav justify-content-end">
-            <li class="nav-item">
-              <a class="nav-link text-secondary">${userinfo.username}님 환영합니다!</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link text-secondary" href="${root}/member/logout" id="logout"
-                >로그아웃</a
-              >
-            </li>
-            <li class="nav-item">
-              <a class="nav-link text-secondary" href="#searchModal" data-toggle="modal" id="view"
-                >회원정보</a
-              >
-            </li>
-          </ul>
+          <div v-else>
+            <ul id="header_nav_confirm_on" class="navbar-nav justify-content-end">
+              <li class="nav-item">
+                <a class="nav-link text-secondary">{{ getUserId }}님 환영합니다!</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link text-secondary" id="logout" @click="logout">로그아웃</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link text-secondary" href="#searchModal" data-toggle="modal" id="view"
+                  >회원정보</a
+                >
+              </li>
+            </ul>
+          </div>
         </div>
       </div>
     </nav>
@@ -74,7 +75,27 @@
 </template>
 
 <script>
+import { mapGetters, mapMutations, mapActions } from "vuex";
 export default {
   name: "AppHeader",
+  data() {
+    return {
+      d: null,
+    };
+  },
+  computed: {
+    ...mapGetters(["getUserId", "getUserName"]),
+  },
+  methods: {
+    ...mapMutations(["mLogout"]),
+    ...mapActions(["aLogout"]),
+    logout() {
+      if (this.userid != "") {
+        let msg = "로그아웃";
+        alert(msg);
+        this.aLogout();
+      }
+    },
+  },
 };
 </script>
