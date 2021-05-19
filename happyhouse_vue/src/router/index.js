@@ -10,7 +10,7 @@ import Housesearch from "../views/housesearch.vue";
 import Login from "../views/Login.vue";
 import Regist from "../views/Regist.vue";
 import Addinterest from "../views/Addinterest.vue";
-
+import Modify from "../views/Modify.vue";
 Vue.use(VueRouter);
 
 const routes = [
@@ -63,6 +63,11 @@ const routes = [
     path: "/addinterest",
     name: "addinterest",
     component: Addinterest,
+  },
+  {
+    path: "/modify",
+    name: "modify",
+    component: Modify,
   }
   
 ];

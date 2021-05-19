@@ -16,18 +16,10 @@
         <div id="navb" class="collapse navbar-collapse">
           <ul class="navbar-nav mr-auto">
             <!-- 로그인 후 -->
-            <li v-if="getUserId != null" class="nav-item menu_confirm_on"></li>
-            <li class="nav-item menu_confirm_on">
+            <li v-if="getUserId != null" class="nav-item menu_confirm_on">
               <router-link class="nav-link text-secondary" to="/addinterest"
                 >관심 지역 추가</router-link
               >
-              <!-- <a
-                class="nav-link text-secondary"
-                href="#InterestArea"
-                data-toggle="modal"
-                id="interest"
-                >관심 지역 추가</
-              > -->
             </li>
             <li class="nav-item menu_confirm_on">
               <router-link class="nav-link text-secondary" to="/list">Q&A 게시판</router-link>
@@ -58,9 +50,7 @@
                 <a class="nav-link text-secondary" id="logout" @click="logout">로그아웃</a>
               </li>
               <li class="nav-item">
-                <a class="nav-link text-secondary" href="#searchModal" data-toggle="modal" id="view"
-                  >회원정보</a
-                >
+                <router-link class="nav-link text-secondary" to="/modify"> 회원정보</router-link>
               </li>
             </ul>
           </div>
