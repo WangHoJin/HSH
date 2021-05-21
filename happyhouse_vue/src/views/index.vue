@@ -144,7 +144,11 @@
         <!-- filters end -->
       </div>
     </div>
-    <GmapMap ref="mapRef" :center="center" :zoom="16" style="width: 100%; height: 300px"></GmapMap>
+    <!-- Map Start -->
+    <GmapMap ref="mapRef" :center="center" :zoom="16" style="width: 100%; height: 300px">
+      <GmapMarker :key="index" v-for="(m, index) in markers" :position="m.position" />
+    </GmapMap>
+    <!-- Map End -->
     <div class="row mt-3">
       <!-- 내집마련 Article Start  -->
       <div class="col-md-4">
@@ -281,9 +285,17 @@ export default {
   data() {
     return {
       center: {
-        lat: 37.5,
-        lng: 127.0324,
+        lat: 37.5724163,
+        lng: 126.9824791,
       },
+      markers: [
+        {
+          position: {
+            lat: 37.5724163,
+            lng: 126.9824791,
+          },
+        },
+      ],
     };
   },
 };

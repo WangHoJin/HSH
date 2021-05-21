@@ -1,6 +1,22 @@
 <template>
   <div id="search" class="container">
-    <GmapMap ref="mapRef" :center="center" :zoom="16" style="width: 100%; height: 300px"></GmapMap>
+    <!-- Map Start -->
+    <GmapMap
+      ref="mapRef"
+      v-if="apts[0] != null"
+      :center="{ lat: apts[0].lat * 1, lng: apts[0].lng * 1 }"
+      :zoom="14"
+      style="width: 100%; height: 300px"
+    >
+      <GmapMarker
+        v-for="(m, index) in apts"
+        :key="`${index}_apts`"
+        :position="{ lat: m.lat * 1, lng: m.lng * 1 }"
+      />
+    </GmapMap>
+    <GmapMap ref="mapRef" v-else :center="center" :zoom="14" style="width: 100%; height: 300px">
+    </GmapMap>
+    <!-- Map End -->
     <!-- 아파트 거래정보 검색 시작 -->
     <div class="d-flex justify-content-center mb-3 mt-3">
       <div class="dark-bg section">
@@ -107,7 +123,7 @@
                     :key="`${index}_apts`"
                     :dong="apt.dong"
                     :aptName="apt.aptName"
-                    :buildYear="apt.buildYear"
+                    :buildYear="'126.9824791' * 1"
                   />
                 </tbody>
               </table>
@@ -168,8 +184,8 @@ export default {
   data() {
     return {
       center: {
-        lat: 37.5,
-        lng: 127.0324,
+        lat: 37.5724163,
+        lng: 126.9824791,
       },
       apts: [],
       aptdetail: [],
@@ -231,6 +247,7 @@ export default {
         )
         .then(({ data }) => {
           this.apts = data;
+          console.log(data);
         })
         .catch(() => {
           alert("에러가 발생했습니다.");
@@ -245,7 +262,6 @@ export default {
             event.target.value
         )
         .then(({ data }) => {
-          console.log(data);
           this.aptdetail = data;
         })
         .catch(() => {

@@ -14,7 +14,7 @@ export default {
   props: {
     dong: { type: String },
     aptName: { type: String },
-    buildYear: { type: String },
+    buildYear: { type: Number },
   },
 };
 </script>
