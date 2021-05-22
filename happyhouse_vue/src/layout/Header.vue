@@ -1,31 +1,29 @@
 <template>
   <header>
-    <nav class="navbar navbar-expand-sm bg-light fixed-top shadow">
+    <nav id="nav" class="navbar navbar-expand-sm bg-light fixed-top shadow">
       <div class="container">
-        <router-link class="navbar-brand" to="/">
-          <img src="../img/logo.jpg" alt="Logo" style="width: 100px" />
-        </router-link>
-        <button
+        <!-- <button
           class="navbar-toggler navbar-toggler-right bg-secondary text-white"
           type="button"
           data-toggle="collapse"
           data-target="#navb"
         >
           <span class="navbar-toggler-icon">-</span>
-        </button>
+        </button> -->
         <div id="navb" class="collapse navbar-collapse">
           <ul class="navbar-nav mr-auto">
-            <!-- 로그인 후 -->
+            <li class="nav-item menu_confirm_on">
+              <router-link class="nav-link" to="/"> HOME </router-link>
+            </li>
             <li v-if="getUserId != null" class="nav-item menu_confirm_on">
-              <router-link class="nav-link text-secondary" to="/addinterest"
-                >관심 지역 추가</router-link
-              >
+              <router-link class="nav-link" to="/addinterest">관심 지역 추가</router-link>
+            </li>
+            <!-- 로그인 후 -->
+            <li class="nav-item menu_confirm_on">
+              <router-link class="nav-link" to="/list">Q&A 게시판</router-link>
             </li>
             <li class="nav-item menu_confirm_on">
-              <router-link class="nav-link text-secondary" to="/list">Q&A 게시판</router-link>
-            </li>
-            <li class="nav-item menu_confirm_on">
-              <router-link class="nav-link text-secondary" to="/housesearch">검색</router-link>
+              <router-link class="nav-link" to="/housesearch">검색</router-link>
             </li>
           </ul>
 
@@ -33,10 +31,10 @@
           <div v-if="getUserId == null">
             <ul id="header_nav_confirm_off" class="navbar-nav justify-content-end">
               <li class="nav-item">
-                <router-link class="nav-link text-secondary" to="/login">로그인</router-link>
+                <router-link class="nav-link" to="/login">로그인</router-link>
               </li>
               <li class="nav-item">
-                <router-link class="nav-link text-secondary" to="/regist">회원가입</router-link>
+                <router-link class="nav-link" to="/regist">회원가입</router-link>
               </li>
             </ul>
           </div>
@@ -44,20 +42,20 @@
           <div v-else>
             <ul id="header_nav_confirm_on" class="navbar-nav justify-content-end">
               <li class="nav-item">
-                <a class="nav-link text-secondary">{{ getUserId }}님 환영합니다!</a>
+                <a class="nav-link">{{ getUserId }}님 환영합니다!</a>
               </li>
               <li class="nav-item">
-                <a class="nav-link text-secondary" id="logout" @click="logout">로그아웃</a>
+                <a class="nav-link" id="logout" @click="logout">로그아웃</a>
               </li>
               <li class="nav-item">
-                <router-link class="nav-link text-secondary" to="/modify"> 회원정보</router-link>
+                <router-link class="nav-link" to="/modify"> 회원정보</router-link>
               </li>
             </ul>
           </div>
         </div>
       </div>
     </nav>
-    <div style="height: 100px"></div>
+    <!-- <div style="height: 100px"></div> -->
   </header>
 </template>
 
@@ -86,3 +84,7 @@ export default {
   },
 };
 </script>
+
+<style>
+@import "../assets/css/main.css";
+</style>
