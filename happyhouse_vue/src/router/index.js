@@ -14,6 +14,8 @@ import Modify from "../views/member/Modify.vue";
 import Addinterest from "../views/member/Addinterest.vue";
 
 import Housesearch from "../views/apt/housesearch.vue";
+import HouseDetail from "../views/apt/housedetail.vue";
+
 Vue.use(VueRouter);
 
 const routes = [
@@ -71,6 +73,11 @@ const routes = [
     path: "/modify",
     name: "modify",
     component: Modify,
+  },
+  {
+    path: "/housedetail",
+    name: "housedetail",
+    component: HouseDetail,
   },
 ];
 

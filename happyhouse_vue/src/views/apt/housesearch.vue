@@ -167,6 +167,7 @@
 <script>
 import http from "@/util/http-common";
 import AptListRow from "@/components/apt/AptListRow.vue";
+import { mapMutations, mapActions } from "vuex";
 export default {
   name: "search",
   components: {
@@ -202,6 +203,8 @@ export default {
       });
   },
   methods: {
+    ...mapMutations(["GET_APT_LIST"]),
+    ...mapActions(["getAptList"]),
     searchAll() {
       http
         .get("/housesearch2/houseall")
@@ -258,6 +261,7 @@ export default {
         )
         .then(({ data }) => {
           this.aptdetail = data;
+          this.getAptList(this.aptdetail);
         })
         .catch(() => {
           alert("에러가 발생했습니다.");

@@ -2,7 +2,7 @@
   <li>
     <article class="box post-summary">
       <h3>
-        <a href="#">{{ aptName }}</a>
+        <a class="nav-link" @click="detail">{{ aptName }}</a>
       </h3>
       <ul class="meta">
         <li><h4>법정동 :</h4></li>
@@ -20,12 +20,21 @@
 </template>
 
 <script>
+import { mapMutations, mapActions } from "vuex";
 export default {
   name: "aptrow",
   props: {
     dong: { type: String },
     aptName: { type: String },
     buildYear: { type: Number },
+  },
+  methods: {
+    ...mapMutations(["GET_APT_Name"]),
+    ...mapActions(["getAptName"]),
+    detail() {
+      this.getAptName(this.aptName);
+      this.$router.push("/housedetail");
+    },
   },
 };
 </script>
