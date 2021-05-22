@@ -145,7 +145,7 @@
       </div>
     </div>
     <!-- Map Start -->
-    <GmapMap ref="mapRef" :center="center" :zoom="16" style="width: 100%; height: 300px">
+    <GmapMap ref="mapRef" :center="center" :zoom="16" style="width: 100%; height: 500px">
       <GmapMarker :key="index" v-for="(m, index) in markers" :position="m.position" />
     </GmapMap>
     <!-- Map End -->

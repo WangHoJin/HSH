@@ -13,8 +13,13 @@
         :key="`${index}_apts`"
         :position="{ lat: m.lat * 1, lng: m.lng * 1 }"
       />
+      <GmapMarker
+        v-for="(c, index) in coffeeshop"
+        :key="`${index}_coffeeshop`"
+        :position="{ lat: c.lat * 1, lng: c.lng * 1 }"
+      />
     </GmapMap>
-    <GmapMap ref="mapRef" v-else :center="center" :zoom="14" style="width: 100%; height: 300px">
+    <GmapMap ref="mapRef" v-else :center="center" :zoom="14" style="width: 100%; height: 500px">
     </GmapMap>
     <!-- Map End -->
     <!-- 아파트 거래정보 검색 시작 -->
@@ -66,7 +71,14 @@
                 </select>
               </div>
             </form>
-
+            <button
+              type="button"
+              class="btn btn-success mr-3"
+              id="searchCoffeeShop"
+              @click="searchCoffeeShop"
+            >
+              카페
+            </button>
             <form class="form-inline ml-3" id="frm" method="post" action="housesearch">
               <div>
                 <input type="hidden" name="act" value="aptsearch" />
@@ -132,7 +144,7 @@
         </div>
 
         <div class="col-lg-6">
-          <div class="card" style="height: 400px; overflow: auto">
+          <div v-if="cflag == false" class="card" style="height: 400px; overflow: auto">
             <div class="card-header bg-dark text-white">
               <h4>아파트 거래 상세 정보</h4>
             </div>
@@ -163,6 +175,31 @@
               </table>
             </div>
           </div>
+          <div v-else-if="cflag == true" class="card" style="height: 400px; overflow: auto">
+            <div class="card-header bg-dark text-white">
+              <h4>주변 커피 정보</h4>
+            </div>
+            <div class="card-body" style="padding:0;'">
+              <table id="coffeeshop-list" class="table table-striped">
+                <thead>
+                  <tr>
+                    <th>카페이름</th>
+                    <th>법정동</th>
+                    <th>주소</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <coffee-shop-list-row
+                    v-for="(coffee, index) in coffeeshop"
+                    :key="`${index}_coffeeshop`"
+                    :cname="coffee.cname"
+                    :dong="coffee.dong"
+                    :address1="coffee.address1"
+                  />
+                </tbody>
+              </table>
+            </div>
+          </div>
         </div>
       </div>
       <!-- 모든집의정보 받아오기 끝 -->
@@ -175,11 +212,13 @@
 import http from "@/util/http-common";
 import AptListRow from "@/components/apt/AptListRow.vue";
 import AptDetailListRow from "@/components/apt/AptDetailListRow.vue";
+import CoffeeShopListRow from "@/components/coffeeshop/CoffeeShopListRow.vue";
 export default {
   name: "search",
   components: {
     AptListRow,
     AptDetailListRow,
+    CoffeeShopListRow,
   },
   data() {
     return {
@@ -189,12 +228,15 @@ export default {
       },
       apts: [],
       aptdetail: [],
+      coffeeshop: [],
       sidos: {},
       guguns: {},
       dongs: {},
       sidocode: 0,
       guguncode: 0,
+      dong: "",
       aptname: "",
+      cflag: false,
     };
   },
   created() {
@@ -247,6 +289,7 @@ export default {
         )
         .then(({ data }) => {
           this.apts = data;
+          this.dong = event.target.value;
           console.log(data);
         })
         .catch(() => {
@@ -299,6 +342,18 @@ export default {
         .get("/housesearch2/dealinterest/" + this.$store.state.userid)
         .then(({ data }) => {
           this.aptdetail = data;
+        })
+        .catch(() => {
+          alert("에러가 발생했습니다.");
+        });
+    },
+    searchCoffeeShop() {
+      http
+        .get("/coffeeshop/coffee/" + this.dong)
+        .then(({ data }) => {
+          this.coffeeshop = data;
+          this.cflag = !this.cflag;
+          console.log(data);
         })
         .catch(() => {
           alert("에러가 발생했습니다.");
