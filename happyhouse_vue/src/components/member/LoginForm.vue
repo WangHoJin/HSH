@@ -96,6 +96,9 @@ export default {
     return {
       userid: "",
       userpwd: "",
+      username: "",
+      address: "",
+      phone: "",
     };
   },
   methods: {
