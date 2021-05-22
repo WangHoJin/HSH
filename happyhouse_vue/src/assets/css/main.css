@@ -2116,7 +2116,7 @@ ul.special li a:before {
   -webkit-transition: background-color 0.2s ease-in-out;
   -ms-transition: background-color 0.2s ease-in-out;
   transition: background-color 0.2s ease-in-out;
-  display: block;
+  /* display: block; */
   text-align: center;
   background: #c1cac5;
   border-radius: 100%;
@@ -2447,10 +2447,10 @@ body {
   background-color: rgba(255, 255, 255, 0.95);
   background-image: url("images/overlay.png");
   width: 100%;
-  height: 3.25em;
+  height: 3.5em;
   line-height: 3.25em;
   text-align: center;
-  font-family: "Open Sans Condensed", sans-serif;
+  /* font-family: "Open Sans Condensed", sans-serif; */
   font-weight: 700;
   text-transform: uppercase;
   cursor: default;
@@ -2483,7 +2483,7 @@ body {
   -webkit-transition: background-color 0.075s ease-in-out, color 0.075s ease-in-out;
   -ms-transition: background-color 0.075s ease-in-out, color 0.075s ease-in-out;
   transition: background-color 0.075s ease-in-out, color 0.075s ease-in-out;
-  position: relative;
+  /* position: relative; */
   display: block;
   text-decoration: none;
   color: #6b7770;
@@ -2584,18 +2584,19 @@ body {
 
 #banner {
   position: relative;
-  background-image: url("images/overlay.png"), url("images/overlay.png"), url("images/img1.jpg");
+  background-image: url("images/img1.jpg");
+  filter: brightness(50%);
   background-position: top left, top left, center center;
   background-repeat: repeat, repeat, no-repeat;
-  background-size: auto, auto, cover;
+  background-size: cover, cover, cover;
   z-index: 1;
   padding: 11em 0;
 }
 
 #banner .content {
   position: relative;
-  background-color: rgba(21, 28, 23, 0.85);
-  background-image: url("images/overlay.png"), url("images/highlight.png");
+  /* background-color: rgba(77, 82, 79, 0.85); */
+  /* background-image: url("images/overlay.png"), url("images/highlight.png"); */
   background-position: top left, center center;
   background-size: auto, 100% 250%;
   background-repeat: repeat, no-repeat;

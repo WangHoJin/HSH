@@ -13,20 +13,29 @@
               </p>
             </div>
             <!-- Footer Social Icons-->
+
             <div class="col-lg-4 mb-5 mb-lg-0">
               <h4 class="text-uppercase mb-4">Around the Web</h4>
-              <a class="btn btn-outline-dark btn-social mx-1" href="#!">
-                <i class="fa fa-facebook" aria-hidden="true"></i
-              ></a>
-              <a class="btn btn-outline-dark btn-social mx-1" href="#!"
-                ><i class="fa fa-twitter" aria-hidden="true"></i
-              ></a>
-              <a class="btn btn-outline-dark btn-social mx-1" href="#!"
-                ><i class="fa fa-instagram" aria-hidden="true"></i
-              ></a>
-              <a class="btn btn-outline-dark btn-social mx-1" href="#!"
-                ><i class="fa fa-dribbble" aria-hidden="true"></i
-              ></a>
+              <ul class="contact">
+                <li>
+                  <a class="icon brands fa-facebook-f" href="#"
+                    ><span class="label">Facebook</span></a
+                  >
+                </li>
+                <li>
+                  <a class="icon brands fa-twitter" href="#"><span class="label">Twitter</span></a>
+                </li>
+                <li>
+                  <a class="icon brands fa-instagram" href="#"
+                    ><span class="label">Instagram</span></a
+                  >
+                </li>
+                <li>
+                  <a class="icon brands fa-dribbble" href="#"
+                    ><span class="label">Dribbble</span></a
+                  >
+                </li>
+              </ul>
             </div>
             <!-- Footer About Text-->
             <div class="col-lg-4">
