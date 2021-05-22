@@ -36,12 +36,12 @@
 
   <div style="margin-top: 100px" class="container" ref="container">
     <div class="form-container sign-up-container">
-      <form action="#">
+      <div class="form-class">
         <h1>Create Account</h1>
         <div class="social-container">
-          <a href="#" class="social"><i class="fab fa-facebook-f"></i></a>
-          <a href="#" class="social"><i class="fab fa-google-plus-g"></i></a>
-          <a href="#" class="social"><i class="fab fa-linkedin-in"></i></a>
+          <a class="social"><i class="fab fa-facebook-f"></i></a>
+          <a class="social"><i class="fab fa-google-plus-g"></i></a>
+          <a class="social"><i class="fab fa-linkedin-in"></i></a>
         </div>
         <span>or use your email for registration</span>
         <input type="text" placeholder="Id" v-model="userid" />
@@ -50,22 +50,22 @@
         <input type="text" placeholder="Address" v-model="address" />
         <input type="tel" placeholder="Tel" v-model="phone" />
         <button @click="registHandler">Sign Up</button>
-      </form>
+      </div>
     </div>
     <div class="form-container sign-in-container">
-      <form action="#">
+      <div class="form-class">
         <h1>Sign in</h1>
         <div class="social-container">
-          <a href="#" class="social"><i class="fab fa-facebook-f"></i></a>
-          <a href="#" class="social"><i class="fab fa-google-plus-g"></i></a>
-          <a href="#" class="social"><i class="fab fa-linkedin-in"></i></a>
+          <a class="social"><i class="fab fa-facebook-f"></i></a>
+          <a class="social"><i class="fab fa-google-plus-g"></i></a>
+          <a class="social"><i class="fab fa-linkedin-in"></i></a>
         </div>
         <span>or use your account</span>
         <input type="text" placeholder="Id" v-model="userid" />
         <input type="password" placeholder="Password" v-model="userpwd" />
-        <a href="#">Forgot your password?</a>
+        <a>Forgot your password?</a>
         <button @click="login">Sign In</button>
-      </form>
+      </div>
     </div>
     <div class="overlay-container">
       <div class="overlay">
@@ -121,19 +121,16 @@ export default {
           userpwd: this.userpwd,
         })
         .then(({ data }) => {
-          let msg = "로그인 실패";
+          let msg = "아이디랑 패스워드를 다시 확인해주세요.";
           if (data === "success") {
-            msg = "로그인 성공";
-            alert(msg);
             // this.$store.dispatch();
             // this.Mlogin(this.userid);
             // this.$store.commit("LOGIN", this.userid);
             this.asyncLogin(this.userid);
+            this.$router.push("/");
           } else {
             alert(msg);
           }
-
-          this.$router.push("/");
         });
     },
     signUpButton() {
@@ -161,7 +158,7 @@ export default {
             msg = "가입이 완료되었습니다.";
           }
           alert(msg);
-          this.$router.push("/");
+          this.signInButton();
         });
     },
   },
@@ -240,7 +237,7 @@ button.ghost {
   border-color: #ffffff;
 }
 
-form {
+.form-class {
   background-color: #ffffff;
   display: flex;
   align-items: center;
