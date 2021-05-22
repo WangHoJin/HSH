@@ -34,7 +34,7 @@
     </div>
   </div> -->
 
-  <div class="container" ref="container">
+  <div style="margin-top: 100px" class="container" ref="container">
     <div class="form-container sign-up-container">
       <form action="#">
         <h1>Create Account</h1>
@@ -44,10 +44,12 @@
           <a href="#" class="social"><i class="fab fa-linkedin-in"></i></a>
         </div>
         <span>or use your email for registration</span>
-        <input type="text" placeholder="Name" />
-        <input type="email" placeholder="Email" />
-        <input type="password" placeholder="Password" />
-        <button>Sign Up</button>
+        <input type="text" placeholder="Id" v-model="userid" />
+        <input type="password" placeholder="Password" v-model="userpwd" />
+        <input type="text" placeholder="Name" v-model="username" />
+        <input type="text" placeholder="Address" v-model="address" />
+        <input type="tel" placeholder="Tel" v-model="phone" />
+        <button @click="registHandler">Sign Up</button>
       </form>
     </div>
     <div class="form-container sign-in-container">
@@ -59,10 +61,10 @@
           <a href="#" class="social"><i class="fab fa-linkedin-in"></i></a>
         </div>
         <span>or use your account</span>
-        <input type="email" placeholder="Email" />
-        <input type="password" placeholder="Password" />
+        <input type="text" placeholder="Id" v-model="userid" />
+        <input type="password" placeholder="Password" v-m odel="userpwd" />
         <a href="#">Forgot your password?</a>
-        <button>Sign In</button>
+        <button @click="login">Sign In</button>
       </form>
     </div>
     <div class="overlay-container">
@@ -139,6 +141,25 @@ export default {
     signInButton() {
       const container = this.$refs.container;
       container.classList.remove("right-panel-active");
+    },
+
+    registHandler() {
+      http
+        .post("/member/regist", {
+          userid: this.userid,
+          userpwd: this.userpwd,
+          username: this.username,
+          address: this.address,
+          phone: this.phone,
+        })
+        .then(({ data }) => {
+          let msg = "가입 처리시 문제가 발생했습니다.";
+          if (data === "success") {
+            msg = "가입이 완료되었습니다.";
+          }
+          alert(msg);
+          this.$router.push("/");
+        });
     },
   },
 };
@@ -241,9 +262,9 @@ input {
   box-shadow: 0 14px 28px rgba(0, 0, 0, 0.25), 0 10px 10px rgba(0, 0, 0, 0.22);
   position: relative;
   overflow: hidden;
-  width: 768px;
+  width: 800px;
   max-width: 100%;
-  min-height: 480px;
+  min-height: 600px;
 }
 
 .form-container {
@@ -308,8 +329,8 @@ input {
 
 .overlay {
   background: #b1ddab;
-  background: -webkit-linear-gradient(to right, #b1ddab, #5cd68b);
-  background: linear-gradient(to right, #b1ddab, #5cd68b);
+  background: -webkit-linear-gradient(to right, #a8ece1, #b1ddab);
+  background: linear-gradient(to right, #a8ece1, #b1ddab);
   background-repeat: no-repeat;
   background-size: cover;
   background-position: 0 0;
@@ -371,30 +392,5 @@ input {
   margin: 0 5px;
   height: 40px;
   width: 40px;
-}
-
-footer {
-  background-color: #222;
-  color: #fff;
-  font-size: 14px;
-  bottom: 0;
-  position: fixed;
-  left: 0;
-  right: 0;
-  text-align: center;
-  z-index: 999;
-}
-
-footer p {
-  margin: 10px 0;
-}
-
-footer i {
-  color: red;
-}
-
-footer a {
-  color: #3c97bf;
-  text-decoration: none;
 }
 </style>
