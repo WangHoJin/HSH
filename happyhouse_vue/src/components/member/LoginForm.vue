@@ -62,7 +62,7 @@
         </div>
         <span>or use your account</span>
         <input type="text" placeholder="Id" v-model="userid" />
-        <input type="password" placeholder="Password" v-m odel="userpwd" />
+        <input type="password" placeholder="Password" v-model="userpwd" />
         <a href="#">Forgot your password?</a>
         <button @click="login">Sign In</button>
       </form>
