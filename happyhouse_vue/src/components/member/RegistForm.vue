@@ -86,7 +86,7 @@ export default {
             msg = "가입이 완료되었습니다.";
           }
           alert(msg);
-          this.$router.push("/");
+          this.$router.push("/login");
         });
     },
   },

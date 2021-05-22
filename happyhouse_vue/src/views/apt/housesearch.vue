@@ -1,209 +1,165 @@
 <template>
-  <div id="search" class="container">
-    <!-- Map Start -->
-    <GmapMap
-      ref="mapRef"
-      v-if="apts[0] != null"
-      :center="{ lat: apts[0].lat * 1, lng: apts[0].lng * 1 }"
-      :zoom="14"
-      style="width: 100%; height: 300px"
-    >
-      <GmapMarker
-        v-for="(m, index) in apts"
-        :key="`${index}_apts`"
-        :position="{ lat: m.lat * 1, lng: m.lng * 1 }"
-      />
-      <GmapMarker
-        v-for="(c, index) in coffeeshop"
-        :key="`${index}_coffeeshop`"
-        :position="{ lat: c.lat * 1, lng: c.lng * 1 }"
-      />
-    </GmapMap>
-    <GmapMap ref="mapRef" v-else :center="center" :zoom="14" style="width: 100%; height: 500px">
-    </GmapMap>
-    <!-- Map End -->
-    <!-- 아파트 거래정보 검색 시작 -->
-    <div class="d-flex justify-content-center mb-3 mt-3">
-      <div class="dark-bg section">
-        <div class="container-fluid" style="margin-bottom: 10px">
+  <div>
+    <!-- Main -->
+    <section id="main">
+      <div class="container">
+        <div class="row">
           <!-- filters start -->
-          <div class="sorting-filters text-center mb-20 d-flex justify-content-center">
-            <button type="button" class="btn btn-dark mr-3" id="searchall" @click="searchAll">
-              전체 조회
-            </button>
+          <div class="col-8 col-12-medium">
+            <div class="sorting-filters text-center mb-20 d-flex justify-content-center">
+              <button type="button" class="btn btn-dark mr-3" id="searchall" @click="searchAll">
+                전체 조회
+              </button>
 
-            <form class="form-inline ml-3 mr-3" id="frm" method="post" action="housesearch">
-              <input type="hidden" name="act" id="act" value="search" />
-              <label for="dongsearch" style="display: inline-block; margin-right: 10px"
-                >동별 검색</label
+              <form class="form-inline ml-3 mr-3" id="frm" method="post" action="housesearch">
+                <input type="hidden" name="act" id="act" value="search" />
+                <label for="dongsearch" style="display: inline-block; margin-right: 10px"
+                  >동별 검색</label
+                >
+
+                <div class="form-group md">
+                  <select class="form-control mr-2" id="sido" @change="getGugun($event)">
+                    <option value="0">선택</option>
+                    <option
+                      v-for="(sido, index) in sidos"
+                      :key="`${index}_sidos`"
+                      :value="sido.sido_code"
+                    >
+                      {{ sido.sido_name }}
+                    </option>
+                  </select>
+                </div>
+                <div class="form-group mr-2 md-1">
+                  <select class="form-control" id="gugun" @change="getDong($event)">
+                    <option value="0">선택</option>
+                    <option
+                      v-for="(gugun, index) in guguns"
+                      :key="`${index}_guguns`"
+                      :value="gugun.gugun_code"
+                    >
+                      {{ gugun.gugun_name }}
+                    </option>
+                  </select>
+                </div>
+                <div class="form-group md-1">
+                  <select class="form-control" id="dong" @change="getInfo($event)">
+                    <option value="0">선택</option>
+                    <option
+                      v-for="(dong, index) in dongs"
+                      :key="`${index}_dongs`"
+                      :value="dong.dong"
+                    >
+                      {{ dong.dong }}
+                    </option>
+                  </select>
+                </div>
+              </form>
+              <button
+                type="button"
+                class="btn btn-success mr-3"
+                id="searchCoffeeShop"
+                @click="searchCoffeeShop"
               >
-
-              <div class="form-group md">
-                <select class="form-control mr-2" id="sido" @change="getGugun($event)">
-                  <option value="0">선택</option>
-                  <option
-                    v-for="(sido, index) in sidos"
-                    :key="`${index}_sidos`"
-                    :value="sido.sido_code"
-                  >
-                    {{ sido.sido_name }}
-                  </option>
-                </select>
-              </div>
-              <div class="form-group mr-2 md-1">
-                <select class="form-control" id="gugun" @change="getDong($event)">
-                  <option value="0">선택</option>
-                  <option
-                    v-for="(gugun, index) in guguns"
-                    :key="`${index}_guguns`"
-                    :value="gugun.gugun_code"
-                  >
-                    {{ gugun.gugun_name }}
-                  </option>
-                </select>
-              </div>
-              <div class="form-group md-1">
-                <select class="form-control" id="dong" @change="getInfo($event)">
-                  <option value="0">선택</option>
-                  <option v-for="(dong, index) in dongs" :key="`${index}_dongs`" :value="dong.dong">
-                    {{ dong.dong }}
-                  </option>
-                </select>
-              </div>
-            </form>
-            <button
-              type="button"
-              class="btn btn-success mr-3"
-              id="searchCoffeeShop"
-              @click="searchCoffeeShop"
-            >
-              카페
-            </button>
-            <form class="form-inline ml-3" id="frm" method="post" action="housesearch">
+                카페
+              </button>
+              <button
+                type="button"
+                class="form-inline ml-3 btn btn-warning"
+                id="searchinterest"
+                @click="searchInterest"
+              >
+                관심지역
+              </button>
+            </div>
+          </div>
+          <div class="col-4 col-12-medium">
+            <form id="frm" method="post" action="housesearch">
               <div>
                 <input type="hidden" name="act" value="aptsearch" />
-                <label for="aptname" style="display: inline-block; margin-right: 10px"
-                  >아파트별 검색</label
-                >
-                <input type="text" id="apttext" v-model="aptname" />
+                <label for="aptname" style="display: inline-block">아파트별 검색</label>
                 <input
+                  type="text"
+                  style="display: inline-block; width: 150px"
+                  id="apttext"
+                  v-model="aptname"
+                />
+                <button
                   type="button"
                   id="aptsearch"
                   class="btn btn-dark"
                   value="검색"
                   @click="searchName"
-                />
+                >
+                  검색
+                </button>
               </div>
             </form>
-
-            <button
-              type="button"
-              class="form-inline ml-3 btn btn-warning"
-              id="searchinterest"
-              @click="searchInterest"
-            >
-              관심지역
-            </button>
           </div>
           <!-- filters end -->
         </div>
-      </div>
-    </div>
-    <!-- 아파트 거래정보 끝 -->
-
-    <!-- 중앙 콘텐츠 시작 -->
-    <div data-spy="scroll" data-offset="50">
-      <!-- 모든집의정보 받아오기 시작 -->
-      <div class="row">
-        <div class="col-lg-6">
-          <div class="card" style="height: 400px; overflow: auto">
-            <div class="card-header bg-dark text-white">
-              <h4>아파트 거래 정보</h4>
-            </div>
-            <div class="card-body" style="padding:0;'">
-              <table id="houseinfo-list" class="table table-striped">
-                <thead>
-                  <tr>
-                    <th>법정동</th>
-                    <th>아파트명</th>
-                    <th>건축년도</th>
-                  </tr>
-                </thead>
-                <tbody id="searchResult">
-                  <apt-list-row
-                    v-for="(apt, index) in apts"
-                    :key="`${index}_apts`"
-                    :dong="apt.dong"
-                    :aptName="apt.aptName"
-                    :buildYear="'126.9824791' * 1"
-                  />
-                </tbody>
-              </table>
-            </div>
-          </div>
-        </div>
-
-        <div class="col-lg-6">
-          <div v-if="cflag == false" class="card" style="height: 400px; overflow: auto">
-            <div class="card-header bg-dark text-white">
-              <h4>아파트 거래 상세 정보</h4>
-            </div>
-            <div class="card-body" style="padding:0;'">
-              <table id="houseinfo-list" class="table table-striped">
-                <thead>
-                  <tr>
-                    <th>법정동</th>
-                    <th>아파트명</th>
-                    <th>거래가격</th>
-                    <th>거래날짜</th>
-                    <th>전용면적</th>
-                  </tr>
-                </thead>
-                <tbody id="detailResult">
-                  <apt-detail-list-row
-                    v-for="(ad, index) in aptdetail"
-                    :key="`${index}_ad`"
-                    :dong="ad.dong"
-                    :aptName="ad.aptName"
-                    :dealAmount="ad.dealAmount"
-                    :dealYear="ad.dealYear"
-                    :dealMonth="ad.dealMonth"
-                    :dealDay="ad.dealDay"
-                    :area="ad.area"
-                  />
-                </tbody>
-              </table>
+        <div class="row">
+          <div class="col-8 col-12-medium">
+            <div class="content">
+              <!-- Content -->
+              <article class="box page-content">
+                <section>
+                  <!-- Map Start -->
+                  <GmapMap
+                    ref="mapRef"
+                    v-if="apts[0] != null"
+                    :center="{ lat: apts[0].lat * 1, lng: apts[0].lng * 1 }"
+                    :zoom="14"
+                    style="width: 100%; height: 500px"
+                  >
+                    <GmapMarker
+                      v-for="(m, index) in apts"
+                      :key="`${index}_apts`"
+                      :position="{ lat: m.lat * 1, lng: m.lng * 1 }"
+                    />
+                    <GmapMarker
+                      v-for="(c, index) in coffeeshop"
+                      :key="`${index}_coffeeshop`"
+                      :position="{ lat: c.lat * 1, lng: c.lng * 1 }"
+                    />
+                  </GmapMap>
+                  <GmapMap
+                    ref="mapRef"
+                    v-else
+                    :center="center"
+                    :zoom="14"
+                    style="width: 100%; height: 500px"
+                  >
+                  </GmapMap>
+                  <!-- Map End -->
+                </section>
+              </article>
             </div>
           </div>
-          <div v-else-if="cflag == true" class="card" style="height: 400px; overflow: auto">
-            <div class="card-header bg-dark text-white">
-              <h4>주변 커피 정보</h4>
-            </div>
-            <div class="card-body" style="padding:0;'">
-              <table id="coffeeshop-list" class="table table-striped">
-                <thead>
-                  <tr>
-                    <th>카페이름</th>
-                    <th>법정동</th>
-                    <th>주소</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <coffee-shop-list-row
-                    v-for="(coffee, index) in coffeeshop"
-                    :key="`${index}_coffeeshop`"
-                    :cname="coffee.cname"
-                    :dong="coffee.dong"
-                    :address1="coffee.address1"
-                  />
-                </tbody>
-              </table>
+          <div class="col-4 col-12-medium">
+            <div class="card" style="border: 0px; height: 600px; overflow: auto">
+              <div class="sidebar">
+                <!-- Sidebar -->
+
+                <!-- Recent Posts -->
+                <section>
+                  <h2 class="major"><span>아파트 거래 정보</span></h2>
+                  <ul class="divided">
+                    <apt-list-row
+                      v-for="(apt, index) in apts"
+                      :key="`${index}_apts`"
+                      :dong="apt.dong"
+                      :aptName="apt.aptName"
+                      :buildYear="'126.9824791' * 1"
+                    />
+                  </ul>
+                </section>
+              </div>
             </div>
           </div>
         </div>
       </div>
-      <!-- 모든집의정보 받아오기 끝 -->
-    </div>
+    </section>
+
     <!-- 컨테이너 끝 -->
   </div>
 </template>
@@ -211,14 +167,10 @@
 <script>
 import http from "@/util/http-common";
 import AptListRow from "@/components/apt/AptListRow.vue";
-import AptDetailListRow from "@/components/apt/AptDetailListRow.vue";
-import CoffeeShopListRow from "@/components/coffeeshop/CoffeeShopListRow.vue";
 export default {
   name: "search",
   components: {
     AptListRow,
-    AptDetailListRow,
-    CoffeeShopListRow,
   },
   data() {
     return {

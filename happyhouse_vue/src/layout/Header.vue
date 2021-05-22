@@ -56,6 +56,13 @@
       </div>
     </nav>
     <!-- <div style="height: 100px"></div> -->
+    <header id="header">
+      <div class="logo">
+        <div>
+          <p>HAPPY HOUSE</p>
+        </div>
+      </div>
+    </header>
   </header>
 </template>
 

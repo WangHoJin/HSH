@@ -2157,13 +2157,13 @@ ul.meta li a {
 }
 
 ul.meta li:first-child {
-  margin-left: 0;
+  /* margin-left: 0; */
 }
 
 ul.meta li:before {
-  opacity: 0.5;
-  cursor: default;
-  margin-right: 0.5em;
+  /* opacity: 0.5; */
+  /* cursor: default; */
+  /* margin-right: 0.5em; */
 }
 
 /* Menu */
@@ -2669,7 +2669,7 @@ body {
 
 #footer {
   text-align: center;
-  padding: 8em 0 8em 0;
+  padding: 5em 0 8em 0;
 }
 
 #footer a {
