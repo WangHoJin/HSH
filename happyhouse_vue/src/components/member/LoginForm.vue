@@ -34,7 +34,7 @@
     </div>
   </div> -->
 
-  <div style="margin-top: 100px" class="container" ref="container">
+  <div class="container" ref="container">
     <div class="form-container sign-up-container">
       <div class="form-class">
         <h1>Create Account</h1>
