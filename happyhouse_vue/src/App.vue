@@ -1,5 +1,5 @@
 <template>
-  <div id="app" class="container">
+  <div id="app">
     <nav-header></nav-header>
     <div style="height: 80px"></div>
     <router-view />
@@ -19,6 +19,7 @@ export default {
 };
 </script>
 <style>
+@import "/assets/css/main.css";
 @import "https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css";
 @import "https://fonts.googleapis.com/css?family=Montserrat:400,700";
 @import "https://fonts.googleapis.com/css?family=Lato:400,700,400italic,700italic";
