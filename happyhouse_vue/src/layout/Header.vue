@@ -15,9 +15,6 @@
             <li class="nav-item menu_confirm_on">
               <router-link class="nav-link" to="/"> HOME </router-link>
             </li>
-            <li v-if="getUserId != null" class="nav-item menu_confirm_on">
-              <router-link class="nav-link" to="/addinterest">관심 지역 추가</router-link>
-            </li>
             <!-- 로그인 후 -->
             <li class="nav-item menu_confirm_on">
               <router-link class="nav-link" to="/list">Q&A 게시판</router-link>
@@ -31,10 +28,7 @@
           <div v-if="getUserId == null">
             <ul id="header_nav_confirm_off" class="navbar-nav justify-content-end">
               <li class="nav-item">
-                <router-link class="nav-link" to="/login">로그인</router-link>
-              </li>
-              <li class="nav-item">
-                <router-link class="nav-link" to="/regist">회원가입</router-link>
+                <router-link class="nav-link" to="/login">로그인/회원가입</router-link>
               </li>
             </ul>
           </div>
@@ -48,7 +42,7 @@
                 <a class="nav-link" id="logout" @click="logout">로그아웃</a>
               </li>
               <li class="nav-item">
-                <router-link class="nav-link" to="/modify"> 회원정보</router-link>
+                <router-link class="nav-link" to="/modify"> My Page</router-link>
               </li>
             </ul>
           </div>

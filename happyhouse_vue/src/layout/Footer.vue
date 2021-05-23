@@ -1,7 +1,7 @@
 <template>
   <div>
     <footer id="footer" class="clearfix">
-      <footer class="footer text-center pt-5 pb-2">
+      <footer class="footer text-center pt-2 pb-2">
         <div class="container">
           <div class="row">
             <!-- Footer Location-->

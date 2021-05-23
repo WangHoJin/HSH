@@ -34,53 +34,57 @@
     </div>
   </div> -->
 
-  <div class="container" ref="container">
-    <div class="form-container sign-up-container">
-      <div class="form-class">
-        <h1>Create Account</h1>
-        <div class="social-container">
-          <a class="social"><i class="fab fa-facebook-f"></i></a>
-          <a class="social"><i class="fab fa-google-plus-g"></i></a>
-          <a class="social"><i class="fab fa-linkedin-in"></i></a>
-        </div>
-        <span>or use your email for registration</span>
-        <input type="text" placeholder="Id" v-model="userid" />
-        <input type="password" placeholder="Password" v-model="userpwd" />
-        <input type="text" placeholder="Name" v-model="username" />
-        <input type="text" placeholder="Address" v-model="address" />
-        <input type="tel" placeholder="Tel" v-model="phone" />
-        <button @click="registHandler">Sign Up</button>
-      </div>
-    </div>
-    <div class="form-container sign-in-container">
-      <div class="form-class">
-        <h1>Sign in</h1>
-        <div class="social-container">
-          <a class="social"><i class="fab fa-facebook-f"></i></a>
-          <a class="social"><i class="fab fa-google-plus-g"></i></a>
-          <a class="social"><i class="fab fa-linkedin-in"></i></a>
-        </div>
-        <span>or use your account</span>
-        <input type="text" placeholder="Id" v-model="userid" />
-        <input type="password" placeholder="Password" v-model="userpwd" />
-        <a>Forgot your password?</a>
-        <button @click="login">Sign In</button>
-      </div>
-    </div>
-    <div class="overlay-container">
-      <div class="overlay">
-        <div class="overlay-panel overlay-left">
-          <h1>Welcome Back!</h1>
-          <p>To keep connected with us please login with your personal info</p>
-          <button class="ghost" @click="signInButton">Sign In</button>
-        </div>
-        <div class="overlay-panel overlay-right">
-          <h1>Hello, Friend!</h1>
-          <p>Enter your personal details and start journey with us</p>
-          <button class="ghost" @click="signUpButton">Sign Up</button>
+  <div>
+    <!-- <section id="main" > -->
+    <div class="container" ref="container">
+      <div class="form-container sign-up-container">
+        <div class="form-class">
+          <h1>Create Account</h1>
+          <div class="social-container">
+            <a class="social"><i class="fab fa-facebook-f"></i></a>
+            <a class="social"><i class="fab fa-google-plus-g"></i></a>
+            <a class="social"><i class="fab fa-linkedin-in"></i></a>
+          </div>
+          <span>or use your email for registration</span>
+          <input type="text" placeholder="Id" v-model="userid" />
+          <input type="password" placeholder="Password" v-model="userpwd" />
+          <input type="text" placeholder="Name" v-model="username" />
+          <input type="text" placeholder="Address" v-model="address" />
+          <input type="tel" placeholder="Tel" v-model="phone" />
+          <button @click="registHandler">Sign Up</button>
         </div>
       </div>
+      <div class="form-container sign-in-container">
+        <div class="form-class">
+          <h1>Sign in</h1>
+          <div class="social-container">
+            <a class="social"><i class="fab fa-facebook-f"></i></a>
+            <a class="social"><i class="fab fa-google-plus-g"></i></a>
+            <a class="social"><i class="fab fa-linkedin-in"></i></a>
+          </div>
+          <span>or use your account</span>
+          <input type="text" placeholder="Id" v-model="userid" />
+          <input type="password" placeholder="Password" v-model="userpwd" />
+          <a>Forgot your password?</a>
+          <button @click="login">Sign In</button>
+        </div>
+      </div>
+      <div class="overlay-container">
+        <div class="overlay">
+          <div class="overlay-panel overlay-left">
+            <h1>Welcome Back!</h1>
+            <p>To keep connected with us please login with your personal info</p>
+            <button class="ghost" @click="signInButton">Sign In</button>
+          </div>
+          <div class="overlay-panel overlay-right">
+            <h1>Hello, Friend!</h1>
+            <p>Enter your personal details and start journey with us</p>
+            <button class="ghost" @click="signUpButton">Sign Up</button>
+          </div>
+        </div>
+      </div>
     </div>
+    <!-- </section> -->
   </div>
 </template>
 

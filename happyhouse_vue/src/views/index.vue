@@ -18,16 +18,20 @@
             <section class="box highlight">
               <ul class="special">
                 <li>
-                  <a href="#" class="icon solid fa-search"><span class="label">Magnifier</span></a>
+                  <a href="#" @click="showcoffeeshop" class="icon solid fa-coffee"
+                    ><span class="label">Magnifier</span></a
+                  >
                 </li>
                 <li>
-                  <a href="#" class="icon solid fa-tablet-alt"><span class="label">Tablet</span></a>
+                  <a href="#" class="icon solid fa-shopping-cart"
+                    ><span class="label">Tablet</span></a
+                  >
                 </li>
                 <li>
-                  <a href="#" class="icon solid fa-flask"><span class="label">Flask</span></a>
+                  <a href="#" class="icon solid fa-subway"><span class="label">Flask</span></a>
                 </li>
                 <li>
-                  <a href="#" class="icon solid fa-cog"><span class="label">Cog?</span></a>
+                  <a href="#" class="icon solid fa-hospital"><span class="label">Cog?</span></a>
                 </li>
               </ul>
               <header>
@@ -102,15 +106,15 @@
               </div>
             </section>
           </div>
-          <div class="col-12">
-            <!-- Blog -->
+          <!-- <div class="col-12">
+           
             <section class="box blog">
               <h2 class="major"><span>Another Major Heading</span></h2>
               <div>
                 <div class="row">
                   <div class="col-9 col-12-medium">
                     <div class="content">
-                      <!-- Featured Post -->
+                      
                       <article class="box post">
                         <header>
                           <h3><a href="#">Here's a really big heading</a></h3>
@@ -134,7 +138,7 @@
                   </div>
                   <div class="col-3 col-12-medium">
                     <div class="sidebar">
-                      <!-- Archives -->
+                      
                       <ul class="divided">
                         <li>
                           <article class="box post-summary">
@@ -187,8 +191,8 @@
                   </div>
                 </div>
               </div>
-            </section>
-          </div>
+            </section> 
+          </div> -->
         </div>
       </div>
     </section>
