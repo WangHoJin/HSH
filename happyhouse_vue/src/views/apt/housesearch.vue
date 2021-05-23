@@ -143,14 +143,11 @@
                 <!-- Recent Posts -->
                 <section>
                   <h2 class="major"><span>아파트 거래 정보</span></h2>
-                  <ul class="divided">
-                    <apt-list-row
-                      v-for="(apt, index) in apts"
-                      :key="`${index}_apts`"
-                      :dong="apt.dong"
-                      :aptName="apt.aptName"
-                      :buildYear="'126.9824791' * 1"
-                    />
+                  <ul v-if="apts[0] != null" class="divided">
+                    <apt-list-row v-for="(apt, index) in apts" :key="`${index}_apts`" :apt="apt" />
+                  </ul>
+                  <ul v-else class="divided">
+                    <h5>매물이 없습니다.</h5>
                   </ul>
                 </section>
               </div>
@@ -249,23 +246,6 @@ export default {
         .then(({ data }) => {
           this.apts = data;
           this.dong = event.target.value;
-          console.log(data);
-        })
-        .catch(() => {
-          alert("에러가 발생했습니다.");
-        });
-      http
-        .get(
-          "/housesearch2/housedeal/" +
-            this.sidocode +
-            "/" +
-            this.guguncode +
-            "/" +
-            event.target.value
-        )
-        .then(({ data }) => {
-          this.aptdetail = data;
-          this.getAptList(this.aptdetail);
         })
         .catch(() => {
           alert("에러가 발생했습니다.");

@@ -4,7 +4,7 @@ import Vuex from "vuex";
 Vue.use(Vuex);
 
 export default new Vuex.Store({
-  state: { userid: null, username: "", aptname: "", apts: [] },
+  state: { userid: null, username: "", apt: {}, aptdetail: [] },
   getters: {
     getUserId(state) {
       return state.userid;
@@ -12,11 +12,11 @@ export default new Vuex.Store({
     getUserName(state) {
       return state.username;
     },
-    getAptName(state) {
-      return state.aptname;
+    getApt(state) {
+      return state.apt;
     },
     getAptList(state) {
-      return state.apts;
+      return state.aptdetail;
     },
   },
   actions: {
@@ -26,11 +26,11 @@ export default new Vuex.Store({
     aLogout(context) {
       context.commit("mLogout");
     },
-    getAptName({ commit }, aptname) {
-      commit("GET_APT_NAME", aptname);
+    setApt({ commit }, apt) {
+      commit("SET_APT", apt);
     },
-    getAptList({ commit }, aptlist) {
-      commit("GET_APT_LIST", aptlist);
+    setAptList({ commit }, aptdetail) {
+      commit("SET_APT_LIST", aptdetail);
     },
   },
   mutations: {
@@ -40,11 +40,11 @@ export default new Vuex.Store({
     mLogout(state) {
       state.userid = null;
     },
-    GET_APT_NAME(state, aptname) {
-      state.aptname = aptname;
+    SET_APT(state, apt) {
+      state.apt = apt;
     },
-    GET_APT_LIST(state, aptlist) {
-      state.apts = aptlist;
+    SET_APT_LIST(state, aptdetail) {
+      state.aptdetail = aptdetail;
     },
   },
 });

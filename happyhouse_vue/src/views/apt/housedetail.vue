@@ -7,7 +7,7 @@
           <!-- filters start -->
           <div class="col-3 col-12-medium">
             <h3>
-              <a href="#">{{ getAptName }}</a>
+              <a href="#">{{ getApt.aptName }}</a>
             </h3>
             <section>
               <a href="#" class="image featured"><img src="@/img/house1.jpg" alt="" /></a>
@@ -18,7 +18,7 @@
               <section>
                 <ul class="divided">
                   <apt-detail-list-row
-                    v-for="(ad, index) in getAptList"
+                    v-for="(ad, index) in aptdetail"
                     :key="`${index}_ad`"
                     :dong="ad.dong"
                     :aptName="ad.aptName"
@@ -40,18 +40,18 @@
             <ul class="contact" style="display: inline-block">
               <h3 style="display: inline-block">이곳은 땡세권</h3>
               <li>
-                <a class="icon food fa-coffee" href="#"><span class="label">Facebook</span></a>
+                <a class="fas fa-coffee" @click="getCoffeeShopRadius"
+                  ><span class="label"></span
+                ></a>
               </li>
               <li>
-                <a class="icon brands fa-twitter" href="#"><span class="label">Twitter</span></a>
+                <a class="fas fa-shopping-cart" href="#"><span class="label"></span></a>
               </li>
               <li>
-                <a class="icon brands fa-instagram" href="#"
-                  ><span class="label">Instagram</span></a
-                >
+                <a class="fas fa-subway" href="#"><span class="label"></span></a>
               </li>
               <li>
-                <a class="icon brands fa-dribbble" href="#"><span class="label">Dribbble</span></a>
+                <a class="fas fa-hospital-alt" href="#"><span class="label"></span></a>
               </li>
               <input
                 type="text"
@@ -90,29 +90,16 @@
                   <!-- Map Start -->
                   <GmapMap
                     ref="mapRef"
-                    v-if="apts[0] != null"
-                    :center="{ lat: apts[0].lat * 1, lng: apts[0].lng * 1 }"
-                    :zoom="14"
+                    :center="{ lat: getApt.lat * 1, lng: getApt.lng * 1 }"
+                    :zoom="16"
                     style="width: 100%; height: 500px"
                   >
-                    <GmapMarker
-                      v-for="(m, index) in apts"
-                      :key="`${index}_apts`"
-                      :position="{ lat: m.lat * 1, lng: m.lng * 1 }"
-                    />
+                    <GmapMarker :position="{ lat: getApt.lat * 1, lng: getApt.lng * 1 }" />
                     <GmapMarker
                       v-for="(c, index) in coffeeshop"
                       :key="`${index}_coffeeshop`"
                       :position="{ lat: c.lat * 1, lng: c.lng * 1 }"
                     />
-                  </GmapMap>
-                  <GmapMap
-                    ref="mapRef"
-                    v-else
-                    :center="center"
-                    :zoom="14"
-                    style="width: 100%; height: 500px"
-                  >
                   </GmapMap>
                   <!-- Map End -->
                 </section>
@@ -165,33 +152,24 @@ export default {
       dong: "",
       aptname: "",
       cflag: false,
+      mflag: false,
     };
   },
   computed: {
-    ...mapGetters(["getAptName", "getAptList"]),
+    ...mapGetters(["getApt"]),
   },
   created() {
-    console.log(this.$store.state.apts);
     http
-      .get("/housesearch2/house")
+      .get("/housesearch2/housedeal/" + this.getApt.dong + "/" + this.getApt.aptName)
       .then(({ data }) => {
-        this.sidos = data;
+        console.log(data);
+        this.aptdetail = data;
       })
       .catch(() => {
         alert("에러가 발생했습니다.");
       });
   },
   methods: {
-    searchAll() {
-      http
-        .get("/housesearch2/houseall")
-        .then(({ data }) => {
-          this.apts = data;
-        })
-        .catch(() => {
-          alert("에러가 발생했습니다.");
-        });
-    },
     searchName() {
       http
         .get("/housesearch/aptofname/" + this.aptname)
@@ -210,31 +188,11 @@ export default {
           alert("에러가 발생했습니다.");
         });
     },
-    searchInterest() {
+    getCoffeeShopRadius() {
       http
-        .get("/housesearch2/interest/" + this.$store.state.userid)
-        .then(({ data }) => {
-          this.apts = data;
-        })
-        .catch(() => {
-          alert("에러가 발생했습니다.");
-        });
-      http
-        .get("/housesearch2/dealinterest/" + this.$store.state.userid)
-        .then(({ data }) => {
-          this.aptdetail = data;
-        })
-        .catch(() => {
-          alert("에러가 발생했습니다.");
-        });
-    },
-    searchCoffeeShop() {
-      http
-        .get("/coffeeshop/coffee/" + this.dong)
+        .get("/coffeeshop/coffeeradius/" + this.getApt.aptName)
         .then(({ data }) => {
           this.coffeeshop = data;
-          this.cflag = !this.cflag;
-          console.log(data);
         })
         .catch(() => {
           alert("에러가 발생했습니다.");
