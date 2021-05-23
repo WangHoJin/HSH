@@ -54,9 +54,8 @@
             <!-- Features -->
             <section class="box features">
               <h2 class="major"><span>A Major Heading</span></h2>
-              <bar-chart></bar-chart>
               <ul>
-                <li><router-link to="/chartjs">vue-chartjs</router-link></li>
+                <chartjs-bar></chartjs-bar>
               </ul>
             </section>
           </div>
@@ -67,7 +66,7 @@
 </template>
 
 <script>
-import BarChart from "../components/Charts/BarChart.vue";
+import BarChart from "@/components/Charts/BarChart";
 export default {
   name: "index",
   component: {
@@ -76,6 +75,8 @@ export default {
   data: function () {
     return {
       showcoffee: false,
+      labels: ["January", "February", "March", "April", "May", "June", "July"],
+      dataset: [65, 59, 80, 81, 56, 55, 40],
     };
   },
   methods: {

@@ -21,6 +21,10 @@ Vue.use(VueGoogleMaps, {
 
 import "bootstrap/dist/css/bootstrap.css";
 import "bootstrap-vue/dist/bootstrap-vue.css";
+import "chart.js";
+import "hchs-vue-charts";
+Vue.use(window.VueCharts);
+
 Vue.config.productionTip = false;
 
 new Vue({
