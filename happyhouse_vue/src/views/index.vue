@@ -18,20 +18,24 @@
             <section class="box highlight">
               <ul class="special">
                 <li>
-                  <a href="#" @click="showCoffeeShop" class="icon solid fa-coffee"
-                    ><span class="label">Magnifier</span></a
+                  <a href="#icondetail" @click="showCoffeeShop" class="icon solid fa-coffee">
+                    <span class="label">Magnifier</span></a
                   >
                 </li>
                 <li>
-                  <a href="#" class="icon solid fa-shopping-cart"
+                  <a href="#icondetail" class="icon solid fa-shopping-cart"
                     ><span class="label">Tablet</span></a
                   >
                 </li>
                 <li>
-                  <a href="#" class="icon solid fa-subway"><span class="label">Flask</span></a>
+                  <a href="#icondetail" class="icon solid fa-subway"
+                    ><span class="label">Flask</span></a
+                  >
                 </li>
                 <li>
-                  <a href="#" class="icon solid fa-hospital"><span class="label">Cog?</span></a>
+                  <a href="#icondetail" class="icon solid fa-hospital"
+                    ><span class="label">Cog?</span></a
+                  >
                 </li>
               </ul>
               <header>
@@ -46,7 +50,7 @@
               </p>
             </section>
           </div>
-          <div class="col-12">
+          <div id="icondetail" class="col-12" v-show="showcoffee">
             <!-- Features -->
             <section class="box features">
               <h2 class="major"><span>A Major Heading</span></h2>
@@ -201,9 +205,21 @@
 
 <script>
 export default {
-  name: "search",
+  name: "index",
+  props: {
+    type: { type: String },
+  },
+  data: function () {
+    return {
+      showcoffee: false,
+    };
+  },
   methods: {
-    showCoffeeShop() {},
+    showCoffeeShop() {
+      console.log("뭐야");
+      this.showcoffee = true;
+      console.log(this.showcoffee);
+    },
   },
 };
 </script>
