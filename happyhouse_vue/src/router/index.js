@@ -16,6 +16,8 @@ import Addinterest from "../views/member/Addinterest.vue";
 import Housesearch from "../views/apt/housesearch.vue";
 import HouseDetail from "../views/apt/housedetail.vue";
 
+import VueChartJS from "@/views/VueChartJS";
+
 Vue.use(VueRouter);
 
 const routes = [
@@ -78,6 +80,11 @@ const routes = [
     path: "/housedetail",
     name: "housedetail",
     component: HouseDetail,
+  },
+  {
+    path: "/chartjs",
+    name: "VueChartJS",
+    component: VueChartJS,
   },
 ];
 
