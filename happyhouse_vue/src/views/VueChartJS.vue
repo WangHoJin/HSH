@@ -4,7 +4,7 @@
     <div class="columns">
       <div class="column">
         <h3>Line Chart</h3>
-        <line-chart></line-chart>
+        <bar-chart></bar-chart>
       </div>
       <div class="column">
         <h3>Bar Chart</h3>
@@ -25,12 +25,12 @@
 </template>
 
 <script>
-import LineChart from "@/components/Charts/LineChart";
+import BarChart from "@/components/Charts/BarChart";
 
 export default {
   name: "VueChartJS",
   components: {
-    LineChart,
+    BarChart,
   },
 };
 </script>
