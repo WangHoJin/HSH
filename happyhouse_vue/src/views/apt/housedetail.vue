@@ -53,30 +53,18 @@
               <li>
                 <a class="fas fa-hospital-alt" href="#"><span class="label"></span></a>
               </li>
-              <input
-                type="text"
-                style="display: inline-block; width: 150px"
-                id="apttext"
-                v-model="aptname"
-              /><button
+              <input type="text" style="display: inline-block; width: 150px" id="apttext" /><button
                 type="button"
                 id="aptsearch"
                 class="btn btn-dark"
                 value="검색"
-                @click="searchName"
               >
                 검색
               </button>
             </ul>
           </div>
           <div class="col-3 col-12-medium">
-            <button
-              type="button"
-              id="aptsearch"
-              class="btn btn-dark"
-              value="검색"
-              @click="searchName"
-            >
+            <button type="button" id="aptsearch" class="btn btn-dark" value="검색">
               가장 가까운 곳 보기
             </button>
           </div>
@@ -141,18 +129,8 @@ export default {
         lat: 37.5724163,
         lng: 126.9824791,
       },
-      apts: [],
       aptdetail: [],
       coffeeshop: [],
-      sidos: {},
-      guguns: {},
-      dongs: {},
-      sidocode: 0,
-      guguncode: 0,
-      dong: "",
-      aptname: "",
-      cflag: false,
-      mflag: false,
     };
   },
   computed: {
@@ -162,7 +140,6 @@ export default {
     http
       .get("/housesearch2/housedeal/" + this.getApt.dong + "/" + this.getApt.aptName)
       .then(({ data }) => {
-        console.log(data);
         this.aptdetail = data;
       })
       .catch(() => {
@@ -170,24 +147,6 @@ export default {
       });
   },
   methods: {
-    searchName() {
-      http
-        .get("/housesearch/aptofname/" + this.aptname)
-        .then(({ data }) => {
-          this.apts = data;
-        })
-        .catch(() => {
-          alert("에러가 발생했습니다.");
-        });
-      http
-        .get("/housesearch/dealofaptname/" + this.aptname)
-        .then(({ data }) => {
-          this.aptdetail = data;
-        })
-        .catch(() => {
-          alert("에러가 발생했습니다.");
-        });
-    },
     getCoffeeShopRadius() {
       http
         .get("/coffeeshop/coffeeradius/" + this.getApt.aptName)

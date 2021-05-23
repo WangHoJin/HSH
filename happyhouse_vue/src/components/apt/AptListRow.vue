@@ -43,7 +43,6 @@ export default {
     ...mapMutations(["SET_APT"]),
     ...mapActions(["setApt"]),
     detail() {
-      console.log(this.apt);
       this.setApt(this.apt);
       this.$router.push("/housedetail");
     },

@@ -18,7 +18,7 @@
             <section class="box highlight">
               <ul class="special">
                 <li>
-                  <a href="#" @click="showcoffeeshop" class="icon solid fa-coffee"
+                  <a href="#" @click="showCoffeeShop" class="icon solid fa-coffee"
                     ><span class="label">Magnifier</span></a
                   >
                 </li>
@@ -202,21 +202,8 @@
 <script>
 export default {
   name: "search",
-  data() {
-    return {
-      center: {
-        lat: 37.5724163,
-        lng: 126.9824791,
-      },
-      markers: [
-        {
-          position: {
-            lat: 37.5724163,
-            lng: 126.9824791,
-          },
-        },
-      ],
-    };
+  methods: {
+    showCoffeeShop() {},
   },
 };
 </script>

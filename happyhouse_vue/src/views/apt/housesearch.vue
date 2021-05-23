@@ -108,7 +108,7 @@
                     ref="mapRef"
                     v-if="apts[0] != null"
                     :center="{ lat: apts[0].lat * 1, lng: apts[0].lng * 1 }"
-                    :zoom="14"
+                    :zoom="16"
                     style="width: 100%; height: 500px"
                   >
                     <GmapMarker
@@ -116,17 +116,12 @@
                       :key="`${index}_apts`"
                       :position="{ lat: m.lat * 1, lng: m.lng * 1 }"
                     />
-                    <GmapMarker
-                      v-for="(c, index) in coffeeshop"
-                      :key="`${index}_coffeeshop`"
-                      :position="{ lat: c.lat * 1, lng: c.lng * 1 }"
-                    />
                   </GmapMap>
                   <GmapMap
                     ref="mapRef"
                     v-else
                     :center="center"
-                    :zoom="14"
+                    :zoom="16"
                     style="width: 100%; height: 500px"
                   >
                   </GmapMap>
@@ -164,7 +159,7 @@
 <script>
 import http from "@/util/http-common";
 import AptListRow from "@/components/apt/AptListRow.vue";
-import { mapMutations, mapActions } from "vuex";
+import { mapGetters } from "vuex";
 export default {
   name: "search",
   components: {
@@ -178,7 +173,7 @@ export default {
       },
       apts: [],
       aptdetail: [],
-      coffeeshop: [],
+      areainterest: [],
       sidos: {},
       guguns: {},
       dongs: {},
@@ -186,9 +181,10 @@ export default {
       guguncode: 0,
       dong: "",
       aptname: "",
-      cflag: false,
-      areainterest: [],
     };
+  },
+  computed: {
+    ...mapGetters(["getUserId"]),
   },
   created() {
     http
@@ -199,13 +195,11 @@ export default {
       .catch(() => {
         alert("에러가 발생했습니다.");
       });
-    http.get("/member/getareainterest/" + this.$store.state.userid).then(({ data }) => {
+    http.get("/member/getareainterest/" + this.getUserId).then(({ data }) => {
       this.areainterest = data;
     });
   },
   methods: {
-    ...mapMutations(["GET_APT_LIST"]),
-    ...mapActions(["getAptList"]),
     searchAll() {
       http
         .get("/housesearch2/houseall")
@@ -260,14 +254,6 @@ export default {
         .catch(() => {
           alert("에러가 발생했습니다.");
         });
-      http
-        .get("/housesearch/dealofaptname/" + this.aptname)
-        .then(({ data }) => {
-          this.aptdetail = data;
-        })
-        .catch(() => {
-          alert("에러가 발생했습니다.");
-        });
     },
     searchInterest() {
       if (this.$store.state.userid == null) {
@@ -278,26 +264,6 @@ export default {
         .get("/housesearch2/interest/" + this.$store.state.userid)
         .then(({ data }) => {
           this.apts = data;
-        })
-        .catch(() => {
-          alert("에러가 발생했습니다.");
-        });
-      http
-        .get("/housesearch2/dealinterest/" + this.$store.state.userid)
-        .then(({ data }) => {
-          this.aptdetail = data;
-        })
-        .catch(() => {
-          alert("에러가 발생했습니다.");
-        });
-    },
-    searchCoffeeShop() {
-      http
-        .get("/coffeeshop/coffee/" + this.dong)
-        .then(({ data }) => {
-          this.coffeeshop = data;
-          this.cflag = !this.cflag;
-          console.log(data);
         })
         .catch(() => {
           alert("에러가 발생했습니다.");
