@@ -62,6 +62,7 @@
       <input type="submit" class="btn btn-danger" @click="deleteHandler" value="탈퇴" />
     </div>
   </div> -->
+
   <div class="container" ref="container">
     <div class="form-container sign-in-container">
       <div class="form-class">
@@ -86,25 +87,27 @@
       </div>
     </div>
     <div class="form-container sign-up-container">
-      <div class="form-class">
+      <div class="form-class-area">
         <h1>Areas of Interest</h1>
         <div class="social-container">
           <a class="social"><i class="fab fa-facebook-f"></i></a>
           <a class="social"><i class="fab fa-google-plus-g"></i></a>
           <a class="social"><i class="fab fa-linkedin-in"></i></a>
         </div>
-        <span>or use your email for registration</span>
-        <p>{{ areainterest }}</p>
-        <!-- <div :v-for="(area, index) in areainterest"> -->
-        <!-- <p>{{ index.area }}</p> -->
-        <!-- </div> -->
-        <!-- <p>{{ areainterest }}</p> -->
-        <!-- <input type="text" placeholder="Id" v-model="userid" readonly />
-        <input type="password" placeholder="Password" v-model="userpwd" />
-        <input type="text" placeholder="Name" v-model="username" />
-        <input type="text" placeholder="Address" v-model="address" />
-        <input type="tel" placeholder="Tel" v-model="phone" />
-        <button @click="registHandler">Sign Up</button> -->
+        <span>관심지역은 최대 5개까지 설정가능합니다.</span>
+        <ul class="list-group list-group-flush">
+          <li
+            style="text-align: left"
+            class="list-group-item"
+            v-for="(area, index) in areainterest"
+            :key="index"
+          >
+            {{ area.city }} {{ area.gugun }} {{ area.dong }}
+            <div style="float: right; margin-left: 10px">
+              <button class="delete" @click="deleteConfirm(index)">삭제</button>
+            </div>
+          </li>
+        </ul>
       </div>
     </div>
     <div class="overlay-container">
@@ -140,6 +143,7 @@ export default {
       address: this.address,
       phone: this.phone,
       areainterest: [],
+      is_show: false,
     };
   },
   created() {
@@ -175,10 +179,6 @@ export default {
           alert(msg);
           this.$router.push("/modify");
         });
-
-      // http.get("/member/getareainterest/" + this.$store.state.userid).then(({ data }) => {
-      //   this.dong = data;
-      // });
     },
     deleteHandler() {
       http.delete("/member/delete/" + this.$store.state.userid).then(({ data }) => {
@@ -191,11 +191,28 @@ export default {
         this.$router.push("/");
       });
     },
-    // areaInterestList() {
-    //   http.get("/member/getareainterest/" + this.$store.state.userid).then(({ data }) => {
-    //     this.dong = data;
-    //   });
-    // },
+    deleteConfirm(index) {
+      let result = confirm("삭제하시겠습니까?");
+      if (result) {
+        this.deleteArea(index);
+      }
+    },
+    deleteArea(index) {
+      http
+        .delete(
+          "member/deleteinterest/" +
+            this.areainterest[index].userid +
+            "/" +
+            this.areainterest[index].dongcode
+        )
+        .then(({ data }) => {
+          if (data !== "success") {
+            alert("삭제 시 문제가 발생했습니다.");
+          } else {
+            this.areainterest.splice(index, 1);
+          }
+        });
+    },
     UpdateButtons() {
       const container = this.$refs.container;
       container.classList.add("right-panel-active");
@@ -281,6 +298,20 @@ button.ghost {
   border-color: #ffffff;
 }
 
+button.delete {
+  border-radius: 10px;
+  border: 1px solid #b1ddab;
+  background-color: #b1ddab;
+  color: #ffffff;
+  font-size: 12px;
+  font-weight: bold;
+  padding: 10px 10px;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  transition: transform 80ms ease-in;
+  display: inline-block;
+}
+
 .form-class {
   background-color: #ffffff;
   display: flex;
@@ -288,6 +319,16 @@ button.ghost {
   justify-content: center;
   flex-direction: column;
   padding: 0 50px;
+  height: 100%;
+  text-align: center;
+}
+.form-class-area {
+  background-color: #ffffff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  padding: 0 30px;
   height: 100%;
   text-align: center;
 }

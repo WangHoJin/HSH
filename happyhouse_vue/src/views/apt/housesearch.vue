@@ -56,19 +56,19 @@
               </form>
               <button
                 type="button"
-                class="btn btn-success mr-3"
-                id="searchCoffeeShop"
-                @click="searchCoffeeShop"
-              >
-                카페
-              </button>
-              <button
-                type="button"
                 class="form-inline ml-3 btn btn-warning"
                 id="searchinterest"
                 @click="searchInterest"
               >
                 관심지역
+              </button>
+              <button
+                type="button"
+                class="form-inline ml-3 btn btn-warning"
+                id="addinterest"
+                @click="addInterest"
+              >
+                관심지역추가
               </button>
             </div>
           </div>
@@ -190,6 +190,7 @@ export default {
       dong: "",
       aptname: "",
       cflag: false,
+      areainterest: [],
     };
   },
   created() {
@@ -201,6 +202,9 @@ export default {
       .catch(() => {
         alert("에러가 발생했습니다.");
       });
+    http.get("/member/getareainterest/" + this.$store.state.userid).then(({ data }) => {
+      this.areainterest = data;
+    });
   },
   methods: {
     ...mapMutations(["GET_APT_LIST"]),
@@ -286,6 +290,10 @@ export default {
         });
     },
     searchInterest() {
+      if (this.$store.state.userid == null) {
+        alert("회원가입 후 이용가능합니다.");
+        return;
+      }
       http
         .get("/housesearch2/interest/" + this.$store.state.userid)
         .then(({ data }) => {
@@ -314,6 +322,28 @@ export default {
         .catch(() => {
           alert("에러가 발생했습니다.");
         });
+    },
+    addInterest() {
+      if (this.$store.state.userid == null) {
+        alert("회원가입 후 이용가능합니다.");
+        return;
+      }
+      if (this.areainterest.length >= 5) {
+        alert("등록할 수 있는 관심지역 수를 초과하였습니다.");
+      } else {
+        http
+          .post("/member/addinterest", {
+            userid: this.$store.state.userid,
+            dong: this.dong,
+          })
+          .then(({ data }) => {
+            let msg = "등록 처리시 문제가 발생했습니다.";
+            if (data === "success") {
+              msg = "관심 지역 추가가 완료되었습니다.";
+            }
+            alert(msg);
+          });
+      }
     },
   },
 };

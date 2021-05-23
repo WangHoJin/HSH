@@ -26,7 +26,7 @@
     </div>
 
     <div class="text-right">
-      <input type="submit" class="btn btn-primary" @click="addInterest" value="추가" />
+      <input type="submit" class="btn btn-primary" value="추가" />
     </div>
   </div>
 </template>
@@ -87,21 +87,21 @@ export default {
           alert("에러가 발생했습니다.");
         });
     },
-    addInterest() {
-      http
-        .post("/member/addinterest", {
-          userid: this.$store.state.userid,
-          dong: this.dong,
-        })
-        .then(({ data }) => {
-          let msg = "등록 처리시 문제가 발생했습니다.";
-          if (data === "success") {
-            msg = "관심 지역 추가가 완료되었습니다.";
-          }
-          alert(msg);
-          this.$router.push("/");
-        });
-    },
+    // addInterest() {
+    //   http
+    //     .post("/member/addinterest", {
+    //       userid: this.$store.state.userid,
+    //       dong: this.dong,
+    //     })
+    //     .then(({ data }) => {
+    //       let msg = "등록 처리시 문제가 발생했습니다.";
+    //       if (data === "success") {
+    //         msg = "관심 지역 추가가 완료되었습니다.";
+    //       }
+    //       alert(msg);
+    //       this.$router.push("/");
+    //     });
+    // },
     getInfo(event) {
       this.dong = event.target.value;
     },
