@@ -1901,7 +1901,8 @@ button,
   -ms-transition: background-color 0.2s ease-in-out;
   transition: background-color 0.2s ease-in-out;
   font-size: 1.25em;
-  padding: 0.85em 1.85em;
+  padding: 0.65em 0.85em;
+  margin: 0 0.15em;
   text-align: center;
 }
 
@@ -3099,7 +3100,7 @@ body {
   button,
   .button {
     display: block;
-    width: 100%;
+    width: 90%;
   }
 
   input[type="button"].large,

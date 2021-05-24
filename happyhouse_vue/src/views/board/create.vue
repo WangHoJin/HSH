@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="contianer">
     <create-form type="create" />
   </div>
 </template>
