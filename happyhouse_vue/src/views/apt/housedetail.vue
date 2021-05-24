@@ -10,7 +10,9 @@
               <a href="#">{{ getApt.aptName }}</a>
             </h3>
             <section>
-              <a href="#" class="image featured"><img src="@/img/house1.jpg" alt="" /></a>
+              <a href="#" class="image featured"
+                ><img src="@/assets/css/images/house1.jpg" alt=""
+              /></a>
             </section>
           </div>
           <div class="col-9 col-12-medium">
@@ -40,18 +42,26 @@
             <ul class="contact" style="display: inline-block">
               <h3 style="display: inline-block">이곳은 땡세권</h3>
               <li>
-                <a class="fas fa-coffee" @click="getCoffeeShopRadius"
+                <a
+                  :class="{ current: isCoffeeCurrent }"
+                  class="icon solid fa-coffee"
+                  @click="getCoffeeShopRadius"
                   ><span class="label"></span
                 ></a>
               </li>
               <li>
-                <a class="fas fa-shopping-cart" href="#"><span class="label"></span></a>
+                <a
+                  class="icon solid fa-shopping-cart"
+                  :class="{ current: isMarketCurrent }"
+                  @click="getMarketRadius"
+                  ><span class="label"></span
+                ></a>
               </li>
               <li>
-                <a class="fas fa-subway" href="#"><span class="label"></span></a>
+                <a class="icon solid fa-subway" href="#"><span class="label"></span></a>
               </li>
               <li>
-                <a class="fas fa-hospital-alt" href="#"><span class="label"></span></a>
+                <a class="icon solid fa-hospital-alt" href="#"><span class="label"></span></a>
               </li>
               <input type="text" style="display: inline-block; width: 150px" id="apttext" /><button
                 type="button"
@@ -63,11 +73,7 @@
               </button>
             </ul>
           </div>
-          <div class="col-3 col-12-medium">
-            <button type="button" id="aptsearch" class="btn btn-dark" value="검색">
-              가장 가까운 곳 보기
-            </button>
-          </div>
+          <div class="col-3 col-12-medium"></div>
         </div>
         <div class="row">
           <div class="col-8 col-12-medium">
@@ -141,6 +147,8 @@ export default {
         size: { width: 60, height: 90, f: "px", b: "px" },
         scaledSize: { width: 30, height: 45, f: "px", b: "px" },
       },
+      isCoffeeCurrent: false,
+      isMarketCurrent: false,
     };
   },
   computed: {
@@ -166,6 +174,10 @@ export default {
         .catch(() => {
           alert("에러가 발생했습니다.");
         });
+      this.isCoffeeCurrent = !this.isCoffeeCurrent;
+    },
+    getMarketRadius() {
+      this.isMarketCurrent = !this.isMarketCurrent;
     },
     aa() {
       alert("야야");

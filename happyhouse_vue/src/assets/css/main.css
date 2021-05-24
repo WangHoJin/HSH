@@ -252,7 +252,7 @@ h4 {
 
 a {
   color: #006376;
-  text-decoration: underline;
+  text-decoration: none;
 }
 
 a:hover {
@@ -1083,7 +1083,7 @@ header > p {
   }
 
   .row.gtr-200 > * {
-    padding: 80px 0 0 80px;
+    padding: 80px 0 0 0;
   }
 
   .row.gtr-200.gtr-uniform {
@@ -2047,7 +2047,10 @@ ul.contact li a {
   background: #c1cac5;
   text-align: center;
 }
-
+ul.contact li a.current {
+  background: #b1ddab;
+  color: #fff;
+}
 ul.contact li a:before {
   color: #f2f5f3;
   font-size: 32px;
@@ -2082,6 +2085,9 @@ ul.contact li:hover a.fa-google-plus {
   background-color: #da2713;
 }
 
+ul.contact li:hover a.icon {
+  background-color: #c1edbb;
+}
 ul.contact li:active {
   top: 0;
 }
@@ -2515,7 +2521,8 @@ body {
 }
 
 #nav li.current a,
-#nav .router-link-exact-active {
+#nav .router-link-exact-active,
+a.current {
   background: #b1ddab;
   color: #fff;
 }
