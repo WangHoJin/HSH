@@ -50,18 +50,14 @@
               <div class="small">
                 <h2>{{ topdong }} 카페 순위</h2>
                 <div v-for="(cafe, index) in cafes" :key="`${index}_cafes`">
-                  <h2>{{ cafe.cname }}</h2>
-                  <img class="cafelogo" :src="imgsrc + cafe.cname + imgtype" />
+                  <h2>{{ cafe.cname }} {{ cafe.coffeeshopcnt }}개</h2>
+
+                  <img
+                    class="cafelogo"
+                    :src="require(`@/assets/css/images/${cafeEngName[index]}.png`)"
+                  />
                 </div>
               </div>
-              <img class="cafelogo" src="../assets/css/images/할리스커피.png" />
-              <img class="cafelogo" src="@/assets/css/images/파스쿠찌.png" />
-              <img class="cafelogo" src="@/assets/css/images/투썸플레이스.png" />
-
-              <img class="cafelogo" src="@/assets/css/images/탐앤탐스.png" />
-              <img class="cafelogo" src="@/assets/css/images/커피빈.png" />
-              <img class="cafelogo" src="@/assets/css/images/커피에반하다.png" />
-              <img class="cafelogo" src="@/assets/css/images/이디야커피.png" />
             </section>
           </div>
         </div>
@@ -87,8 +83,10 @@ export default {
       chartdata: null,
       options: null,
       cafes: [],
-      imgsrc: "../assets/css/images/",
+      imgsrc: "@/assets/css/images/",
       imgtype: ".png",
+      cafename: "starbucks",
+      cafeEngName: [],
     };
   },
   async mounted() {
@@ -139,7 +137,38 @@ export default {
         .get("/coffeeshop/coffeeshoprank/" + this.topdong)
         .then(({ data }) => {
           console.log(data);
+          console.log(data[0].cname);
           this.cafes = data;
+          for (let i = 0; i < 5; i++) {
+            if (this.cafes[i].cname === "스타벅스") {
+              this.cafeEngName[i] = "starbucks";
+            } else if (this.cafes[i].cname === "이디야커피") {
+              this.cafeEngName[i] = "ediya";
+            } else if (this.cafes[i].cname === "투썸플레이스") {
+              this.cafeEngName[i] = "twosome";
+            } else if (this.cafes[i].cname === "커피빈") {
+              this.cafeEngName[i] = "coffeebean";
+            } else if (this.cafes[i].cname === "빽다방") {
+              this.cafeEngName[i] = "paikscoffee";
+            } else if (this.cafes[i].cname === "파스쿠찌") {
+              this.cafeEngName[i] = "pascucci";
+            } else if (this.cafes[i].cname === "할리스커피") {
+              this.cafeEngName[i] = "hollys";
+            } else if (this.cafes[i].cname === "커피에반하다") {
+              this.cafeEngName[i] = "cuban";
+            } else if (this.cafes[i].cname === "탐앤탐스") {
+              this.cafeEngName[i] = "tomtom";
+            } else if (this.cafes[i].cname === "메가엠지씨커피") {
+              this.cafeEngName[i] = "mega";
+            } else {
+              this.cafeEngName[i] = "profile";
+            }
+          }
+
+          if (this.cafes.cname === "스타벅스") {
+            console.log(this.cafes.cname);
+            this.cafes.cname = "starbucks";
+          }
         })
         .catch(() => {
           alert("에러가 발생했습니다.");
