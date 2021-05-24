@@ -44,24 +44,24 @@
               <li>
                 <a
                   :class="{ current: isCoffeeCurrent }"
-                  class="icon solid fa-coffee"
+                  class="icon solid fa-coffee green"
                   @click="getCoffeeShopRadius"
                   ><span class="label"></span
                 ></a>
               </li>
               <li>
                 <a
-                  class="icon solid fa-shopping-cart"
+                  class="icon solid fa-shopping-cart green"
                   :class="{ current: isMarketCurrent }"
                   @click="getMarketRadius"
                   ><span class="label"></span
                 ></a>
               </li>
               <li>
-                <a class="icon solid fa-subway" href="#"><span class="label"></span></a>
+                <a class="icon solid fa-subway green" href="#"><span class="label"></span></a>
               </li>
               <li>
-                <a class="icon solid fa-hospital-alt" href="#"><span class="label"></span></a>
+                <a class="icon solid fa-hospital-alt green" href="#"><span class="label"></span></a>
               </li>
               <input type="text" style="display: inline-block; width: 150px" id="apttext" /><button
                 type="button"
