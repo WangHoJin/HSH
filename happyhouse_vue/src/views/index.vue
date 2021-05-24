@@ -38,16 +38,6 @@
                   >
                 </li>
               </ul>
-              <header>
-                <h2>A random assortment of icons in circles</h2>
-                <p>And some text that attempts to explain their significance</p>
-              </header>
-              <p>
-                Phasellus quam turpis, feugiat sit amet ornare in, hendrerit in lectus. Praesent
-                semper mod quis eget mi. Etiam eu<br />
-                ante risus. Aliquam erat volutpat. Aliquam luctus et mattis lectus amet pulvinar.
-                Nam nec turpis consequat.
-              </p>
             </section>
           </div>
           <div id="icondetail" class="col-12" v-show="showcoffee">
@@ -55,8 +45,23 @@
             <section class="box features">
               <h2 class="major"><span>A Major Heading</span></h2>
               <div class="small">
-                <bar-chart v-if="loaded" :chartdata="chartdata"></bar-chart>
+                <bar-chart v-if="loaded" :chartdata="chartdata" :options="options"></bar-chart>
               </div>
+              <div class="small">
+                <h2>{{ topdong }} 카페 순위</h2>
+                <div v-for="(cafe, index) in cafes" :key="`${index}_cafes`">
+                  <h2>{{ cafe.cname }}</h2>
+                  <img class="cafelogo" :src="imgsrc + cafe.cname + imgtype" />
+                </div>
+              </div>
+              <img class="cafelogo" src="../assets/css/images/할리스커피.png" />
+              <img class="cafelogo" src="@/assets/css/images/파스쿠찌.png" />
+              <img class="cafelogo" src="@/assets/css/images/투썸플레이스.png" />
+
+              <img class="cafelogo" src="@/assets/css/images/탐앤탐스.png" />
+              <img class="cafelogo" src="@/assets/css/images/커피빈.png" />
+              <img class="cafelogo" src="@/assets/css/images/커피에반하다.png" />
+              <img class="cafelogo" src="@/assets/css/images/이디야커피.png" />
             </section>
           </div>
         </div>
@@ -67,12 +72,10 @@
 
 <script>
 import http from "@/util/http-common";
-// import { Bar } from "vue-chartjs";
 import BarChart from "@/components/Charts/BarChart.vue";
 export default {
   components: { BarChart },
   name: "index",
-  // extends: Bar,
   component: {
     BarChart,
   },
@@ -80,41 +83,12 @@ export default {
     return {
       loaded: false,
       showcoffee: false,
+      topdong: "",
       chartdata: null,
-      // {
-      //   labels: ["January", "February", "March", "April", "May", "June", "July"],
-      //   datasets: [
-      //     {
-      //       label: "Data One",
-      //       backgroundColor: "#f87979",
-      //       data: [65, 59, 80, 81, 56, 55, 40],
-      //     },
-      //   ],
-      // },
-      // labels: ["January", "February", "March", "April", "May", "June", "July"],
-      // datasets: [
-      //   {
-      //     data: [65, 59, 80, 81, 56, 55, 40],
-      //     backgroundColor: [
-      //       "rgba(255, 99, 132, 0.2)",
-      //       "rgba(255, 159, 64, 0.2)",
-      //       "rgba(255, 205, 86, 0.2)",
-      //       "rgba(75, 192, 192, 0.2)",
-      //       "rgba(54, 162, 235, 0.2)",
-      //       "rgba(153, 102, 255, 0.2)",
-      //       "rgba(201, 203, 207, 0.2)",
-      //     ],
-      //     borderColor: [
-      //       "rgb(255, 99, 132)",
-      //       "rgb(255, 159, 64)",
-      //       "rgb(255, 205, 86)",
-      //       "rgb(75, 192, 192)",
-      //       "rgb(54, 162, 235)",
-      //       "rgb(153, 102, 255)",
-      //       "rgb(201, 203, 207)",
-      //     ],
-      //   },
-      // ],
+      options: null,
+      cafes: [],
+      imgsrc: "../assets/css/images/",
+      imgtype: ".png",
     };
   },
   async mounted() {
@@ -139,12 +113,37 @@ export default {
         labels: l,
         datasets: [
           {
-            label: "Data One",
-            backgroundColor: "#f87979",
+            label: "카페 많은 동네 TOP 3",
+            backgroundColor: [
+              "rgba(255, 99, 132, 0.2)",
+              "rgba(255, 159, 64, 0.2)",
+              "rgba(255, 205, 86, 0.2)",
+            ],
+            borderColor: ["rgb(255, 99, 132)", "rgb(255, 159, 64)", "rgb(255, 205, 86)"],
             data: d,
           },
         ],
       };
+
+      this.options = {
+        onClick: this.handle,
+      };
+    },
+    handle(point, event) {
+      console.log(point);
+      const item = event[0];
+      this.topdong = item._model.label;
+
+      console.log(item._model.label);
+      http
+        .get("/coffeeshop/coffeeshoprank/" + this.topdong)
+        .then(({ data }) => {
+          console.log(data);
+          this.cafes = data;
+        })
+        .catch(() => {
+          alert("에러가 발생했습니다.");
+        });
     },
     showCoffeeShop() {
       this.showcoffee = !this.showcoffee;
@@ -155,7 +154,13 @@ export default {
 </script>
 <style>
 .small {
+  width: 50%;
   max-width: 600px;
-  margin: 150px auto;
+  display: inline-block;
+  text-align: center;
+}
+.cafelogo {
+  width: 100px;
+  height: 100px;
 }
 </style>
