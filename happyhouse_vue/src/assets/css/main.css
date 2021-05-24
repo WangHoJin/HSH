@@ -1875,6 +1875,11 @@ header > p {
   width: auto;
 }
 
+img.cafelogo {
+  width: 150px;
+  height: 150px;
+}
+
 /* Button */
 
 input[type="button"],

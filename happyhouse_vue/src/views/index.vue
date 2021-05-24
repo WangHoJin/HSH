@@ -44,18 +44,24 @@
             <!-- Features -->
             <section class="box features">
               <h2 class="major"><span>A Major Heading</span></h2>
-              <div class="small">
-                <bar-chart v-if="loaded" :chartdata="chartdata" :options="options"></bar-chart>
-              </div>
-              <div class="small">
-                <h2>{{ topdong }} 카페 순위</h2>
-                <div v-for="(cafe, index) in cafes" :key="`${index}_cafes`">
-                  <h2>{{ cafe.cname }} {{ cafe.coffeeshopcnt }}개</h2>
+              <div class="row">
+                <div class="col-6">
+                  <bar-chart v-if="loaded" :chartdata="chartdata" :options="options"></bar-chart>
+                </div>
+                <div class="col-6 text-center">
+                  <h2 style="margin-bottom: 2em">{{ topdong }} 카페 순위</h2>
+                  <div
+                    v-for="(cafe, index) in cafes"
+                    :key="`${index}_cafes`"
+                    style="display: inline-block; padding: 2em 1em"
+                  >
+                    <h2>{{ index + 1 }}. {{ cafe.cname }}</h2>
 
-                  <img
-                    class="cafelogo"
-                    :src="require(`@/assets/css/images/${cafeEngName[index]}.png`)"
-                  />
+                    <img
+                      class="cafelogo"
+                      :src="require(`@/assets/css/images/${cafeEngName[index]}.png`)"
+                    />
+                  </div>
                 </div>
               </div>
             </section>
@@ -83,9 +89,6 @@ export default {
       chartdata: null,
       options: null,
       cafes: [],
-      imgsrc: "@/assets/css/images/",
-      imgtype: ".png",
-      cafename: "starbucks",
       cafeEngName: [],
     };
   },
@@ -160,6 +163,8 @@ export default {
               this.cafeEngName[i] = "tomtom";
             } else if (this.cafes[i].cname === "메가엠지씨커피") {
               this.cafeEngName[i] = "mega";
+            } else if (this.cafes[i].cname === "달콤") {
+              this.cafeEngfName[i] = "dalkomm";
             } else {
               this.cafeEngName[i] = "profile";
             }
