@@ -18,8 +18,7 @@
             <section class="box highlight">
               <ul class="special">
                 <li>
-                  <a href="#icondetail" @click="showCoffeeShop" class="icon solid fa-coffee"
-                    ><router-link to="/chartjs"></router-link>
+                  <a href="#icondetail" @click="showCoffeeShop" class="icon solid fa-coffee">
                     <span class="label">Magnifier</span></a
                   >
                 </li>
@@ -55,10 +54,8 @@
             <!-- Features -->
             <section class="box features">
               <h2 class="major"><span>A Major Heading</span></h2>
-              <div>
-                <bar-chart style="height: 400px"></bar-chart>
-
-                <!-- <chartjs-bar :labels="labels" :datasets="datasets"></chartjs-bar> -->
+              <div class="small">
+                <bar-chart v-if="loaded" :chartdata="chartdata"></bar-chart>
               </div>
             </section>
           </div>
@@ -69,19 +66,31 @@
 </template>
 
 <script>
-import { Bar } from "vue-chartjs";
-import BarChart from "../components/Charts/BarChart.vue";
+import http from "@/util/http-common";
+// import { Bar } from "vue-chartjs";
+import BarChart from "@/components/Charts/BarChart.vue";
 export default {
   components: { BarChart },
   name: "index",
-  extends: Bar,
+  // extends: Bar,
   component: {
     BarChart,
   },
-  data: function () {
+  data() {
     return {
+      loaded: false,
       showcoffee: false,
-
+      chartdata: null,
+      // {
+      //   labels: ["January", "February", "March", "April", "May", "June", "July"],
+      //   datasets: [
+      //     {
+      //       label: "Data One",
+      //       backgroundColor: "#f87979",
+      //       data: [65, 59, 80, 81, 56, 55, 40],
+      //     },
+      //   ],
+      // },
       // labels: ["January", "February", "March", "April", "May", "June", "July"],
       // datasets: [
       //   {
@@ -108,12 +117,45 @@ export default {
       // ],
     };
   },
+  async mounted() {
+    const labels = [];
+    const datas = [];
+    http
+      .get("/coffeeshop/dongrank")
+      .then(({ data }) => {
+        for (let index = 0; index < 3; index++) {
+          labels.push(data[index].dong);
+          datas.push(data[index].cnt);
+        }
+      })
+      .catch(() => {
+        alert("에러가 발생했습니다.");
+      });
+    this.fillData(labels, datas);
+  },
   methods: {
+    fillData(l, d) {
+      this.chartdata = {
+        labels: l,
+        datasets: [
+          {
+            label: "Data One",
+            backgroundColor: "#f87979",
+            data: d,
+          },
+        ],
+      };
+    },
     showCoffeeShop() {
-      console.log("뭐야");
-      this.showcoffee = true;
-      console.log(this.showcoffee);
+      this.showcoffee = !this.showcoffee;
+      this.loaded = true;
     },
   },
 };
 </script>
+<style>
+.small {
+  max-width: 600px;
+  margin: 150px auto;
+}
+</style>
