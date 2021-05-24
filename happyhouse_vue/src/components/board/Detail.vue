@@ -44,12 +44,13 @@
 
 <script>
 import moment from "moment";
+import { mapGetters } from "vuex";
 export default {
   name: "detail",
   data() {
     return {
       checkWriter: false,
-      //userid: this.$store.state.userid,
+      writer2: this.writer,
     };
   },
   props: {
@@ -64,12 +65,17 @@ export default {
       return moment(new Date(regtime)).format("YYYY.MM.DD HH:mm:ss");
     },
   },
-  mounted() {
-    //console.log($writer);
-    console.log(this.$props.writer);
-    if (this.$props.writer === this.$store.state.userid) {
-      this.checkWriter = true;
-    }
+  computed: {
+    ...mapGetters(["getUserId"]),
   },
+  watch: {
+    writer() {
+      console.log(this.getUserId);
+      if (this.$props.writer === this.getUserId) {
+        this.checkWriter = true;
+      }
+    },
+  },
+  mounted() {},
 };
 </script>
