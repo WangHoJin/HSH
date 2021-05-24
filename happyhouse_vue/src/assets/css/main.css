@@ -1888,7 +1888,7 @@ button,
   font-weight: 700;
   text-transform: uppercase;
   text-decoration: none;
-  background: #b1ddab;
+  background: #c1cac5;
   color: #fff;
   border: 0;
   line-height: 1em;
@@ -1900,7 +1900,7 @@ button,
   -o-transition: background-color 0.2s ease-in-out;
   -ms-transition: background-color 0.2s ease-in-out;
   transition: background-color 0.2s ease-in-out;
-  font-size: 1.25em;
+  font-size: 1.1em;
   padding: 0.65em 0.85em;
   margin: 0 0.15em;
   text-align: center;
@@ -2222,7 +2222,7 @@ form input[type="text"],
 form input[type="email"],
 form input[type="password"],
 form select {
-  line-height: 3em;
+  line-height: 2em;
   padding: 0 1em;
 }
 
