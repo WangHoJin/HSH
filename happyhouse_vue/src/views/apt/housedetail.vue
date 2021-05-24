@@ -82,11 +82,15 @@
                     :zoom="16"
                     style="width: 100%; height: 500px"
                   >
-                    <GmapMarker :position="{ lat: getApt.lat * 1, lng: getApt.lng * 1 }" />
+                    <GmapMarker
+                      :position="{ lat: getApt.lat * 1, lng: getApt.lng * 1 }"
+                      :icon="markerOptions"
+                    />
                     <GmapMarker
                       v-for="(c, index) in coffeeshop"
                       :key="`${index}_coffeeshop`"
                       :position="{ lat: c.lat * 1, lng: c.lng * 1 }"
+                      @click="aa"
                     />
                   </GmapMap>
                   <!-- Map End -->
@@ -118,6 +122,7 @@
 import http from "@/util/http-common";
 import AptDetailListRow from "@/components/apt/AptDetailListRow.vue";
 import { mapGetters } from "vuex";
+const mapMarker = require("@/assets/logo.png");
 export default {
   name: "search",
   components: {
@@ -131,6 +136,11 @@ export default {
       },
       aptdetail: [],
       coffeeshop: [],
+      markerOptions: {
+        url: mapMarker,
+        size: { width: 60, height: 90, f: "px", b: "px" },
+        scaledSize: { width: 30, height: 45, f: "px", b: "px" },
+      },
     };
   },
   computed: {
@@ -156,6 +166,9 @@ export default {
         .catch(() => {
           alert("에러가 발생했습니다.");
         });
+    },
+    aa() {
+      alert("야야");
     },
   },
 };

@@ -1,4 +1,5 @@
 <script>
+import http from "@/util/http-common";
 //Importing Bar class from the vue-chartjs wrapper
 import { Bar } from "vue-chartjs";
 //Exporting this so it can be used in other components
@@ -64,8 +65,26 @@ export default {
       },
     };
   },
+  created() {
+    console.log("생성");
+  },
   mounted() {
     //renderChart function renders the chart with the datacollection and options object.
+    console.log("렌더링");
+    this.renderChart(this.datacollection, this.options);
+    http
+      .get("/coffeeshop/dongrank")
+      .then(({ coffee }) => {
+        for (let index = 0; index < 3; index++) {
+          console.log(coffee);
+          console.log(coffee[index].dong);
+          // this.labels.push(data[index].dong);
+          // this.data.push(data[index].cnt);
+        }
+      })
+      .catch(() => {
+        alert("에러가 발생했습니다.");
+      });
     this.renderChart(this.datacollection, this.options);
   },
   methods: {

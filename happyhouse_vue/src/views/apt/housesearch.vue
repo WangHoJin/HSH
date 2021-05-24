@@ -115,6 +115,7 @@
                       v-for="(m, index) in apts"
                       :key="`${index}_apts`"
                       :position="{ lat: m.lat * 1, lng: m.lng * 1 }"
+                      :icon="markerOptions"
                     />
                   </GmapMap>
                   <GmapMap
@@ -160,6 +161,7 @@
 import http from "@/util/http-common";
 import AptListRow from "@/components/apt/AptListRow.vue";
 import { mapGetters } from "vuex";
+const mapMarker = require("@/assets/logo.png");
 export default {
   name: "search",
   components: {
@@ -181,6 +183,11 @@ export default {
       guguncode: 0,
       dong: "",
       aptname: "",
+      markerOptions: {
+        url: mapMarker,
+        size: { width: 60, height: 90, f: "px", b: "px" },
+        scaledSize: { width: 30, height: 45, f: "px", b: "px" },
+      },
     };
   },
   computed: {
