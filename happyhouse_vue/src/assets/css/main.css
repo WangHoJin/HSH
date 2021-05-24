@@ -1914,6 +1914,11 @@ button:hover,
   background: #c1edbb;
 }
 
+button.selected {
+  background: #b1ddab;
+  color: #fff;
+}
+
 input[type="button"]:active,
 input[type="submit"]:active,
 input[type="reset"]:active,

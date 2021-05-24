@@ -38,9 +38,9 @@
         </div>
         <h2 class="major"></h2>
         <div class="row">
-          <div class="col-9 col-12-medium">
+          <div>
             <ul class="contact" style="display: inline-block">
-              <h3 style="display: inline-block">이곳은 땡세권</h3>
+              <h3 style="display: inline-block; margin: 0 1em">이곳의 땡세권</h3>
               <li>
                 <a
                   :class="{ current: isCoffeeCurrent }"
@@ -63,17 +63,25 @@
               <li>
                 <a class="icon solid fa-hospital-alt green" href="#"><span class="label"></span></a>
               </li>
-              <input type="text" style="display: inline-block; width: 150px" id="apttext" /><button
-                type="button"
-                id="aptsearch"
-                class="btn btn-dark"
-                value="검색"
-              >
-                검색
-              </button>
+              <input
+                type="text"
+                style="
+                  display: inline-block;
+                  margin: 0 1em;
+                  width: 300px;
+                  border: solid 2px #e7eae8;
+                  border-radius: 8px;
+                "
+                id="apttext"
+              /><button type="button" id="aptsearch" class="button" value="검색">검색</button>
             </ul>
+            <!-- <div class="col-4 col-12-medium"> -->
+            <h3 style="display: inline-block; margin: 0 1em">반경 설정</h3>
+            <button class="button" :class="{ selected: dist100 }" @click="getDist100">100m</button>
+            <button class="button" :class="{ selected: dist300 }" @click="getDist300">300m</button>
+            <button class="button" :class="{ selected: dist500 }" @click="getDist500">500m</button>
+            <!-- </div> -->
           </div>
-          <div class="col-3 col-12-medium"></div>
         </div>
         <div class="row">
           <div class="col-8 col-12-medium">
@@ -108,10 +116,10 @@
             <div class="card" style="border: 0px; height: 600px; overflow: auto">
               <div class="sidebar">
                 <section>
-                  <h2 class="major"><span>가장 가까운 곳</span></h2>
+                  <h2 class="major"><span>땡세권 그래프</span></h2>
                 </section>
                 <section>
-                  <h2 class="major"><span>땡세권 그래프</span></h2>
+                  <h2 class="major"><span>마커 정보</span></h2>
                 </section>
               </div>
             </div>
@@ -149,6 +157,9 @@ export default {
       },
       isCoffeeCurrent: false,
       isMarketCurrent: false,
+      dist100: true,
+      dist300: false,
+      dist500: false,
     };
   },
   computed: {
@@ -181,6 +192,21 @@ export default {
     },
     aa() {
       alert("야야");
+    },
+    getDist100() {
+      this.dist100 = true;
+      this.dist300 = false;
+      this.dist500 = false;
+    },
+    getDist300() {
+      this.dist100 = false;
+      this.dist300 = true;
+      this.dist500 = false;
+    },
+    getDist500() {
+      this.dist100 = false;
+      this.dist300 = false;
+      this.dist500 = true;
     },
   },
 };
