@@ -225,7 +225,7 @@ export default {
       labels: [],
       datas: [],
       meter: 0,
-      zoom: 10,
+      zoom: 16,
     };
   },
   computed: {
@@ -355,7 +355,22 @@ export default {
           alert("에러가 발생했습니다.");
         });
 
-      this.zoom = 18;
+      this.center.lat = lat * 1;
+      this.center.lng = lng * 1;
+
+      if (this.zoom == 17) {
+        if (this.meter == 100) {
+          this.zoom = 16.2;
+        } else if (this.meter == 300) {
+          this.zoom = 15.7;
+        } else if (this.meter == 500) {
+          this.zoom = 15.5;
+        }
+      } else if (this.zoom <= 16.2) {
+        this.zoom = 17;
+      }
+
+      this.$refs.mapRef.panTo(this.center);
     },
     selectDist100() {
       this.dist100 = true;
@@ -363,6 +378,9 @@ export default {
       this.dist500 = false;
       //console.log("렌더링100");
       this.fillData(this.labels, this.datas);
+      if (this.zoom != 16.2) {
+        this.zoom = 16.2;
+      }
     },
     selectDist300() {
       this.dist100 = false;
@@ -370,6 +388,9 @@ export default {
       this.dist500 = false;
       //console.log("렌더링300");
       this.fillData(this.labels, this.datas);
+      if (this.zoom != 15.7) {
+        this.zoom = 15.7;
+      }
     },
     selectDist500() {
       this.dist100 = false;
@@ -377,6 +398,9 @@ export default {
       this.dist500 = true;
       //console.log("렌더링500");
       this.fillData(this.labels, this.datas);
+      if (this.zoom != 15.5) {
+        this.zoom = 15.5;
+      }
     },
 
     changeDist(d) {
