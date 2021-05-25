@@ -45,7 +45,8 @@
                 <a
                   :class="{ current: isCoffeeCurrent }"
                   class="icon solid fa-coffee green"
-                  @click="[getCoffeeShopRadius(100, false), chartOpenAndClose()]"
+                  @mousedown="[getCafeData(m)]"
+                  @mouseup="[chartOpen(0)]"
                   ><span class="label"></span
                 ></a>
               </li>
@@ -53,7 +54,8 @@
                 <a
                   class="icon solid fa-shopping-cart green"
                   :class="{ current: isMarketCurrent }"
-                  @click="getMarketRadius(100), chartOpenAndClose()"
+                  @mousedown="[getMarketData(m)]"
+                  @mouseup="[chartOpen(1)]"
                   ><span class="label"></span
                 ></a>
               </li>
@@ -129,13 +131,13 @@
                       :key="`${index}_coffeeshop`"
                       :position="{ lat: c.lat * 1, lng: c.lng * 1 }"
                       :icon="cafemarkerOptions"
-                      @click="markerClick(c.lat, c.lng)"
+                      @click="markerClick(c.lat, c.lng, 0)"
                     />
                     <GmapMarker
                       v-for="(c, index) in store"
                       :key="`${index}_store`"
                       :position="{ lat: c.lat * 1, lng: c.lng * 1 }"
-                      @click="markerClick(c.lat, c.lng)"
+                      @click="markerClick(c.lat, c.lng, 1)"
                     />
                   </GmapMap>
                   <!-- Map End -->
@@ -147,25 +149,45 @@
             <div class="card" style="border: 0px; height: 600px; overflow: auto">
               <div class="sidebar">
                 <section>
-                  <h2 class="major">
-                    <span>땡세권 그래프</span>
-                    <pie-chart
-                      v-if="chartbar"
-                      :chartdata="chartdata"
-                      :options="options"
-                    ></pie-chart>
-                  </h2>
-                </section>
-                <section>
-                  <h2 class="major"><span>마커 정보</span></h2>
+                  <h2 class="major"><span>카페 정보</span></h2>
                   <div v-for="(cafe, index) in markerinfo" :key="`${index}_markerinfo`">
                     <h4>{{ cafe.cname }}</h4>
                     <h5>{{ cafe.branchname }}</h5>
                     <h5>{{ cafe.address1 }}</h5>
                     <h5>{{ cafe.address2 }}</h5>
                   </div>
+                  <h2 class="major" style="margin: 1.5em 0 1.5em 0"><span>편의점 정보</span></h2>
+                  <div v-for="(store, index) in markerinfo2" :key="`${index}_markerinfo2`">
+                    <h4>{{ store.sname }}</h4>
+                    <h5>{{ store.branchname }}</h5>
+                    <h5>{{ store.address1 }}</h5>
+                    <h5>{{ store.address2 }}</h5>
+                  </div>
                 </section>
               </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-4 col-12-medium">
+              <section>
+                <h2 class="major">
+                  <span>카세권 그래프</span>
+                  <doughnut-chart v-if="chartbar" :chartdata="chartdata" :options="options">
+                  </doughnut-chart>
+                </h2>
+              </section>
+            </div>
+            <div class="col-4 col-12-medium">
+              <section>
+                <h2 class="major">
+                  <span>편세권 그래프</span>
+                  <doughnut-chart2
+                    v-if="chartbar2"
+                    :chartdata="chartdata2"
+                    :options="options2"
+                  ></doughnut-chart2>
+                </h2>
+              </section>
             </div>
           </div>
         </div>
@@ -180,7 +202,8 @@
 import http from "@/util/http-common";
 import AptDetailListRow from "@/components/apt/AptDetailListRow.vue";
 // import M100 from "@/components/Charts/100M.vue";
-import PieChart from "@/components/Charts/PieChart.vue";
+import DoughnutChart from "@/components/Charts/DoughnutChart.vue";
+import DoughnutChart2 from "@/components/Charts/DoughnutChart2.vue";
 import { mapGetters } from "vuex";
 const mapMarker = require("@/assets/css/images/apartment.png");
 const cafeMarker = require("@/assets/css/images/coffee-cup.png");
@@ -190,7 +213,8 @@ export default {
   components: {
     AptDetailListRow,
     // M100,
-    PieChart,
+    DoughnutChart,
+    DoughnutChart2,
   },
   data() {
     return {
@@ -212,6 +236,7 @@ export default {
         scaledSize: { width: 30, height: 30, f: "px", b: "px" },
       },
       markerinfo: {},
+      markerinfo2: {},
       isCoffeeCurrent: false,
       isMarketCurrent: false,
       dist100: true,
@@ -220,11 +245,17 @@ export default {
       chartdata: null,
       options: null,
       chartbar: false,
-      loaded: false,
-      start: true,
       labels: [],
       datas: [],
-      meter: 0,
+      chartdata2: null,
+      options2: null,
+      chartbar2: false,
+      labels2: [],
+      datas2: [],
+      category: 5,
+      loaded: false,
+      start: true,
+      m: 100,
       zoom: 16,
     };
   },
@@ -241,52 +272,187 @@ export default {
         alert("에러가 발생했습니다.");
       });
   },
+  async mounted() {},
   watch: {
-    meter: function (newVal) {
-      //console.log("와치");
-      //console.log( "/coffeeshop/coffeeradiusrank/" + this.getApt.lat + "/" + this.getApt.lng + "/" + newVal);
+    category: function (newVal) {
+      this.labels = [];
+      this.datas = [];
+      this.labels2 = [];
+      this.datas2 = [];
+      switch (newVal) {
+        case 0:
+          console.log("와치1 진입");
+          this.getCafeData(this.meter);
+          break;
+        case 1:
+          console.log("와치2 진입");
+          this.getMarketData(this.meter);
+          break;
+        case 2:
+          break;
+        default:
+          break;
+      }
+    },
+    isCoffeeCurrent: function (newVal) {
+      console.log("바낐다");
+      console.log(newVal);
+      if (newVal == false) this.coffeeshop = null;
+    },
+    isMarketCurrent: function (newVal) {
+      if (newVal == false) this.store = null;
+    },
+    // meter: function (newVal) {
+    //   //console.log("와치");
+    //   //console.log( "/coffeeshop/coffeeradiusrank/" + this.getApt.lat + "/" + this.getApt.lng + "/" + newVal);
+    //   http
+    //     .get(
+    //       "/coffeeshop/coffeeradiusrank/" + this.getApt.no + "/" + this.getApt.lng + "/" + newVal
+    //     )
+    //     .then(({ data }) => {
+    //       this.labels = [];
+    //       this.datas = [];
+    //       //console.log(data);
+    //       for (let index = 0; index < data.length; index++) {
+    //         if (index == 5) break;
+    //         this.labels.push(data[index].cname);
+    //         this.datas.push(data[index].coffeeshopcnt);
+    //       }
+    //       //console.log(this.labels);
+    //     })
+    //     .catch(() => {
+    //       alert("에러가 발생했습니다.");
+    //     });
+    // },
+  },
+  methods: {
+    getCafeData(radius) {
+      console.log(radius);
+      this.labels = [];
+      this.datas = [];
+      http
+        .get("/coffeeshop/coffeeradius/" + this.getApt.lat + "/" + this.getApt.lng + "/" + radius)
+        .then(({ data }) => {
+          console.log("카페 데이터 가져와");
+          this.coffeeshop = data;
+        })
+        .catch(() => {
+          alert("에러가 발생했습니다.");
+        });
+
       http
         .get(
-          "/coffeeshop/coffeeradiusrank/" + this.getApt.no + "/" + this.getApt.lng + "/" + newVal
+          "/coffeeshop/coffeeradiusrank/" + this.getApt.lat + "/" + this.getApt.lng + "/" + radius
         )
         .then(({ data }) => {
-          this.labels = [];
-          this.datas = [];
-          //console.log(data);
-          for (let index = 0; index < data.length; index++) {
-            if (index == 5) break;
+          for (let index = 0; index < 3; index++) {
             this.labels.push(data[index].cname);
             this.datas.push(data[index].coffeeshopcnt);
           }
-          //console.log(this.labels);
+          console.log("카페 데이터 삽입");
         })
         .catch(() => {
           alert("에러가 발생했습니다.");
         });
     },
-  },
-  async mounted() {
-    http
-      .get("/coffeeshop/coffeeradiusrank/" + this.getApt.lat + "/" + this.getApt.lng + "/100")
-      .then(({ data }) => {
-        for (let index = 0; index < data.length; index++) {
-          if (index == 5) break;
-          this.labels.push(data[index].cname);
-          this.datas.push(data[index].coffeeshopcnt);
-        }
-      })
-      .catch(() => {
-        alert("에러가 발생했습니다.");
-      });
-    this.fillData(this.labels, this.datas);
-  },
-  methods: {
+    getMarketData(radius) {
+      this.labels2 = [];
+      this.datas2 = [];
+      http
+        .get("/store/storeradius/" + this.getApt.lat + "/" + this.getApt.lng + "/" + radius)
+        .then(({ data }) => {
+          this.store = data;
+        })
+        .catch(() => {
+          alert("에러가 발생했습니다.");
+        });
+      http
+        .get("/store/storeradiusrank/" + this.getApt.lat + "/" + this.getApt.lng + "/" + radius)
+        .then(({ data }) => {
+          for (let index = 0; index < data.length; index++) {
+            if (index == 3) break;
+            this.labels2.push(data[index].sname);
+            this.datas2.push(data[index].storecnt);
+          }
+          console.log("편의점 데이터 삽입");
+        })
+        .catch(() => {
+          alert("에러가 발생했습니다.");
+        });
+    },
+    changeCategory(c) {
+      this.category = c;
+      console.log(c);
+    },
+    chartOpen(c) {
+      switch (c) {
+        case 0:
+          console.log("커피 버튼 바뀌기 전");
+          console.log(this.isCoffeeCurrent);
+          this.isCoffeeCurrent = !this.isCoffeeCurrent;
+          console.log("커피 버튼 바뀐 후");
+          console.log(this.isCoffeeCurrent);
+          this.chartbar = !this.chartbar;
+          this.a();
+          break;
+        case 1:
+          this.isMarketCurrent = !this.isMarketCurrent;
+          this.chartbar2 = !this.chartbar2;
+          this.b();
+          break;
+        case 2:
+          break;
+        default:
+          break;
+      }
+      console.log(this.chartbar);
+    },
+    a() {
+      console.log("1렌더링해야지");
+      this.fillData(this.labels, this.datas);
+    },
+    b() {
+      console.log("2렌더링해야지");
+      this.fillData2(this.labels2, this.datas2);
+    },
     fillData(l, d) {
       this.chartdata = {
         labels: l,
         datasets: [
           {
-            label: "카페 많은 동네 TOP 3",
+            label: "주변 카페 동네 TOP 3",
+            backgroundColor: [
+              "rgba(255, 99, 132, 0.2)",
+              "rgba(255, 159, 64, 0.2)",
+              "rgba(255, 205, 86, 0.2)",
+            ],
+            borderColor: ["rgb(255, 99, 132)", "rgb(255, 159, 64)", "rgb(255, 205, 86)"],
+            data: d,
+          },
+        ],
+        // datasets: [
+        //   {
+        //     label: "카페 많은 동네 TOP 3",
+        //     backgroundColor: [
+        //       "rgba(255, 99, 132, 0.2)",
+        //       "rgba(255, 159, 64, 0.2)",
+        //       "rgba(255, 205, 86, 0.2)",
+        //     ],
+        //     borderColor: ["rgb(255, 99, 132)", "rgb(255, 159, 64)", "rgb(255, 205, 86)"],
+        //     data: d,
+        //   },
+        // ],
+      };
+      this.options = {
+        onClick: this.aa,
+      };
+    },
+    fillData2(l, d) {
+      this.chartdata2 = {
+        labels: l,
+        datasets: [
+          {
+            label: "주변 편의점 TOP 3",
             backgroundColor: [
               "rgba(255, 99, 132, 0.2)",
               "rgba(255, 159, 64, 0.2)",
@@ -344,16 +510,29 @@ export default {
         });
       this.isMarketCurrent = !this.isMarketCurrent;
     },
-    markerClick(lat, lng) {
-      http
-        .get("/coffeeshop/coffeemarker/" + lat + "/" + lng)
-        .then(({ data }) => {
-          //console.log(data);
-          this.markerinfo = data;
-        })
-        .catch(() => {
-          alert("에러가 발생했습니다.");
-        });
+    markerClick(lat, lng, c) {
+      if (c == 0) {
+        console.log("카페 클릭");
+        http
+          .get("/coffeeshop/coffeemarker/" + lat + "/" + lng)
+          .then(({ data }) => {
+            console.log(data);
+            this.markerinfo = data;
+          })
+          .catch(() => {
+            alert("에러가 발생했습니다.");
+          });
+      } else {
+        http
+          .get("/store/storemarker/" + lat + "/" + lng)
+          .then(({ data }) => {
+            console.log(data);
+            this.markerinfo2 = data;
+          })
+          .catch(() => {
+            alert("에러가 발생했습니다.");
+          });
+      }
 
       this.center.lat = lat * 1;
       this.center.lng = lng * 1;
@@ -406,9 +585,7 @@ export default {
     changeDist(d) {
       this.meter = d;
     },
-    chartOpen() {
-      this.chartbar = true;
-    },
+
     chartClose() {
       this.chartbar = false;
     },
