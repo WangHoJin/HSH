@@ -128,7 +128,8 @@
                       v-for="(c, index) in coffeeshop"
                       :key="`${index}_coffeeshop`"
                       :position="{ lat: c.lat * 1, lng: c.lng * 1 }"
-                      @click="aa"
+                      :icon="cafemarkerOptions"
+                      @click="markerClick(c.lat, c.lng)"
                     />
                   </GmapMap>
                   <!-- Map End -->
@@ -151,6 +152,12 @@
                 </section>
                 <section>
                   <h2 class="major"><span>마커 정보</span></h2>
+                  <div v-for="(cafe, index) in markerinfo" :key="`${index}_markerinfo`">
+                    <h4>{{ cafe.cname }}</h4>
+                    <h5>{{ cafe.branchname }}</h5>
+                    <h5>{{ cafe.address1 }}</h5>
+                    <h5>{{ cafe.address2 }}</h5>
+                  </div>
                 </section>
               </div>
             </div>
@@ -169,7 +176,9 @@ import AptDetailListRow from "@/components/apt/AptDetailListRow.vue";
 // import M100 from "@/components/Charts/100M.vue";
 import PieChart from "@/components/Charts/PieChart.vue";
 import { mapGetters } from "vuex";
-const mapMarker = require("@/assets/logo.png");
+const mapMarker = require("@/assets/css/images/apartment.png");
+const cafeMarker = require("@/assets/css/images/coffee-cup.png");
+
 export default {
   name: "search",
   components: {
@@ -190,6 +199,12 @@ export default {
         size: { width: 60, height: 90, f: "px", b: "px" },
         scaledSize: { width: 30, height: 45, f: "px", b: "px" },
       },
+      cafemarkerOptions: {
+        url: cafeMarker,
+        size: { width: 60, height: 70, f: "px", b: "px" },
+        scaledSize: { width: 30, height: 30, f: "px", b: "px" },
+      },
+      markerinfo: {},
       isCoffeeCurrent: false,
       isMarketCurrent: false,
       dist100: true,
@@ -305,8 +320,16 @@ export default {
     getMarketRadius() {
       this.isMarketCurrent = !this.isMarketCurrent;
     },
-    aa() {
-      alert("야야");
+    markerClick(lat, lng) {
+      http
+        .get("/coffeeshop/coffeemarker/" + lat + "/" + lng)
+        .then(({ data }) => {
+          console.log(data);
+          this.markerinfo = data;
+        })
+        .catch(() => {
+          alert("에러가 발생했습니다.");
+        });
     },
     selectDist100() {
       this.dist100 = true;
