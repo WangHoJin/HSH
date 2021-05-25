@@ -11,7 +11,7 @@
 
     <!-- Main -->
     <section id="main">
-      <div class="container">
+      <div id="ranking" class="container">
         <div class="row gtr-200">
           <div class="col-12">
             <!-- Highlight -->

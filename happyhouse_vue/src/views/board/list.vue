@@ -1,21 +1,21 @@
 <template>
   <div>
     <section id="main">
-      <h2 class="text-center">Q&A</h2>
+      <h2 class="major"><span>게시판</span></h2>
       <div class="container" style="width: 70%">
         <div v-if="items.length">
           <table class="table table-bordered table-condensed">
             <colgroup>
-              <col :style="{ width: '5%' }" />
+              <col :style="{ width: '10%' }" />
               <col :style="{ width: '50%' }" />
               <col :style="{ width: '10%' }" />
               <col :style="{ width: '25%' }" />
             </colgroup>
-            <tr>
-              <th>번호</th>
-              <th>제목</th>
-              <th>작성자</th>
-              <th>날짜</th>
+            <tr id="htr">
+              <th><h2>번호</h2></th>
+              <th><h2>제목</h2></th>
+              <th><h2>작성자</h2></th>
+              <th><h2>날짜</h2></th>
             </tr>
             <list-row
               v-for="(item, index) in items"
@@ -27,7 +27,7 @@
             />
           </table>
         </div>
-        <div v-else>글이 없습니다.</div>
+        <div v-else><h2>글이 없습니다.</h2></div>
         <div class="text-right">
           <button class="button" @click="movePage">등록</button>
         </div>
@@ -71,4 +71,12 @@ export default {
 };
 </script>
 
-<style></style>
+<style>
+h2 {
+  font-size: 100%;
+  border-top: solid 0px #e7eae8;
+}
+#htr {
+  background-color: #f2f5f3;
+}
+</style>
