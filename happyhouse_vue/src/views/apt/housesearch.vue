@@ -71,8 +71,6 @@
           </div>
           <div class="col-4 col-12-medium">
             <div class="form-group sorting-filters text-center d-flex justify-content-center">
-              <!-- <label for="aptname" style="display: inline-block">아파트별 검색</label> -->
-
               <input
                 type="text"
                 style="
@@ -163,7 +161,7 @@
 import http from "@/util/http-common";
 import AptListRow from "@/components/apt/AptListRow.vue";
 import { mapGetters } from "vuex";
-const mapMarker = require("@/assets/logo.png");
+const mapMarker = require("@/assets/css/images/apartment.png");
 export default {
   name: "search",
   components: {
