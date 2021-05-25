@@ -21,7 +21,7 @@
                   <a
                     href="#icondetail"
                     @mouseover="[changeCategory(0)]"
-                    @mouseup="[chartOpen()]"
+                    @mouseup="[showCafeRank()]"
                     class="icon solid fa-coffee"
                   >
                     <span class="label">Magnifier</span></a
@@ -32,7 +32,7 @@
                     href="#icondetail"
                     class="icon solid fa-shopping-cart"
                     @mouseover="[changeCategory(1)]"
-                    @mouseup="[chartOpen()]"
+                    @mouseup="[showStoreRank()]"
                     ><span class="label">Tablet</span></a
                   >
                 </li>
@@ -49,7 +49,7 @@
               </ul>
             </section>
           </div>
-          <div id="icondetail" class="col-12" v-show="showcoffee">
+          <div id="icondetail" class="col-12" v-show="showrank">
             <!-- Features -->
             <section class="box features">
               <h2 class="major"><span>A Major Heading</span></h2>
@@ -58,17 +58,32 @@
                   <bar-chart v-if="chartbar" :chartdata="chartdata" :options="options"></bar-chart>
                 </div>
                 <div class="col-6 text-center">
-                  <h2 style="margin-bottom: 2em">{{ topdong }} 카페 순위</h2>
                   <div
                     v-for="(cafe, index) in cafes"
                     :key="`${index}_cafes`"
-                    style="display: inline-block; padding: 2em 1em"
+                    style="padding: 0.5em 1em"
+                    v-show="cafeRank"
                   >
-                    <h2>{{ index + 1 }}. {{ cafe.cname }}</h2>
+                    <!-- <h2 style="margin-bottom: 2em">{{ topdong }} 카페 순위</h2> -->
+                    <h2 style="display: inline-block">{{ index + 1 }}. {{ cafe.cname }}</h2>
 
                     <img
                       class="cafelogo"
                       :src="require(`@/assets/css/images/${cafeEngName[index]}.png`)"
+                    />
+                  </div>
+                  <div
+                    v-for="(store, index) in stores"
+                    :key="`${index}_stores`"
+                    style="padding: 0.5em 1em"
+                    v-show="storeRank"
+                  >
+                    <!-- <h2 style="margin-bottom: 2em">{{ topdong }} 편의점 순위</h2> -->
+                    <h2 style="display: inline-block">{{ index + 1 }}. {{ store.sname }}</h2>
+
+                    <img
+                      class="cafelogo"
+                      :src="require(`@/assets/css/images/${storeEngName[index]}.png`)"
                     />
                   </div>
                 </div>
@@ -95,11 +110,16 @@ export default {
       options: null,
       labels: [],
       datas: [],
-      showcoffee: false,
+      showrank: false,
       chartbar: false,
       cafes: [],
       cafeEngName: [],
       category: 5,
+      stores: [],
+      storeEngName: [],
+      cafeRank: false,
+      storeRank: false,
+      rank: "",
     };
   },
   async mounted() {
@@ -196,62 +216,103 @@ export default {
       this.topdong = item._model.label;
 
       console.log(item._model.label);
-      http
-        .get("/coffeeshop/coffeeshoprank/" + this.topdong)
-        .then(({ data }) => {
+      if (this.rank === "카페") {
+        http
+          .get("/coffeeshop/coffeeshoprank/" + this.topdong)
+          .then(({ data }) => {
+            console.log(data);
+            console.log(data[0].cname);
+            this.cafes = data;
+            for (let i = 0; i < 5; i++) {
+              if (this.cafes[i].cname === "스타벅스") {
+                this.cafeEngName[i] = "starbucks";
+              } else if (this.cafes[i].cname === "이디야커피") {
+                this.cafeEngName[i] = "ediya";
+              } else if (this.cafes[i].cname === "투썸플레이스") {
+                this.cafeEngName[i] = "twosome";
+              } else if (this.cafes[i].cname === "커피빈") {
+                this.cafeEngName[i] = "coffeebean";
+              } else if (this.cafes[i].cname === "빽다방") {
+                this.cafeEngName[i] = "paikscoffee";
+              } else if (this.cafes[i].cname === "파스쿠찌") {
+                this.cafeEngName[i] = "pascucci";
+              } else if (this.cafes[i].cname === "할리스커피") {
+                this.cafeEngName[i] = "hollys";
+              } else if (this.cafes[i].cname === "커피에반하다") {
+                this.cafeEngName[i] = "cuban";
+              } else if (this.cafes[i].cname === "탐앤탐스") {
+                this.cafeEngName[i] = "tomtom";
+              } else if (this.cafes[i].cname === "메가엠지씨커피") {
+                this.cafeEngName[i] = "mega";
+              } else if (this.cafes[i].cname === "달콤") {
+                this.cafeEngfName[i] = "dalkomm";
+              } else {
+                this.cafeEngName[i] = "profile";
+              }
+            }
+          })
+          .catch(() => {
+            alert("에러가 발생했습니다.");
+          });
+      } else if (this.rank === "편의점") {
+        http.get("/store/storerank/" + this.topdong).then(({ data }) => {
+          this.stores = data;
           console.log(data);
-          console.log(data[0].cname);
-          this.cafes = data;
           for (let i = 0; i < 5; i++) {
-            if (this.cafes[i].cname === "스타벅스") {
-              this.cafeEngName[i] = "starbucks";
-            } else if (this.cafes[i].cname === "이디야커피") {
-              this.cafeEngName[i] = "ediya";
-            } else if (this.cafes[i].cname === "투썸플레이스") {
-              this.cafeEngName[i] = "twosome";
-            } else if (this.cafes[i].cname === "커피빈") {
-              this.cafeEngName[i] = "coffeebean";
-            } else if (this.cafes[i].cname === "빽다방") {
-              this.cafeEngName[i] = "paikscoffee";
-            } else if (this.cafes[i].cname === "파스쿠찌") {
-              this.cafeEngName[i] = "pascucci";
-            } else if (this.cafes[i].cname === "할리스커피") {
-              this.cafeEngName[i] = "hollys";
-            } else if (this.cafes[i].cname === "커피에반하다") {
-              this.cafeEngName[i] = "cuban";
-            } else if (this.cafes[i].cname === "탐앤탐스") {
-              this.cafeEngName[i] = "tomtom";
-            } else if (this.cafes[i].cname === "메가엠지씨커피") {
-              this.cafeEngName[i] = "mega";
-            } else if (this.cafes[i].cname === "달콤") {
-              this.cafeEngfName[i] = "dalkomm";
+            if (this.stores[i].sname === "CU") {
+              this.storeEngName[i] = "CU";
+            } else if (this.stores[i].sname === "GS25") {
+              this.storeEngName[i] = "gs25";
+            } else if (this.stores[i].sname === "세븐일레븐") {
+              this.storeEngName[i] = "seveneleven";
+            } else if (this.stores[i].sname === "미니스톱") {
+              this.storeEngName[i] = "ministop";
+            } else if (this.stores[i].sname === "이마트24") {
+              this.storeEngName[i] = "emart24";
             } else {
-              this.cafeEngName[i] = "profile";
+              this.storeEngName[i] = "profile";
             }
           }
-
-          if (this.cafes.cname === "스타벅스") {
-            console.log(this.cafes.cname);
-            this.cafes.cname = "starbucks";
-          }
-        })
-        .catch(() => {
-          alert("에러가 발생했습니다.");
         });
+      }
     },
+
     showCoffeeShop() {
       console.log("차트도 열고");
-      this.showcoffee = !this.showcoffee;
+      this.showrank = !this.showrank;
       this.chartbar = !this.chartbar;
     },
     changeCategory(c) {
       this.category = c;
+      if (c == 0) {
+        this.rank = "카페";
+      } else if (c == 1) {
+        this.rank = "편의점";
+      }
       console.log(c);
     },
     chartOpen() {
       console.log("렌더링해야지");
       this.fillData(this.labels, this.datas);
-      this.showcoffee = !this.showcoffee;
+      this.showrank = !this.showrank;
+      this.chartbar = !this.chartbar;
+      console.log(this.chartbar);
+    },
+    showCafeRank() {
+      console.log("렌더링해야지");
+      this.fillData(this.labels, this.datas);
+      this.cafeRank = true;
+      this.storeRank = false;
+      this.showrank = !this.showrank;
+      this.chartbar = !this.chartbar;
+      console.log(this.chartbar);
+    },
+    showStoreRank() {
+      console.log("렌더링해야지");
+      this.fillData(this.labels, this.datas);
+      this.storeRank = true;
+      this.cafeRank = false;
+      this.showrank = !this.showrank;
       this.chartbar = !this.chartbar;
       console.log(this.chartbar);
     },
