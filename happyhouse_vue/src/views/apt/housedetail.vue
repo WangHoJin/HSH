@@ -53,7 +53,7 @@
                 <a
                   class="icon solid fa-shopping-cart green"
                   :class="{ current: isMarketCurrent }"
-                  @click="getMarketRadius"
+                  @click="getMarketRadius(100), chartOpenAndClose()"
                   ><span class="label"></span
                 ></a>
               </li>
@@ -117,7 +117,7 @@
                   <GmapMap
                     ref="mapRef"
                     :center="{ lat: getApt.lat * 1, lng: getApt.lng * 1 }"
-                    :zoom="16"
+                    :zoom="zoom"
                     style="width: 100%; height: 500px"
                   >
                     <GmapMarker
@@ -129,6 +129,12 @@
                       :key="`${index}_coffeeshop`"
                       :position="{ lat: c.lat * 1, lng: c.lng * 1 }"
                       :icon="cafemarkerOptions"
+                      @click="markerClick(c.lat, c.lng)"
+                    />
+                    <GmapMarker
+                      v-for="(c, index) in store"
+                      :key="`${index}_store`"
+                      :position="{ lat: c.lat * 1, lng: c.lng * 1 }"
                       @click="markerClick(c.lat, c.lng)"
                     />
                   </GmapMap>
@@ -194,6 +200,7 @@ export default {
       },
       aptdetail: [],
       coffeeshop: [],
+      store: [],
       markerOptions: {
         url: mapMarker,
         size: { width: 60, height: 90, f: "px", b: "px" },
@@ -218,6 +225,7 @@ export default {
       labels: [],
       datas: [],
       meter: 0,
+      zoom: 10,
     };
   },
   computed: {
@@ -235,19 +243,22 @@ export default {
   },
   watch: {
     meter: function (newVal) {
-      console.log("와치");
-      console.log("/coffeeshop/coffeeradiusrank/" + this.getApt.aptName + "/" + newVal);
+      //console.log("와치");
+      //console.log( "/coffeeshop/coffeeradiusrank/" + this.getApt.lat + "/" + this.getApt.lng + "/" + newVal);
       http
-        .get("/coffeeshop/coffeeradiusrank/" + this.getApt.aptName + "/" + newVal)
+        .get(
+          "/coffeeshop/coffeeradiusrank/" + this.getApt.no + "/" + this.getApt.lng + "/" + newVal
+        )
         .then(({ data }) => {
           this.labels = [];
           this.datas = [];
-          console.log(data);
-          for (let index = 0; index < 5; index++) {
+          //console.log(data);
+          for (let index = 0; index < data.length; index++) {
+            if (index == 5) break;
             this.labels.push(data[index].cname);
             this.datas.push(data[index].coffeeshopcnt);
           }
-          console.log(this.labels);
+          //console.log(this.labels);
         })
         .catch(() => {
           alert("에러가 발생했습니다.");
@@ -256,9 +267,10 @@ export default {
   },
   async mounted() {
     http
-      .get("/coffeeshop/coffeeradiusrank/" + this.getApt.aptName + "/100")
+      .get("/coffeeshop/coffeeradiusrank/" + this.getApt.lat + "/" + this.getApt.lng + "/100")
       .then(({ data }) => {
-        for (let index = 0; index < 5; index++) {
+        for (let index = 0; index < data.length; index++) {
+          if (index == 5) break;
           this.labels.push(data[index].cname);
           this.datas.push(data[index].coffeeshopcnt);
         }
@@ -297,16 +309,16 @@ export default {
       // f->t t
       // 끄는 상황
       // t->f f
-      console.log("로그인상태" + !this.isCoffeeCurrent);
-      console.log("클릭상태" + meter);
+      //console.log("로그인상태" + !this.isCoffeeCurrent);
+      //console.log("클릭상태" + meter);
       if ((!this.isCoffeeCurrent && meter) == true) {
         alert("세권입력");
         this.chartbar = false;
       } else if (!this.isCoffeeCurrent || meter) {
         http
-          .get("/coffeeshop/coffeeradius/" + this.getApt.aptName + "/" + radius)
+          .get("/coffeeshop/coffeeradius/" + this.getApt.lat + "/" + this.getApt.lng + "/" + radius)
           .then(({ data }) => {
-            console.log(data);
+            //console.log(data);
             this.coffeeshop = data;
           })
           .catch(() => {
@@ -316,40 +328,54 @@ export default {
         this.coffeeshop = null;
       }
       if (!meter) this.isCoffeeCurrent = !this.isCoffeeCurrent;
+      console.log("카페 클릭");
+      console.log(this.getApt.lat + "/" + this.getApt.lng);
     },
-    getMarketRadius() {
+    getMarketRadius(radius) {
+      console.log("편의점 클릭");
+      http
+        .get("/store/storeradius/" + this.getApt.lat + "/" + this.getApt.lng + "/" + radius)
+        .then(({ data }) => {
+          //console.log(data);
+          this.store = data;
+        })
+        .catch(() => {
+          alert("에러가 발생했습니다.");
+        });
       this.isMarketCurrent = !this.isMarketCurrent;
     },
     markerClick(lat, lng) {
       http
         .get("/coffeeshop/coffeemarker/" + lat + "/" + lng)
         .then(({ data }) => {
-          console.log(data);
+          //console.log(data);
           this.markerinfo = data;
         })
         .catch(() => {
           alert("에러가 발생했습니다.");
         });
+
+      this.zoom = 18;
     },
     selectDist100() {
       this.dist100 = true;
       this.dist300 = false;
       this.dist500 = false;
-      console.log("렌더링100");
+      //console.log("렌더링100");
       this.fillData(this.labels, this.datas);
     },
     selectDist300() {
       this.dist100 = false;
       this.dist300 = true;
       this.dist500 = false;
-      console.log("렌더링300");
+      //console.log("렌더링300");
       this.fillData(this.labels, this.datas);
     },
     selectDist500() {
       this.dist100 = false;
       this.dist300 = false;
       this.dist500 = true;
-      console.log("렌더링500");
+      //console.log("렌더링500");
       this.fillData(this.labels, this.datas);
     },
 

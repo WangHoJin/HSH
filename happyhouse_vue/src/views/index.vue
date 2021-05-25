@@ -18,12 +18,21 @@
             <section class="box highlight">
               <ul class="special">
                 <li>
-                  <a href="#icondetail" @click="showCoffeeShop" class="icon solid fa-coffee">
+                  <a
+                    href="#icondetail"
+                    @mouseover="[changeCategory(0)]"
+                    @mouseup="[chartOpen()]"
+                    class="icon solid fa-coffee"
+                  >
                     <span class="label">Magnifier</span></a
                   >
                 </li>
                 <li>
-                  <a href="#icondetail" class="icon solid fa-shopping-cart"
+                  <a
+                    href="#icondetail"
+                    class="icon solid fa-shopping-cart"
+                    @mouseover="[changeCategory(1)]"
+                    @mouseup="[chartOpen()]"
                     ><span class="label">Tablet</span></a
                   >
                 </li>
@@ -46,7 +55,7 @@
               <h2 class="major"><span>A Major Heading</span></h2>
               <div class="row">
                 <div class="col-6">
-                  <bar-chart v-if="loaded" :chartdata="chartdata" :options="options"></bar-chart>
+                  <bar-chart v-if="chartbar" :chartdata="chartdata" :options="options"></bar-chart>
                 </div>
                 <div class="col-6 text-center">
                   <h2 style="margin-bottom: 2em">{{ topdong }} 카페 순위</h2>
@@ -81,34 +90,85 @@ export default {
   data() {
     return {
       loaded: false,
-      showcoffee: false,
       topdong: "",
       chartdata: null,
       options: null,
+      labels: [],
+      datas: [],
+      showcoffee: false,
+      chartbar: false,
       cafes: [],
       cafeEngName: [],
+      category: 5,
     };
   },
   async mounted() {
-    const labels = [];
-    const datas = [];
-    console.log("마운트");
-    http
-      .get("/coffeeshop/dongrank")
-      .then(({ data }) => {
-        for (let index = 0; index < 3; index++) {
-          labels.push(data[index].dong);
-          datas.push(data[index].cnt);
-          console.log("데이터");
-        }
-      })
-      .catch(() => {
-        alert("에러가 발생했습니다.");
-      });
-    console.log("no!!");
-    this.fillData(labels, datas);
+    // const labels = [];
+    // const datas = [];
+    // console.log("마운트");
+    // http
+    //   .get("/coffeeshop/dongrank")
+    //   .then(({ data }) => {
+    //     for (let index = 0; index < 3; index++) {
+    //       labels.push(data[index].dong);
+    //       datas.push(data[index].cnt);
+    //       console.log("데이터");
+    //     }
+    //   })
+    //   .catch(() => {
+    //     alert("에러가 발생했습니다.");
+    //   });
+    // console.log("no!!");
+    // this.fillData(labels, datas);
+  },
+  watch: {
+    category: function (newVal) {
+      this.labels = [];
+      this.datas = [];
+      switch (newVal) {
+        case 0:
+          console.log("와치 진입");
+          this.getCafeData();
+          break;
+        case 1:
+          this.getMarketData();
+          break;
+        case 2:
+          break;
+        default:
+          break;
+      }
+    },
   },
   methods: {
+    getCafeData() {
+      http
+        .get("/coffeeshop/dongrank")
+        .then(({ data }) => {
+          for (let index = 0; index < 3; index++) {
+            console.log("데이타 잘 받아오고");
+            console.log(data);
+            this.labels.push(data[index].dong);
+            this.datas.push(data[index].cnt);
+          }
+        })
+        .catch(() => {
+          alert("에러가 발생했습니다.");
+        });
+    },
+    getMarketData() {
+      http
+        .get("/store/dongrank")
+        .then(({ data }) => {
+          for (let index = 0; index < 3; index++) {
+            this.labels.push(data[index].dong);
+            this.datas.push(data[index].cnt);
+          }
+        })
+        .catch(() => {
+          alert("에러가 발생했습니다.");
+        });
+    },
     fillData(l, d) {
       this.chartdata = {
         labels: l,
@@ -180,8 +240,23 @@ export default {
         });
     },
     showCoffeeShop() {
+      console.log("차트도 열고");
       this.showcoffee = !this.showcoffee;
-      this.loaded = true;
+      this.chartbar = !this.chartbar;
+    },
+    changeCategory(c) {
+      this.category = c;
+      console.log(c);
+    },
+    chartOpen() {
+      console.log("렌더링해야지");
+      this.fillData(this.labels, this.datas);
+      this.showcoffee = !this.showcoffee;
+      this.chartbar = !this.chartbar;
+      console.log(this.chartbar);
+    },
+    chartClose() {
+      // this.chartbar = false;
     },
   },
 };
