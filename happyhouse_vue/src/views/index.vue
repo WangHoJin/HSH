@@ -3,7 +3,7 @@
     <!-- Banner -->
     <section id="banner">
       <div class="content">
-        <h2>Welcome to TXT by HTML5 UP</h2>
+        <h2>당신은 어떤 세권에 살고싶은가요?</h2>
         <p>A free responsive site template built on HTML5, CSS3, and some other stuff</p>
         <a href="#main" class="button scrolly">Alright let's go</a>
       </div>
