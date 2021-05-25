@@ -45,7 +45,7 @@
                 <a
                   :class="{ current: isCoffeeCurrent }"
                   class="icon solid fa-coffee green"
-                  @click="getCoffeeShopRadius"
+                  @click="[getCoffeeShopRadius(100, false), chartOpenAndClose()]"
                   ><span class="label"></span
                 ></a>
               </li>
@@ -77,9 +77,33 @@
             </ul>
             <!-- <div class="col-4 col-12-medium"> -->
             <h3 style="display: inline-block; margin: 0 1em">반경 설정</h3>
-            <button class="button" :class="{ selected: dist100 }" @click="getDist100">100m</button>
-            <button class="button" :class="{ selected: dist300 }" @click="getDist300">300m</button>
-            <button class="button" :class="{ selected: dist500 }" @click="getDist500">500m</button>
+            <button
+              class="button"
+              :class="{ selected: dist100 }"
+              @mouseover="changeDist(100)"
+              @mouseup="[selectDist100(), chartOpen(), getCoffeeShopRadius(100, true)]"
+              @mousedown="chartClose()"
+            >
+              100m
+            </button>
+            <button
+              class="button"
+              :class="{ selected: dist300 }"
+              @mouseover="changeDist(300)"
+              @mouseup="[selectDist300(), chartOpen(), getCoffeeShopRadius(300, true)]"
+              @mousedown="chartClose()"
+            >
+              300m
+            </button>
+            <button
+              class="button"
+              :class="{ selected: dist500 }"
+              @mouseover="changeDist(500)"
+              @mouseup="[selectDist500(), chartOpen(), getCoffeeShopRadius(500, true)]"
+              @mousedown="chartClose()"
+            >
+              500m
+            </button>
             <!-- </div> -->
           </div>
         </div>
@@ -116,7 +140,14 @@
             <div class="card" style="border: 0px; height: 600px; overflow: auto">
               <div class="sidebar">
                 <section>
-                  <h2 class="major"><span>땡세권 그래프</span></h2>
+                  <h2 class="major">
+                    <span>땡세권 그래프</span>
+                    <pie-chart
+                      v-if="chartbar"
+                      :chartdata="chartdata"
+                      :options="options"
+                    ></pie-chart>
+                  </h2>
                 </section>
                 <section>
                   <h2 class="major"><span>마커 정보</span></h2>
@@ -135,12 +166,16 @@
 <script>
 import http from "@/util/http-common";
 import AptDetailListRow from "@/components/apt/AptDetailListRow.vue";
+// import M100 from "@/components/Charts/100M.vue";
+import PieChart from "@/components/Charts/PieChart.vue";
 import { mapGetters } from "vuex";
 const mapMarker = require("@/assets/logo.png");
 export default {
   name: "search",
   components: {
     AptDetailListRow,
+    // M100,
+    PieChart,
   },
   data() {
     return {
@@ -160,6 +195,14 @@ export default {
       dist100: true,
       dist300: false,
       dist500: false,
+      chartdata: null,
+      options: null,
+      chartbar: false,
+      loaded: false,
+      start: true,
+      labels: [],
+      datas: [],
+      meter: 0,
     };
   },
   computed: {
@@ -175,17 +218,89 @@ export default {
         alert("에러가 발생했습니다.");
       });
   },
-  methods: {
-    getCoffeeShopRadius() {
+  watch: {
+    meter: function (newVal) {
+      console.log("와치");
+      console.log("/coffeeshop/coffeeradiusrank/" + this.getApt.aptName + "/" + newVal);
       http
-        .get("/coffeeshop/coffeeradius/" + this.getApt.aptName)
+        .get("/coffeeshop/coffeeradiusrank/" + this.getApt.aptName + "/" + newVal)
         .then(({ data }) => {
-          this.coffeeshop = data;
+          this.labels = [];
+          this.datas = [];
+          console.log(data);
+          for (let index = 0; index < 5; index++) {
+            this.labels.push(data[index].cname);
+            this.datas.push(data[index].coffeeshopcnt);
+          }
+          console.log(this.labels);
         })
         .catch(() => {
           alert("에러가 발생했습니다.");
         });
-      this.isCoffeeCurrent = !this.isCoffeeCurrent;
+    },
+  },
+  async mounted() {
+    http
+      .get("/coffeeshop/coffeeradiusrank/" + this.getApt.aptName + "/100")
+      .then(({ data }) => {
+        for (let index = 0; index < 5; index++) {
+          this.labels.push(data[index].cname);
+          this.datas.push(data[index].coffeeshopcnt);
+        }
+      })
+      .catch(() => {
+        alert("에러가 발생했습니다.");
+      });
+    this.fillData(this.labels, this.datas);
+  },
+  methods: {
+    fillData(l, d) {
+      this.chartdata = {
+        labels: l,
+        datasets: [
+          {
+            label: "카페 많은 동네 TOP 3",
+            backgroundColor: [
+              "rgba(255, 99, 132, 0.2)",
+              "rgba(255, 159, 64, 0.2)",
+              "rgba(255, 205, 86, 0.2)",
+            ],
+            borderColor: ["rgb(255, 99, 132)", "rgb(255, 159, 64)", "rgb(255, 205, 86)"],
+            data: d,
+          },
+        ],
+      };
+
+      this.options = {
+        onClick: this.aa,
+      };
+    },
+    getCoffeeShopRadius(radius, meter) {
+      // 통신을 켜야되는 상황
+      // 시작 , 미터 선택
+      // f->t f and t->f t
+      // f->t t
+      // 끄는 상황
+      // t->f f
+      console.log("로그인상태" + !this.isCoffeeCurrent);
+      console.log("클릭상태" + meter);
+      if ((!this.isCoffeeCurrent && meter) == true) {
+        alert("세권입력");
+        this.chartbar = false;
+      } else if (!this.isCoffeeCurrent || meter) {
+        http
+          .get("/coffeeshop/coffeeradius/" + this.getApt.aptName + "/" + radius)
+          .then(({ data }) => {
+            console.log(data);
+            this.coffeeshop = data;
+          })
+          .catch(() => {
+            alert("에러가 발생했습니다.");
+          });
+      } else {
+        this.coffeeshop = null;
+      }
+      if (!meter) this.isCoffeeCurrent = !this.isCoffeeCurrent;
     },
     getMarketRadius() {
       this.isMarketCurrent = !this.isMarketCurrent;
@@ -193,20 +308,39 @@ export default {
     aa() {
       alert("야야");
     },
-    getDist100() {
+    selectDist100() {
       this.dist100 = true;
       this.dist300 = false;
       this.dist500 = false;
+      console.log("렌더링100");
+      this.fillData(this.labels, this.datas);
     },
-    getDist300() {
+    selectDist300() {
       this.dist100 = false;
       this.dist300 = true;
       this.dist500 = false;
+      console.log("렌더링300");
+      this.fillData(this.labels, this.datas);
     },
-    getDist500() {
+    selectDist500() {
       this.dist100 = false;
       this.dist300 = false;
       this.dist500 = true;
+      console.log("렌더링500");
+      this.fillData(this.labels, this.datas);
+    },
+
+    changeDist(d) {
+      this.meter = d;
+    },
+    chartOpen() {
+      this.chartbar = true;
+    },
+    chartClose() {
+      this.chartbar = false;
+    },
+    chartOpenAndClose() {
+      this.chartbar = !this.chartbar;
     },
   },
 };

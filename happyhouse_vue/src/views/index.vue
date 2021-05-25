@@ -76,11 +76,8 @@
 import http from "@/util/http-common";
 import BarChart from "@/components/Charts/BarChart.vue";
 export default {
-  components: { BarChart },
   name: "index",
-  component: {
-    BarChart,
-  },
+  components: { BarChart },
   data() {
     return {
       loaded: false,
@@ -95,17 +92,20 @@ export default {
   async mounted() {
     const labels = [];
     const datas = [];
+    console.log("마운트");
     http
       .get("/coffeeshop/dongrank")
       .then(({ data }) => {
         for (let index = 0; index < 3; index++) {
           labels.push(data[index].dong);
           datas.push(data[index].cnt);
+          console.log("데이터");
         }
       })
       .catch(() => {
         alert("에러가 발생했습니다.");
       });
+    console.log("no!!");
     this.fillData(labels, datas);
   },
   methods: {
