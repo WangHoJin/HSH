@@ -17,10 +17,10 @@
             </li>
             <!-- 로그인 후 -->
             <li class="nav-item menu_confirm_on">
-              <router-link class="nav-link" to="/list">Q&A 게시판</router-link>
+              <router-link class="nav-link" to="/list">Q&A</router-link>
             </li>
             <li class="nav-item menu_confirm_on">
-              <router-link class="nav-link" to="/housesearch">검색</router-link>
+              <router-link class="nav-link" to="/housesearch">매물검색</router-link>
             </li>
           </ul>
 
@@ -28,7 +28,7 @@
           <div v-if="getUserId == null">
             <ul id="header_nav_confirm_off" class="navbar-nav justify-content-end">
               <li class="nav-item">
-                <router-link class="nav-link" to="/login">로그인/회원가입</router-link>
+                <router-link class="nav-link" to="/login">로그인/로그아웃</router-link>
               </li>
             </ul>
           </div>

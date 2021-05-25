@@ -253,8 +253,8 @@ body,
 input,
 textarea,
 select {
-  font-family: "SEBANG_Gothic_Bold", "SDSamliphopangche_Outline", "SLEIGothicTTF", "Open Sans",
-    sans-serif;
+  font-family: "BMJUA", "SEBANG_Gothic_Bold", "SDSamliphopangche_Outline", "SLEIGothicTTF",
+    "Open Sans", sans-serif;
   font-weight: 400;
   color: #6c6b77;
   font-size: 13pt;
@@ -267,8 +267,8 @@ h3,
 h4,
 h5,
 h6 {
-  font-family: "SLEIGothicTTF", "BMJUA", "SDSamliphopangche_Outline", "MaplestoryOTFBold",
-    "Cafe24Shiningstar", "HangeulNuri-Bold", "SEBANG_Gothic_Bold", "Open Sans Condensed", sans-serif;
+  font-family: "BMJUA", "SEBANG_Gothic_Bold", "SLEIGothicTTF", "SDSamliphopangche_Outline",
+    "MaplestoryOTFBold", "Cafe24Shiningstar", "HangeulNuri-Bold", "Open Sans Condensed", sans-serif;
   font-weight: 700;
   text-transform: uppercase;
   color: #6b7770;
@@ -372,7 +372,7 @@ table {
 
 section,
 article {
-  margin-bottom: 6em;
+  /* margin-bottom: 6em; */
 }
 
 section > :last-child,
@@ -384,7 +384,7 @@ article:last-child {
 
 header > p {
   display: block;
-  font-family: "Open Sans Condensed", sans-serif;
+  font-family: "BMJUA", "Open Sans Condensed", sans-serif;
   font-weight: 700;
   text-transform: uppercase;
   color: #c1cac5;
@@ -1951,8 +1951,8 @@ button,
 .button {
   -webkit-appearance: none;
   display: inline-block;
-  font-family: "SLEIGothicTTF", "Open Sans Condensed", sans-serif;
-  font-weight: 700;
+  font-family: "BMJUA", "SLEIGothicTTF", "Open Sans Condensed", sans-serif;
+  font-weight: 500;
   text-transform: uppercase;
   text-decoration: none;
   background: #c1cac5;
@@ -2270,7 +2270,7 @@ ul.menu li:first-child {
 form label {
   display: block;
   margin: 0 0 1em 0;
-  font-family: "SLEIGothicTTF", "Open Sans Condensed", sans-serif;
+  font-family: "BMJUA", "SLEIGothicTTF", "Open Sans Condensed", sans-serif;
   font-weight: 700;
   text-transform: uppercase;
   color: #6b7770;
@@ -2355,7 +2355,7 @@ table.default th {
   text-align: left;
   padding: 0.5em 1em 0.5em 1em;
   margin: 0 0 1em 0;
-  font-family: "SLEIGothicTTF", "Open Sans Condensed", sans-serif;
+  font-family: "BMJUA", "SLEIGothicTTF", "Open Sans Condensed", sans-serif;
   font-weight: 700;
   text-transform: uppercase;
   color: #6b7770;
@@ -2480,7 +2480,7 @@ table.default thead {
 #header {
   text-align: center;
   font-size: 2em;
-  font-family: "SLEIGothicTTF", "Open Sans Condensed", sans-serif;
+  font-family: "BMJUA", "SLEIGothicTTF", "Open Sans Condensed", sans-serif;
   font-weight: 700;
   text-transform: uppercase;
   padding: 2em 0;
@@ -2515,7 +2515,7 @@ table.default thead {
 /* Nav */
 
 body {
-  padding-top: 3.25em;
+  padding-top: 4.5em;
 }
 
 #nav {
@@ -2529,8 +2529,9 @@ body {
   height: 3.5em;
   line-height: 3.25em;
   text-align: center;
-  /* font-family: "Open Sans Condensed", sans-serif; */
-  font-weight: 700;
+  font-family: "BMJUA", "Open Sans Condensed", sans-serif;
+  font-size: 1.25em;
+  font-weight: 500;
   text-transform: uppercase;
   cursor: default;
 }
@@ -2606,7 +2607,7 @@ a.current {
   border-radius: 6px;
   line-height: 2.75em;
   text-align: center;
-  font-family: "SLEIGothicTTF", "Open Sans Condensed", sans-serif;
+  font-family: "BMJUA", "SLEIGothicTTF", "Open Sans Condensed", sans-serif;
   font-weight: 700;
   text-transform: uppercase;
   padding: 1em 0;
@@ -2664,13 +2665,13 @@ a.current {
 
 #banner {
   position: relative;
-  background-image: url("images/h4.jpg");
-  /* filter: brightness(100%); */
-  background-position: top left, top left, center center;
+  background-image: url("images/h5.jpg");
+  filter: brightness(90%);
+  background-position: center left, center left, center center;
   background-repeat: repeat, repeat, no-repeat;
   background-size: cover, cover, cover;
   z-index: 1;
-  padding: 11em 0;
+  padding: 9em 0;
 }
 
 #banner .content {
@@ -2693,7 +2694,7 @@ a.current {
 
 #banner .content p {
   display: block;
-  font-family: "SLEIGothicTTF", "Open Sans Condensed", sans-serif;
+  font-family: "BMJUA", "SLEIGothicTTF", "Open Sans Condensed", sans-serif;
   font-weight: 700;
   text-transform: uppercase;
   color: #575d59;
@@ -2714,7 +2715,7 @@ a.current {
 }
 
 #banner .content .button:hover {
-  color: #e4e7e5;
+  color: rgba(87, 93, 89, 0.75);
   border-color: rgba(87, 93, 89, 0.75);
 }
 
@@ -2974,7 +2975,7 @@ a.current {
   #titleBar .title {
     display: block;
     position: relative;
-    font-family: "SLEIGothicTTF", "Open Sans Condensed", sans-serif;
+    font-family: "BMJUA", "SLEIGothicTTF", "Open Sans Condensed", sans-serif;
     font-weight: 700;
     text-transform: uppercase;
     font-size: 1.25em;
@@ -3059,7 +3060,7 @@ a.current {
       linear-gradient(top, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.5));
     background-repeat: repeat, no-repeat;
     background-size: auto, 100% 100%;
-    font-family: "SLEIGothicTTF", "Open Sans Condensed", sans-serif;
+    font-family: "BMJUA", "SLEIGothicTTF", "Open Sans Condensed", sans-serif;
     font-weight: 700;
     text-transform: uppercase;
     font-size: 1.25em;

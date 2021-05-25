@@ -189,6 +189,7 @@ body {
 
 h1 {
   font-weight: bold;
+  font-family: "Montserrat", sans-serif;
   margin: 0;
 }
 

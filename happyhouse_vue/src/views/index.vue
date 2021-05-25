@@ -3,9 +3,9 @@
     <!-- Banner -->
     <section id="banner">
       <div class="content">
-        <h2>당신은 어떤 세권에 살고싶은가요?</h2>
+        <h2 style="color: #6b7770">당신이 원하는 집이 여기있습니다!</h2>
         <p>A free responsive site template built on HTML5, CSS3, and some other stuff</p>
-        <a href="#main" class="button scrolly">Alright let's go</a>
+        <a href="#main" class="button scrolly">Let's go</a>
       </div>
     </section>
 
@@ -16,6 +16,7 @@
           <div class="col-12">
             <!-- Highlight -->
             <section class="box highlight">
+              <h2 style="margin-bottom: 2em">우리집은 카세권? 편세권?</h2>
               <ul class="special">
                 <li>
                   <a
@@ -52,7 +53,7 @@
           <div id="icondetail" class="col-12" v-show="showrank">
             <!-- Features -->
             <section class="box features">
-              <h2 class="major"><span>A Major Heading</span></h2>
+              <h2 class="major"><span>명예의 전당</span></h2>
               <div class="row">
                 <div class="col-6">
                   <bar-chart v-if="chartbar" :chartdata="chartdata" :options="options"></bar-chart>

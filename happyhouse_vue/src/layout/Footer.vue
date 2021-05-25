@@ -7,7 +7,7 @@
             <!-- Footer Location-->
             <div class="col-lg-4 mb-5 mb-lg-0">
               <h4 class="text-uppercase mb-4">Location</h4>
-              <p class="lead mb-0">
+              <p class="lead mb-0" style="font-family: BMJUA; color: #6b7770">
                 (SSAFY) <br />
                 서울시 강남구 테헤란로 멀티스퀘어
               </p>
@@ -40,7 +40,7 @@
             <!-- Footer About Text-->
             <div class="col-lg-4">
               <h4 class="text-uppercase mb-4">Contact Us</h4>
-              <p class="lead mb-0">
+              <p class="lead mb-0" style="font-family: BMJUA; color: #6b7770">
                 1544-9001 <br />
                 admin@ssafy.com
               </p>
