@@ -16,7 +16,7 @@
             </section>
           </div>
           <div class="col-9 col-12-medium">
-            <div class="card" style="border: 0px; height: 230px; overflow: auto">
+            <div class="card scroll" style="border: 0px; height: 230px; overflow: auto">
               <section>
                 <ul class="divided">
                   <apt-detail-list-row
@@ -134,6 +134,7 @@
                       v-for="(c, index) in store"
                       :key="`${index}_store`"
                       :position="{ lat: c.lat * 1, lng: c.lng * 1 }"
+                      :icon="storemarkerOptions"
                       @click="markerClick(c.lat, c.lng, 1)"
                     />
                   </GmapMap>
@@ -143,23 +144,31 @@
             </div>
           </div>
           <div class="col-4 col-12-medium">
-            <div class="card" style="border: 0px; height: 600px; overflow: auto">
+            <div class="card scroll" style="border: 0px; height: 600px; overflow: auto">
               <div class="sidebar">
                 <section>
                   <h2 class="major"><span>카페 정보</span></h2>
-                  <div v-for="(cafe, index) in markerinfo" :key="`${index}_markerinfo`">
-                    <h4>{{ cafe.cname }}</h4>
-                    <h5>{{ cafe.branchname }}</h5>
-                    <h5>{{ cafe.address1 }}</h5>
-                    <h5>{{ cafe.address2 }}</h5>
-                  </div>
+
+                  <ul class="divided">
+                    <li v-for="(cafe, index) in markerinfo" :key="`${index}_markerinfo`">
+                      <article class="box-post-summary">
+                        <h4>{{ cafe.cname }}</h4>
+                        <h5>{{ cafe.branchname }}</h5>
+                        <h5>{{ cafe.address1 }}</h5>
+                      </article>
+                    </li>
+                  </ul>
+
                   <h2 class="major" style="margin: 1.5em 0 1.5em 0"><span>편의점 정보</span></h2>
-                  <div v-for="(store, index) in markerinfo2" :key="`${index}_markerinfo2`">
-                    <h4>{{ store.sname }}</h4>
-                    <h5>{{ store.branchname }}</h5>
-                    <h5>{{ store.address1 }}</h5>
-                    <h5>{{ store.address2 }}</h5>
-                  </div>
+                  <ul class="divided">
+                    <li v-for="(store, index) in markerinfo2" :key="`${index}_markerinfo2`">
+                      <article class="box-post-summary">
+                        <h4>{{ store.sname }}</h4>
+                        <h5>{{ store.branchname }}</h5>
+                        <h5>{{ store.address1 }}</h5>
+                      </article>
+                    </li>
+                  </ul>
                 </section>
               </div>
             </div>
@@ -203,6 +212,7 @@ import DoughnutChart2 from "@/components/Charts/DoughnutChart2.vue";
 import { mapGetters } from "vuex";
 const mapMarker = require("@/assets/css/images/apartment.png");
 const cafeMarker = require("@/assets/css/images/coffee-cup.png");
+const storeMarker = require("@/assets/css/images/24-hours.png");
 
 export default {
   name: "search",
@@ -228,6 +238,11 @@ export default {
       },
       cafemarkerOptions: {
         url: cafeMarker,
+        size: { width: 60, height: 70, f: "px", b: "px" },
+        scaledSize: { width: 30, height: 30, f: "px", b: "px" },
+      },
+      storemarkerOptions: {
+        url: storeMarker,
         size: { width: 60, height: 70, f: "px", b: "px" },
         scaledSize: { width: 30, height: 30, f: "px", b: "px" },
       },
@@ -495,16 +510,16 @@ export default {
       this.center.lat = lat * 1;
       this.center.lng = lng * 1;
 
-      if (this.zoom == 17) {
-        if (this.meter == 100) {
+      if (this.zoom == 17.5) {
+        if (this.m == 100) {
           this.zoom = 16.2;
-        } else if (this.meter == 300) {
+        } else if (this.m == 300) {
           this.zoom = 15.7;
-        } else if (this.meter == 500) {
+        } else if (this.m == 500) {
           this.zoom = 15.5;
         }
       } else if (this.zoom <= 16.2) {
-        this.zoom = 17;
+        this.zoom = 17.5;
       }
 
       this.$refs.mapRef.panTo(this.center);

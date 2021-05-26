@@ -132,7 +132,7 @@
             </div>
           </div>
           <div class="col-4 col-12-medium">
-            <div class="card" style="border: 0px; height: 600px; overflow: auto">
+            <div class="card scroll" style="border: 0px; height: 600px; overflow: auto">
               <div class="sidebar">
                 <!-- Sidebar -->
 

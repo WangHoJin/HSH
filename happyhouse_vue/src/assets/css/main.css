@@ -389,9 +389,24 @@ header > p {
   text-transform: uppercase;
   color: #c1cac5;
 }
+/* 
+div::-webkit-scrollbar {
+  display: none !important;
+} */
+
+.scroll::-webkit-scrollbar {
+  width: 10px;
+}
+
+.scroll::-webkit-scrollbar-thumb {
+  background-color: #b1ddab;
+}
+
+.scroll::-webkit-scrollbar-track {
+  background-color: #ccd5d0;
+}
 
 /* Container */
-
 .container {
   margin: 0 auto;
   max-width: 100%;

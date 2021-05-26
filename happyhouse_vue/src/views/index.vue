@@ -59,13 +59,20 @@
                   <bar-chart v-if="chartbar" :chartdata="chartdata" :options="options"></bar-chart>
                 </div>
                 <div class="col-6 text-center">
+                  <h2>{{ topdong }} 랭킹</h2>
+
+                  <div v-show="cafeDesc">
+                    <h4 style="margin-top: 10em">
+                      각각의 막대를 클릭하면 <br />
+                      해당 동의 카페 랭킹을 볼 수 있습니다.
+                    </h4>
+                  </div>
                   <div
                     v-for="(cafe, index) in cafes"
                     :key="`${index}_cafes`"
                     style="padding: 0.5em 1em"
                     v-show="cafeRank"
                   >
-                    <!-- <h2 style="margin-bottom: 2em">{{ topdong }} 카페 순위</h2> -->
                     <div class="text-center">
                       <img
                         class="medal"
@@ -88,6 +95,12 @@
                         :src="require(`@/assets/css/images/${cafeEngName[index]}.png`)"
                       />
                     </div>
+                  </div>
+                  <div v-show="storeDesc">
+                    <h4 style="margin-top: 10em">
+                      각각의 막대를 클릭하면 <br />
+                      해당 동의 편의점 랭킹을 볼 수 있습니다.
+                    </h4>
                   </div>
                   <div
                     v-for="(store, index) in stores"
@@ -154,6 +167,8 @@ export default {
       storeRank: false,
       rank: "",
       storeKorName: [],
+      cafeDesc: false,
+      storeDesc: false,
     };
   },
   async mounted() {
@@ -248,7 +263,8 @@ export default {
       console.log(point);
       const item = event[0];
       this.topdong = item._model.label;
-
+      this.cafeDesc = false;
+      this.storeDesc = false;
       console.log(item._model.label);
       if (this.rank === "카페") {
         http
@@ -336,6 +352,10 @@ export default {
       console.log(this.chartbar);
     },
     showCafeRank() {
+      this.cafeDesc = true;
+      this.storeDesc = false;
+      this.topdong = "";
+      this.cafes = [];
       console.log("렌더링해야지");
       this.fillData(this.labels, this.datas);
       this.cafeRank = true;
@@ -345,6 +365,10 @@ export default {
       console.log(this.chartbar);
     },
     showStoreRank() {
+      this.storeDesc = true;
+      this.cafeDesc = false;
+      this.topdong = "";
+      this.stores = [];
       console.log("렌더링해야지");
       this.fillData(this.labels, this.datas);
       this.storeRank = true;
