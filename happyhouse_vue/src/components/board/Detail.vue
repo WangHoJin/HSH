@@ -3,7 +3,7 @@
     <section id="main">
       <div class="container w-50">
         <h2 style="text-align: center">Q&A</h2>
-        <table class="table table-bordered">
+        <table id="table" class="table table-bordered table-condensed">
           <tr>
             <th>번호</th>
             <td>{{ no }}</td>
@@ -20,8 +20,9 @@
             <th>날짜</th>
             <td>{{ getFormatDate(regtime) }}</td>
           </tr>
-          <tr>
-            <td colspan="2">
+          <tr style="height: 300px">
+            <th>내용</th>
+            <td>
               {{ content }}
             </td>
           </tr>
@@ -79,3 +80,18 @@ export default {
   mounted() {},
 };
 </script>
+
+<style>
+th {
+  background-color: #e7eae8;
+  font-family: "BMJUA";
+  border-right: 1px solid #dee2e6;
+  width: 10%;
+  text-align: center;
+  color: #6b7770;
+}
+td {
+  font-family: "BMJUA";
+  color: #6b7770;
+}
+</style>

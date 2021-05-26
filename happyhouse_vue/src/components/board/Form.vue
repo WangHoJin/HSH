@@ -3,17 +3,38 @@
     <section id="main">
       <div class="container w-50">
         <h2 style="text-align: center">Q&A</h2>
+        <table id="table" class="table table-bordered table-condensed">
+          <tr>
+            <th>제목</th>
+            <td>
+              <input
+                type="text"
+                class="form-control noborder"
+                id="title"
+                ref="title"
+                placeholder="제목을 입력하세요"
+                v-model="title"
+              />
+            </td>
+          </tr>
+          <tr style="height: 300px">
+            <th>내용</th>
+            <td>
+              <textarea
+                type="text"
+                class="form-control noborder"
+                id="contnet"
+                ref="content"
+                placeholder="내용을 입력하세요"
+                v-model="content"
+                style="height: 300px"
+              ></textarea>
+            </td>
+          </tr>
+        </table>
+        <!-- <h2 style="text-align: center">Q&A</h2>
         <div class="form-group">
-          <!-- <label for="writer">작성자</label>
-      <input
-        type="text"
-        class="form-control"
-        id="writer"
-        ref="writer"
-        value="writer"
-        v-model="writer"
-        readonly
-      /> -->
+          
         </div>
         <div class="form-group">
           <label for="title">제목</label>
@@ -36,7 +57,7 @@
             placeholder="내용을 입력하세요"
             v-model="content"
           ></textarea>
-        </div>
+        </div> -->
         <div class="text-right">
           <button class="button" v-if="type == 'create'" @click="checkHandler">등록</button>
           <button class="button" v-else @click="checkHandler">수정</button>
@@ -139,4 +160,15 @@ export default {
 };
 </script>
 
-<style scoped></style>
+<style scoped>
+textarea.noborder,
+input.noborder {
+  border: 0;
+}
+th {
+  color: #6b7770;
+}
+td {
+  color: #6b7770;
+}
+</style>

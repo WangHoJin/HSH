@@ -1,18 +1,18 @@
 <template>
   <tr>
     <td>
-      <h2>{{ no }}</h2>
+      <h6>{{ no }}</h6>
     </td>
     <td>
-      <h2>
+      <h6>
         <router-link :to="`/read?no=${no}`">{{ title }}</router-link>
-      </h2>
+      </h6>
     </td>
     <td>
-      <h2>{{ writer }}</h2>
+      <h6>{{ writer }}</h6>
     </td>
     <td>
-      <h2>{{ getFormatDate(regtime) }}</h2>
+      <h6>{{ getFormatDate(regtime) }}</h6>
     </td>
   </tr>
 </template>
@@ -36,8 +36,12 @@ export default {
 </script>
 <style scoped>
 h2 {
-  font-size: 100%;
+  font-size: 1.5em;
   border-top: solid 0px #e7eae8;
-  color: #c1cac5;
+  color: #6d7776;
+}
+
+h6 {
+  margin-bottom: 0;
 }
 </style>

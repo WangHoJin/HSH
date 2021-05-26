@@ -73,10 +73,14 @@ export default {
 
 <style>
 h2 {
-  font-size: 100%;
+  font-size: 1.5em;
   border-top: solid 0px #e7eae8;
 }
 #htr {
   background-color: #f2f5f3;
+}
+#htr h2 {
+  font-size: 1.5em;
+  margin-bottom: 0;
 }
 </style>

@@ -20,7 +20,7 @@
               <router-link class="nav-link" to="/list">Q&A</router-link>
             </li>
             <li>
-              <a href="#ranking">동네 랭킹</a>
+              <router-link class="nav-link" to="/#ranking">동네 랭킹</router-link>
             </li>
             <li class="nav-item menu_confirm_on">
               <router-link class="nav-link" to="/housesearch">매물검색</router-link>
