@@ -15,7 +15,12 @@
                 <input type="hidden" name="act" id="act" value="search" />
 
                 <div class="form-group md">
-                  <select class="form-control mr-2" id="sido" @change="getGugun($event)">
+                  <select
+                    class="form-control mr-2"
+                    style="-webkit-appearance: auto; appearance: auto"
+                    id="sido"
+                    @change="getGugun($event)"
+                  >
                     <option value="0">시/도</option>
                     <option
                       v-for="(sido, index) in sidos"
@@ -27,7 +32,12 @@
                   </select>
                 </div>
                 <div class="form-group mr-2 md-1">
-                  <select class="form-control" id="gugun" @change="getDong($event)">
+                  <select
+                    class="form-control"
+                    style="-webkit-appearance: auto; appearance: auto"
+                    id="gugun"
+                    @change="getDong($event)"
+                  >
                     <option value="0">시/군/구</option>
                     <option
                       v-for="(gugun, index) in guguns"
@@ -39,7 +49,12 @@
                   </select>
                 </div>
                 <div class="form-group md-1">
-                  <select class="form-control" id="dong" @change="getInfo($event)">
+                  <select
+                    class="form-control"
+                    style="-webkit-appearance: auto; appearance: auto"
+                    id="dong"
+                    @change="getInfo($event)"
+                  >
                     <option value="0">동</option>
                     <option
                       v-for="(dong, index) in dongs"

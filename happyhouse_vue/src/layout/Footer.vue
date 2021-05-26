@@ -41,7 +41,7 @@
             <div class="col-lg-4">
               <h4 class="text-uppercase mb-4">Contact Us</h4>
               <p class="lead mb-0" style="font-family: BMJUA; color: #6b7770">
-                심예은 yeeun7873@naver.com <br />
+                심예은 yeeun9603@gmail.com <br />
                 왕호진 kkgmco0825@gmail.com
               </p>
             </div>

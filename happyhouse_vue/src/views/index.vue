@@ -49,7 +49,19 @@
                   >
                 </li>
               </ul>
-              <select class="form-control" id="gugun" @change="getGugun($event)">
+              <select
+                class="form-control"
+                style="
+                  -webkit-appearance: auto;
+                  appearance: auto;
+                  width: 30%;
+                  margin: 0 auto;
+                  border: 3px solid #b1ddab;
+                  border-radius: 0;
+                "
+                id="gugun"
+                @change="getGugun($event)"
+              >
                 <option value="0">시/군/구</option>
                 <option
                   v-for="(gugun, index) in guguns"

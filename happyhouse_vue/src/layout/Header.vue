@@ -56,7 +56,7 @@
     <header id="header">
       <div class="logo">
         <div>
-          <p>HAPPY HOUSE</p>
+          <p>HOME, SWEET HOME</p>
         </div>
       </div>
     </header>

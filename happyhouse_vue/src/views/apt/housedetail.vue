@@ -198,7 +198,7 @@
             <div class="col-4 col-12-medium">
               <section>
                 <h2 class="major">
-                  <span>주요 정보</span>
+                  <span>가장 가까운 곳</span>
                   <ul class="divided">
                     <li v-if="isCoffeeCurrent">
                       <article class="box-post-summary">
