@@ -66,12 +66,28 @@
                     v-show="cafeRank"
                   >
                     <!-- <h2 style="margin-bottom: 2em">{{ topdong }} 카페 순위</h2> -->
-                    <h2 style="display: inline-block">{{ index + 1 }}. {{ cafe.cname }}</h2>
-
-                    <img
-                      class="cafelogo"
-                      :src="require(`@/assets/css/images/${cafeEngName[index]}.png`)"
-                    />
+                    <div class="text-center">
+                      <img
+                        class="medal"
+                        :src="require(`@/assets/css/images/medal1.png`)"
+                        v-if="index == 0"
+                      />
+                      <img
+                        class="medal"
+                        :src="require(`@/assets/css/images/medal2.png`)"
+                        v-if="index == 1"
+                      />
+                      <img
+                        class="medal"
+                        :src="require(`@/assets/css/images/medal3.png`)"
+                        v-if="index == 2"
+                      />
+                      <h4 style="display: inline-block; margin-left: 10px">{{ cafe.cname }}</h4>
+                      <img
+                        class="cafelogo"
+                        :src="require(`@/assets/css/images/${cafeEngName[index]}.png`)"
+                      />
+                    </div>
                   </div>
                   <div
                     v-for="(store, index) in stores"
@@ -80,8 +96,24 @@
                     v-show="storeRank"
                   >
                     <!-- <h2 style="margin-bottom: 2em">{{ topdong }} 편의점 순위</h2> -->
-                    <h2 style="display: inline-block">{{ index + 1 }}. {{ store.sname }}</h2>
-
+                    <img
+                      class="medal"
+                      :src="require(`@/assets/css/images/medal1.png`)"
+                      v-if="index == 0"
+                    />
+                    <img
+                      class="medal"
+                      :src="require(`@/assets/css/images/medal2.png`)"
+                      v-if="index == 1"
+                    />
+                    <img
+                      class="medal"
+                      :src="require(`@/assets/css/images/medal3.png`)"
+                      v-if="index == 2"
+                    />
+                    <h4 style="display: inline-block; margin-left: 10px">
+                      {{ storeKorName[index] }}
+                    </h4>
                     <img
                       class="cafelogo"
                       :src="require(`@/assets/css/images/${storeEngName[index]}.png`)"
@@ -121,6 +153,7 @@ export default {
       cafeRank: false,
       storeRank: false,
       rank: "",
+      storeKorName: [],
     };
   },
   async mounted() {
@@ -224,7 +257,7 @@ export default {
             console.log(data);
             console.log(data[0].cname);
             this.cafes = data;
-            for (let i = 0; i < 5; i++) {
+            for (let i = 0; i < 3; i++) {
               if (this.cafes[i].cname === "스타벅스") {
                 this.cafeEngName[i] = "starbucks";
               } else if (this.cafes[i].cname === "이디야커피") {
@@ -259,13 +292,16 @@ export default {
         http.get("/store/storerank/" + this.topdong).then(({ data }) => {
           this.stores = data;
           console.log(data);
-          for (let i = 0; i < 5; i++) {
+          for (let i = 0; i < 3; i++) {
             if (this.stores[i].sname === "CU") {
               this.storeEngName[i] = "CU";
+              this.storeKorName[i] = "씨유";
             } else if (this.stores[i].sname === "GS25") {
               this.storeEngName[i] = "gs25";
+              this.storeKorName[i] = "지에스25";
             } else if (this.stores[i].sname === "세븐일레븐") {
               this.storeEngName[i] = "seveneleven";
+              this.storeKorName[i] = "세븐일레븐";
             } else if (this.stores[i].sname === "미니스톱") {
               this.storeEngName[i] = "ministop";
             } else if (this.stores[i].sname === "이마트24") {
@@ -330,8 +366,13 @@ export default {
   display: inline-block;
   text-align: center;
 }
-.cafelogo {
-  width: 100px;
-  height: 100px;
+img.cafelogo {
+  width: 200px;
+  height: 200px;
+}
+
+img.medal {
+  width: 50px;
+  height: 50px;
 }
 </style>
