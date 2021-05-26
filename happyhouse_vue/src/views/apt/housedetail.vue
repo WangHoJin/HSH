@@ -173,8 +173,8 @@
               </div>
             </div>
           </div>
-          <div class="row">
-            <div class="col-4 col-12-medium">
+          <div class="row" style="padding-top: 0">
+            <div class="col-4 col-12-medium" style="padding-top: 0">
               <section>
                 <h2 class="major">
                   <span>카세권 그래프</span>
@@ -183,7 +183,7 @@
                 </h2>
               </section>
             </div>
-            <div class="col-4 col-12-medium">
+            <div class="col-4 col-12-medium" style="padding-top: 0">
               <section>
                 <h2 class="major">
                   <span>편세권 그래프</span>
@@ -195,7 +195,7 @@
                 </h2>
               </section>
             </div>
-            <div class="col-4 col-12-medium">
+            <div class="col-4 col-12-medium" style="padding-top: 0">
               <section>
                 <h2 class="major">
                   <span>가장 가까운 곳</span>

@@ -389,12 +389,31 @@ header > p {
   text-transform: uppercase;
   color: #c1cac5;
 }
-/* 
-div::-webkit-scrollbar {
+
+/* div::-webkit-scrollbar {
   display: none !important;
 } */
 
-.scroll::-webkit-scrollbar {
+::-webkit-scrollbar {
+  width: 10px;
+}
+
+::-webkit-scrollbar-thumb {
+  border-radius: 8px;
+  background-color: #b1ddab;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  border-radius: 8px;
+  background-color: #c1edbb;
+}
+
+/* ::-webkit-scrollbar-track {
+  background-color: #ccd5d0;
+  border-radius: 8px;
+} */
+
+/* .scroll::-webkit-scrollbar {
   width: 10px;
 }
 
@@ -405,8 +424,8 @@ div::-webkit-scrollbar {
 
 .scroll::-webkit-scrollbar-track {
   background-color: #ccd5d0;
-  border-radius: 8px;
-}
+  border-radius: 8px; */
+/* } */
 
 /* Container */
 .container {
