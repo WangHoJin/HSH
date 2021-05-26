@@ -219,6 +219,7 @@ export default {
     getCafeData() {
       this.labels = [];
       this.datas = [];
+      this.rank = "카페";
       http
         .get("/coffeeshop/dongrank/" + this.gugun_name)
         .then(({ data }) => {
@@ -236,6 +237,7 @@ export default {
     getMarketData() {
       this.labels = [];
       this.datas = [];
+      this.rank = "편의점";
       http
         .get("/store/dongrank/" + this.gugun_name)
         .then(({ data }) => {

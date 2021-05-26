@@ -8,8 +8,8 @@
             <div class="col-lg-4 mb-5 mb-lg-0">
               <h4 class="text-uppercase mb-4">Location</h4>
               <p class="lead mb-0" style="font-family: BMJUA; color: #6b7770">
-                (SSAFY) <br />
-                서울시 강남구 테헤란로 멀티스퀘어
+                SSAFY 대전캠퍼스 <br />
+                대전광역시 유성구 동서대로 98-39
               </p>
             </div>
             <!-- Footer Social Icons-->
@@ -41,8 +41,8 @@
             <div class="col-lg-4">
               <h4 class="text-uppercase mb-4">Contact Us</h4>
               <p class="lead mb-0" style="font-family: BMJUA; color: #6b7770">
-                1544-9001 <br />
-                admin@ssafy.com
+                심예은 yeeun7873@naver.com <br />
+                왕호진 kkgmco0825@gmail.com
               </p>
             </div>
           </div>
