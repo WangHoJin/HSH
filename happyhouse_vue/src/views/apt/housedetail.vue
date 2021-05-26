@@ -178,8 +178,8 @@
               <section>
                 <h2 class="major">
                   <span>카세권 그래프</span>
-                  <doughnut-chart v-if="chartbar" :chartdata="chartdata" :options="options">
-                  </doughnut-chart>
+                  <line-chart v-if="chartbar" :chartdata="chartdata" :options="options">
+                  </line-chart>
                 </h2>
               </section>
             </div>
@@ -187,11 +187,34 @@
               <section>
                 <h2 class="major">
                   <span>편세권 그래프</span>
-                  <doughnut-chart2
+                  <line-chart2
                     v-if="chartbar2"
                     :chartdata="chartdata2"
                     :options="options2"
-                  ></doughnut-chart2>
+                  ></line-chart2>
+                </h2>
+              </section>
+            </div>
+            <div class="col-4 col-12-medium">
+              <section>
+                <h2 class="major">
+                  <span>주요 정보</span>
+                  <ul class="divided">
+                    <li v-if="isCoffeeCurrent">
+                      <article class="box-post-summary">
+                        <h4>이름 : {{ coffeeshop[0].cname }}</h4>
+                        <h5>주소 : {{ coffeeshop[0].address1 }}</h5>
+                        <h5>거리 : {{ Math.ceil(coffeeshop[0].distance * 1000) }}m</h5>
+                      </article>
+                    </li>
+                    <li v-if="isMarketCurrent">
+                      <article class="box-post-summary">
+                        <h4>이름 : {{ store[0].sname }}</h4>
+                        <h5>주소 : {{ store[0].address1 }}</h5>
+                        <h5>거리 : {{ Math.ceil(store[0].distance * 1000) }}m</h5>
+                      </article>
+                    </li>
+                  </ul>
                 </h2>
               </section>
             </div>
@@ -207,8 +230,10 @@
 <script>
 import http from "@/util/http-common";
 import AptDetailListRow from "@/components/apt/AptDetailListRow.vue";
-import DoughnutChart from "@/components/Charts/DoughnutChart.vue";
-import DoughnutChart2 from "@/components/Charts/DoughnutChart2.vue";
+// import DoughnutChart from "@/components/Charts/DoughnutChart.vue";
+// import DoughnutChart2 from "@/components/Charts/DoughnutChart2.vue";
+import LineChart from "@/components/Charts/LineChart.vue";
+import LineChart2 from "@/components/Charts/LineChart2.vue";
 import { mapGetters } from "vuex";
 const mapMarker = require("@/assets/css/images/apartment.png");
 const cafeMarker = require("@/assets/css/images/coffee-cup.png");
@@ -218,9 +243,10 @@ export default {
   name: "search",
   components: {
     AptDetailListRow,
-    // M100,
-    DoughnutChart,
-    DoughnutChart2,
+    // DoughnutChart,
+    // DoughnutChart2,
+    LineChart,
+    LineChart2,
   },
   data() {
     return {
@@ -256,11 +282,13 @@ export default {
       chartbar: false,
       labels: [],
       datas: [],
+      datas1: [],
       chartdata2: null,
       options2: null,
       chartbar2: false,
       labels2: [],
       datas2: [],
+      datas3: [],
       dist100: false,
       dist300: false,
       dist500: false,
@@ -300,9 +328,11 @@ export default {
           "/coffeeshop/coffeeradiusrank/" + this.getApt.lat + "/" + this.getApt.lng + "/" + radius
         )
         .then(({ data }) => {
-          for (let index = 0; index < 3; index++) {
+          for (let index = 0; index < data.length; index++) {
+            if (index == 5) break;
             this.labels.push(data[index].cname);
             this.datas.push(data[index].coffeeshopcnt);
+            this.datas1.push(data[index].distance * 100);
           }
           console.log("카페 데이터 삽입");
         })
@@ -325,9 +355,10 @@ export default {
         .get("/store/storeradiusrank/" + this.getApt.lat + "/" + this.getApt.lng + "/" + radius)
         .then(({ data }) => {
           for (let index = 0; index < data.length; index++) {
-            if (index == 3) break;
+            if (index == 5) break;
             this.labels2.push(data[index].sname);
             this.datas2.push(data[index].storecnt);
+            this.datas3.push(data[index].distance * 100);
           }
           console.log("편의점 데이터 삽입");
         })
@@ -364,51 +395,76 @@ export default {
     },
     a() {
       console.log("카페 렌더링");
-      this.fillData(this.labels, this.datas);
+      this.fillData(this.labels, this.datas, this.datas1);
     },
     b() {
       console.log("편의점 렌더링");
-      this.fillData2(this.labels2, this.datas2);
+      this.fillData2(this.labels2, this.datas2, this.datas3);
     },
-    fillData(l, d) {
+    fillData(l, d, d1) {
       this.chartdata = {
         labels: l,
         datasets: [
           {
-            label: "주변 카페 동네 TOP 3",
-            backgroundColor: [
-              "rgba(255, 99, 132, 0.2)",
-              "rgba(255, 159, 64, 0.2)",
-              "rgba(255, 205, 86, 0.2)",
-            ],
-            borderColor: ["rgb(255, 99, 132)", "rgb(255, 159, 64)", "rgb(255, 205, 86)"],
+            label: "카페 갯수",
+            borderColor: "rgb(255, 99, 132)",
+            backgroundColor: "rgba(255, 99, 132,0.2)",
+            stack: "combined",
+            type: "bar",
             data: d,
+          },
+          {
+            label: "거리",
+            borderColor: "rgb(54, 162, 235)",
+            fill: false,
+            lineTension: 0,
+            stack: "combined",
+            type: "line",
+            data: d1,
           },
         ],
       };
       this.options = {
+        scales: {
+          y: {
+            stacked: true,
+          },
+        },
+
         onClick: this.aa,
       };
     },
-    fillData2(l, d) {
+    fillData2(l, d, d3) {
       this.chartdata2 = {
         labels: l,
         datasets: [
           {
             label: "주변 편의점 TOP 3",
-            backgroundColor: [
-              "rgba(255, 99, 132, 0.2)",
-              "rgba(255, 159, 64, 0.2)",
-              "rgba(255, 205, 86, 0.2)",
-            ],
-            borderColor: ["rgb(255, 99, 132)", "rgb(255, 159, 64)", "rgb(255, 205, 86)"],
+            borderColor: "rgb(255, 99, 132)",
+            backgroundColor: "rgba(255, 99, 132,0.2)",
+            type: "bar",
+            stack: "combined",
             data: d,
+          },
+          {
+            label: "주변 편의점 TOP 3",
+            borderColor: "rgb(54, 162, 235)",
+            fill: false,
+            lineTension: 0,
+            stack: "combined",
+            type: "line",
+            data: d3,
           },
         ],
       };
 
       this.options = {
         onClick: this.aa,
+        scales: {
+          y: {
+            stacked: true,
+          },
+        },
       };
     },
 
