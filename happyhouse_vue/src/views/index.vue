@@ -4,7 +4,7 @@
     <section id="banner">
       <div class="content">
         <h2 style="color: #6b7770">당신이 원하는 집이 여기있습니다!</h2>
-        <p>A free responsive site template built on HTML5, CSS3, and some other stuff</p>
+        <p>It's choice - not chance - that determines your destiny.</p>
         <a href="#main" class="button scrolly">Let's go</a>
       </div>
     </section>
