@@ -17,11 +17,12 @@
             <!-- Highlight -->
             <section class="box highlight">
               <h2 style="margin-bottom: 2em">우리집은 카세권? 편세권?</h2>
+
               <ul class="special">
                 <li>
                   <a
                     href="#icondetail"
-                    @mouseover="[changeCategory(0)]"
+                    @mousedown="[getCafeData()]"
                     @mouseup="[showCafeRank()]"
                     class="icon solid fa-coffee"
                   >
@@ -32,7 +33,7 @@
                   <a
                     href="#icondetail"
                     class="icon solid fa-shopping-cart"
-                    @mouseover="[changeCategory(1)]"
+                    @mousedown="[getMarketData()]"
                     @mouseup="[showStoreRank()]"
                     ><span class="label">Tablet</span></a
                   >
@@ -48,6 +49,16 @@
                   >
                 </li>
               </ul>
+              <select class="form-control" id="gugun" @change="getGugun($event)">
+                <option value="0">시/군/구</option>
+                <option
+                  v-for="(gugun, index) in guguns"
+                  :key="`${index}_guguns`"
+                  :value="gugun.gugun_name"
+                >
+                  {{ gugun.gugun_name }}
+                </option>
+              </select>
             </section>
           </div>
           <div id="icondetail" class="col-12" v-show="showrank">
@@ -169,26 +180,21 @@ export default {
       storeKorName: [],
       cafeDesc: false,
       storeDesc: false,
+
+      guguns: {},
+      gugun_name: "",
     };
   },
-  async mounted() {
-    // const labels = [];
-    // const datas = [];
-    // console.log("마운트");
-    // http
-    //   .get("/coffeeshop/dongrank")
-    //   .then(({ data }) => {
-    //     for (let index = 0; index < 3; index++) {
-    //       labels.push(data[index].dong);
-    //       datas.push(data[index].cnt);
-    //       console.log("데이터");
-    //     }
-    //   })
-    //   .catch(() => {
-    //     alert("에러가 발생했습니다.");
-    //   });
-    // console.log("no!!");
-    // this.fillData(labels, datas);
+  created() {
+    http
+      .get("/housesearch2/house/11")
+      .then(({ data }) => {
+        console.log(data);
+        this.guguns = data;
+      })
+      .catch(() => {
+        alert("에러가 발생했습니다.");
+      });
   },
   watch: {
     category: function (newVal) {
@@ -211,8 +217,10 @@ export default {
   },
   methods: {
     getCafeData() {
+      this.labels = [];
+      this.datas = [];
       http
-        .get("/coffeeshop/dongrank")
+        .get("/coffeeshop/dongrank/" + this.gugun_name)
         .then(({ data }) => {
           for (let index = 0; index < 3; index++) {
             console.log("데이타 잘 받아오고");
@@ -222,12 +230,14 @@ export default {
           }
         })
         .catch(() => {
-          alert("에러가 발생했습니다.");
+          alert("시군구를 선택하시오.");
         });
     },
     getMarketData() {
+      this.labels = [];
+      this.datas = [];
       http
-        .get("/store/dongrank")
+        .get("/store/dongrank/" + this.gugun_name)
         .then(({ data }) => {
           for (let index = 0; index < 3; index++) {
             this.labels.push(data[index].dong);
@@ -235,7 +245,7 @@ export default {
           }
         })
         .catch(() => {
-          alert("에러가 발생했습니다.");
+          alert("시군구를 선택하시오.");
         });
     },
     fillData(l, d) {
@@ -377,8 +387,8 @@ export default {
       this.chartbar = !this.chartbar;
       console.log(this.chartbar);
     },
-    chartClose() {
-      // this.chartbar = false;
+    getGugun(event) {
+      this.gugun_name = event.target.value;
     },
   },
 };

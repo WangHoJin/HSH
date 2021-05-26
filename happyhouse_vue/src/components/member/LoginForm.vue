@@ -182,14 +182,14 @@ body {
   justify-content: center;
   align-items: center;
   flex-direction: column;
-  font-family: "Montserrat", sans-serif;
+  font-family: "BMJUA", sans-serif;
   height: 100vh;
   margin: -20px 0 50px;
 }
 
 h1 {
   font-weight: bold;
-  font-family: "Montserrat", sans-serif;
+  font-family: "BMJUA", sans-serif;
   margin: 0;
 }
 
