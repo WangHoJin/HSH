@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+	
+<mapper namespace="com.ssafy.happyhouse.model.dao.StoreDao">
+	<select id="listStoreInfo" resultType="StoreDto">
+		select * from store
+	</select>	
+	
+	<select id="getStoreInDong" parameterType="string" resultType="StoreDto">
+		select *
+		from store
+		where dong=#{dong}
+		order by sname
+	</select>
+	
+	<select id="getStoreRadius" parameterType="StoreDto" resultType="StoreDto">
+		select *,(6371*acos(cos(radians(#{lat}))*cos(radians(c.lat))*cos(radians(c.lng)-radians(#{lng}))+sin(radians(#{lat}))*sin(radians(c.lat)))) AS distance
+		from store c
+		having distance <![CDATA[<=]]> #{radius}
+		order by distance 
+		LIMIT 0,100;
+	</select>
+	
+	<select id="getStoreRadiusRank" parameterType="StoreDto" resultType="StoreDto">
+		select *, min(distance) as distance, count(a.sname) as storecnt
+		from (select sname,	(6371*acos(cos(radians(#{lat}))*cos(radians(c.lat))*cos(radians(c.lng)-radians(#{lng}))+sin(radians(#{lat}))*sin(radians(c.lat)))) AS distance
+				from store c
+				having distance <![CDATA[<=]]> #{radius}) a
+		group by a.sname
+		order by storecnt desc, distance asc
+		LIMIT 0,5;
+	</select>
+	
+	<select id="getDongRank" parameterType="string" resultType="StoreDto">
+		select c.dong, count(dong) cnt
+		from store c
+		where gugun_name like #{gugun_name}
+		group by c.dong
+		order by cnt desc
+		LIMIT 0,3;
+	</select>
+	
+	<select id="getStoreRank" parameterType="string" resultType="StoreDto">
+		select a.sname, count(a.sname) as storecnt
+		from (select *
+				from store
+				where dong like #{dong}) a
+		group by a.sname
+		order by Storecnt desc
+		LIMIT 0,3;
+	</select>
+	
+	<select id="getStoreMarkerInfo" parameterType="StoreDto" resultType="StoreDto">
+		select sname,branchname,address1,address2
+		from store
+		where lat=#{lat} and lng=#{lng}
+	</select>
+</mapper>

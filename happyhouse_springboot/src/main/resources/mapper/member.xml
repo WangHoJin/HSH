@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.ssafy.happyhouse.model.dao.MemberDao">
+	<select id="login" parameterType="MemberDto" resultType="MemberDto">
+		select userid, userpwd, username, address, phone
+		from member
+		where userid = #{userid} and userpwd = #{userpwd}
+	</select>
+	
+	<select id="userList" resultType="MemberDto">
+		select userid, userpwd, username, address, phone
+		from member
+	</select>
+	
+	<select id="getMember" parameterType="String" resultType="Memberdto">
+		select userid, userpwd, username, address, phone
+		from member
+		where userid = #{userid}
+	</select>
+	
+	<insert id="registerMember" parameterType="MemberDto">
+		insert into member (userid, userpwd, username, address, phone)
+		values (#{userid}, #{userpwd}, #{username}, #{address}, #{phone})
+	</insert>
+	
+	<update id="modifyMember" parameterType="MemberDto">
+		update member
+		set userpwd = #{userpwd},username = #{username}, address = #{address}, phone = #{phone}
+		where userid = #{userid}
+	</update>
+	
+	<delete id="deleteMember" parameterType="String">
+		delete from member
+		where userid = #{userid}
+	</delete>
+	
+	<select id="selInterestArea" parameterType="String" resultType="string">
+		select dongcode
+		from dongcode
+		where dong=#{dong}
+	</select>
+	
+	<delete id="deleteInterestArea" parameterType="InterestAreaDto">
+		delete from areaofinterest
+		where userid=#{userid} and dongcode=#{dongcode}
+	</delete>
+	<select id="getInterestArea" parameterType="String" resultType="InterestAreaDto">
+		select a.userid,a.dongcode,d.dong,d.city,d.gugun
+		from areaofinterest a,dongcode d
+		where a.userid=#{userid}
+		and a.dongcode=d.dongcode
+	</select>
+	
+	<insert id="addInterestArea" parameterType="InterestAreaDto">
+		insert into areaofinterest (userid, dongcode)
+		values (#{userid},#{dongcode})
+	</insert>
+	
+</mapper>

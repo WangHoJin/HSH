@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.ssafy.happyhouse.model.dao.HouseSearchDao">
+	<select id="listHouseInfo" resultType="HouseInfoDto">
+		select * from houseinfo
+	</select>
+
+	<select id="listHouseDeal" resultType="HouseDealDto">
+		select * from housedeal
+	</select>	
+	
+	<select id="getSido" resultType="SidoGugunCodeDto">
+		select left(sido_code,2) sido_code,sido_name 
+		from sidocode
+		order by sido_code
+	</select>
+	
+	<select id="getGugunInSido" parameterType="string" resultType="SidoGugunCodeDto">
+		select left(gugun_code,5) gugun_code, gugun_name
+		from guguncode
+		where left(gugun_code,2) = #{sido}
+		order by gugun_code
+	</select>
+	
+	<select id="getDongInGugun" parameterType="string" resultType="HouseInfoDto">
+		select distinct dong, left(dongcode,5) code 
+		from dongcode
+		where left(dongcode,5) =#{gugun}
+		order by dong
+	</select>
+	
+	<select id="getAptInDong" parameterType="string" resultType="HouseInfoDto">
+		select no, dong, AptName, code, buildYear, jibun, lat, lng
+		from houseinfo
+		where dong=#{dong}
+		order by AptName
+	</select>
+	
+	<select id="getDealAptInDong" parameterType="HouseInfoDto" resultType="HouseDealDto">
+		select *
+		from housedeal
+		where dong=#{dong} and AptName=#{aptName}
+		order by AptName
+	</select>
+	
+	<select id="getAll" resultType="HouseInfoDto">
+		select no,dong,AptName,code,buildYear,jibun,lat,lng
+		from houseinfo
+		order by AptName
+	</select>
+	
+	<select id="getAptOfName" parameterType="string" resultType="HouseInfoDto">
+		select no,dong,AptName,code,buildYear,jibun,lat,lng
+		from houseinfo
+		where AptName like CONCAT('%',#{aptname},'%')
+		order by AptName,dong
+	</select>
+	
+	<select id="getDealOfAptName" parameterType="string" resultType="HouseDealDto">
+		select * 
+		from housedeal
+		where AptName like CONCAT('%',#{aptname},'%')
+		order by AptName,dong
+	</select>
+	
+	<select id="getInterest" parameterType="string" resultType="HouseInfoDto">
+		select hi.no,hi.dong,hi.AptName,hi.code,hi.buildYear,hi.jibun,hi.lat,hi.lng
+		from houseinfo hi, dongcode dc, areaofinterest ai
+		where hi.dong=dc.dong and dc.dongcode=ai.dongcode and ai.userid=#{userid}
+		ORDER BY dong
+	</select>
+	
+	<select id="getDealInterest" parameterType="string" resultType="HouseDealDto">
+		select hd.no,hd.dong,hd.AptName,hd.code,hd.dealAmount,hd.buildYear,hd.dealYear,hd.dealMonth,hd.dealDay,hd.area,hd.floor,hd.jibun,hd.type
+		from housedeal hd, dongcode dc, areaofinterest ai
+		where hd.dong=dc.dong and dc.dongcode=ai.dongcode and ai.userid=#{userid}
+		ORDER BY dong
+	</select>
+</mapper>
